@@ -307,7 +307,7 @@
     </target>
 
     <target name="delete.jar" description="delete distribution jar file">
-        <delete file="jcedit-4.0.jar"/>
+        <delete file="jcedit-5.0.jar"/>
         <delete>
             <fileset dir="${env.CODA}/common/jar">
                 <include name="jcedit-*.jar"/>
@@ -316,12 +316,12 @@
     </target>
 
     <target name="build.jar" description="build jar file">
-        <jar destfile="jcedit-4.0.jar" basedir="${JCedit.output.dir}"/>
+        <jar destfile="jcedit-5.0.jar" basedir="${JCedit.output.dir}"/>
     </target>
 
     <target name="build.tar" description="build tar file">
         <delete dir="${JCedit.output.dir}"/>
-        <tar destfile="jcedit.tar" basedir="./" excludes=" jcedit.tar, build.xml, JCedit-4.0.iml, JCedit-4.0.ipr, JCedit-4.0.iws, jcedit.properties, **/classes/**, **/out/**, **/src/**" />
+        <tar destfile="jcedit.tar" basedir="./" excludes=" jcedit.tar, build.xml, JCedit-5.0.iml, JCedit-5.0.ipr, JCedit-5.0.iws, jcedit.properties, **/classes/**, **/out/**, **/src/**" />
     </target>
 
     <target name="build.zip" description="create distribution zip file">
@@ -345,7 +345,7 @@
     </target>
 
     <target name="cp" description="install">
-        <copy file="jcedit-4.0.jar" todir="${build_dir}/common/jar" overwrite="true"/>
+        <copy file="jcedit-5.0.jar" todir="${build_dir}/common/jar" overwrite="true"/>
 
         <copy file = "${bin_source_dir}/jcedit" todir="${common_bin_dir}"/>
         <copy file = "${bin_source_dir}/jcedit_view" todir="${common_bin_dir}"/>
