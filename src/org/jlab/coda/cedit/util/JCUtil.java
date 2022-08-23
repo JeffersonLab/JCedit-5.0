@@ -87,10 +87,10 @@ public class JCUtil {
         sourceTransport.setEmuWait(t.getEmuWait());
 
         sourceTransport.setUdpHost(t.getUdpHost());
-        sourceTransport.setcMsgNameSpace(t.getcMsgNameSpace());
         sourceTransport.setUdpPort(t.getUdpPort());
-        sourceTransport.setcMsgSubject(t.getcMsgSubject());
-        sourceTransport.setcMsgType(t.getcMsgType());
+        sourceTransport.setUdpBufferSize(t.getUdpBufferSize());
+        sourceTransport.setLB(t.isLB());
+        sourceTransport.setErsap(t.isErsap());
         return sourceTransport;
     }
 
