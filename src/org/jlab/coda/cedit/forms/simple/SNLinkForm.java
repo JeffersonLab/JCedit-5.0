@@ -53,30 +53,31 @@ public class SNLinkForm extends JFrame {
 
         if (gl.getDestinationComponentType().equals(ACodaType.FILE.name())) {
             comboModel = new DefaultComboBoxModel(new String[]{
-                    "Et",
-                    "cMsg",
                     "File",
+                    "Et",
+                    "UdpStream",
+                    "EmuSocket",
                     "Debug",
                     "None"
             });
         } else if (gl.getDestinationComponentType().equals(ACodaType.EBER.name()))   {
             comboModel = new DefaultComboBoxModel(new String[]{
                     "EmuSocket+Et",
-                    "EmuSocket"
+                    "EmuSocket",
+                    "UdpStream"
             });
         } else if (gl.getDestinationComponentType().equals(ACodaType.ER.name())) {
             comboModel = new DefaultComboBoxModel(new String[]{
-                    "EmuSocket",
                     "Et",
-                    "cMsg"
+                    "EmuSocket",
+                    "UdpStream"
             });
         } else {
             comboModel = new DefaultComboBoxModel(new String[]{
-                    "EmuSocket",
                     "Et",
-                    "cMsg"
+                    "EmuSocket",
+                    "UdpStream"
             });
-
         }
 
         initComponents();
@@ -85,7 +86,7 @@ public class SNLinkForm extends JFrame {
 
             disableEmu();
             disableEt();
-            disableCMsg();
+            disableUdp();
             disableFile();
             okButton.setEnabled(false);
             removeButton.setEnabled(false);
@@ -249,12 +250,14 @@ public class SNLinkForm extends JFrame {
 
         emuFatPipeCheckBox.setSelected(sourceTransport.isEmuFatPipe());
 
-        // cMsg
-        cMsgTypeTextField.setText(destinationTransport.getcMsgType());
-        cMsgSubjectTextField.setText(destinationTransport.getcMsgSubject());
-        cMsgHostTextField.setText(destinationTransport.getcMsgHost());
-        cMsgNameSpaceTextField.setText(destinationTransport.getcMsgNameSpace());
-        cMsgPortSpinner.setValue(destinationTransport.getcMsgPort());
+        // Udp
+        UdpHostTextField.setText(destinationTransport.getUdpHost());
+        UdpPortSpinner.setValue(destinationTransport.getUdpPort());
+
+        destinationTransport.setUdpBufferSize((Integer)UdpBufferSizeSpinner.getValue());
+        destinationTransport.setLB(UdpUseLoadBalancer.isSelected());
+        destinationTransport.setErsap(UdpUseErsap.isSelected());
+
         checkTrClass();
     }
 
@@ -339,27 +342,24 @@ public class SNLinkForm extends JFrame {
         emuFatPipeCheckBox.setEnabled(false);
     }
 
-    private void enableCMsg() {
-        cMsgHostTextField.setEnabled(true);
-        if (destinationTransport.getcMsgHost().equals("platform")) {
-            cMsgNameSpaceTextField.setEnabled(false);
-            cMsgPortSpinner.setEnabled(false);
-        } else {
-            cMsgNameSpaceTextField.setEnabled(true);
-            cMsgPortSpinner.setEnabled(true);
-        }
-        cMsgSubjectTextField.setEnabled(true);
-        cMsgTypeTextField.setEnabled(true);
-
+    private void enableUdp() {
+        UdpHostTextField.setEnabled(true);
+        UdpUseLoadBalancer.setEnabled(true);
+        UdpUseErsap.setEnabled(true);
+        UdpFpgaLinkIp.setEnabled(true);
+        UdpPortSpinner.setEnabled(true);
+        UdpBufferSizeSpinner.setEnabled(true);
+        // I am not sure if we need this check
+        // if (destinationTransport.getUdpHost().equals("platform"))
     }
 
-    private void disableCMsg() {
-        cMsgHostTextField.setEnabled(false);
-        cMsgNameSpaceTextField.setEnabled(false);
-        cMsgPortSpinner.setEnabled(false);
-        cMsgSubjectTextField.setEnabled(false);
-        cMsgTypeTextField.setEnabled(false);
-
+    private void disableUdp() {
+        UdpHostTextField.setEnabled(false);
+        UdpUseLoadBalancer.setEnabled(false);
+        UdpUseErsap.setEnabled(false);
+        UdpFpgaLinkIp.setEnabled(false);
+        UdpPortSpinner.setEnabled(false);
+        UdpBufferSizeSpinner.setEnabled(false);
     }
 
     private void enableFile() {
@@ -388,7 +388,7 @@ public class SNLinkForm extends JFrame {
             enableEt();
 
             disableEmu();
-            disableCMsg();
+            disableUdp();
             disableFile();
 
         } else if (transportClassComboBox.getSelectedItem().equals("File")) {
@@ -396,24 +396,24 @@ public class SNLinkForm extends JFrame {
 
             disableEt();
             disableEmu();
-            disableCMsg();
+            disableUdp();
 
         } else if (transportClassComboBox.getSelectedItem().equals("EmuSocket")) {
             enableEmu();
 
             disableEt();
-            disableCMsg();
+            disableUdp();
             disableFile();
 
         } else if (transportClassComboBox.getSelectedItem().equals("EmuSocket+Et")) {
             enableEmu();
             enableEt();
 
-            disableCMsg();
+            disableUdp();
             disableFile();
 
-        } else if (transportClassComboBox.getSelectedItem().equals("cMsg")) {
-            enableCMsg();
+        } else if (transportClassComboBox.getSelectedItem().equals("UdpStream")) {
+            enableUdp();
 
             disableEt();
             disableEmu();
@@ -423,18 +423,8 @@ public class SNLinkForm extends JFrame {
                 transportClassComboBox.getSelectedItem().equals("Debug")) {
             disableEt();
             disableEmu();
-            disableCMsg();
+            disableUdp();
             disableFile();
-        }
-    }
-
-    private void cMsgHostTextFieldActionPerformed(ActionEvent e) {
-        if (cMsgHostTextField.getText().equals("platform")) {
-            cMsgPortSpinner.setEnabled(false);
-            cMsgNameSpaceTextField.setEnabled(false);
-        } else {
-            cMsgPortSpinner.setEnabled(true);
-            cMsgNameSpaceTextField.setEnabled(true);
         }
     }
 
@@ -509,16 +499,16 @@ public class SNLinkForm extends JFrame {
         fpgaLinkIpTextField = new JTextField();
         panel5 = new JPanel();
         label11 = new JLabel();
-        cMsgHostTextField = new JTextField();
+        UdpHostTextField = new JTextField();
         label12 = new JLabel();
         label13 = new JLabel();
-        cMsgPortSpinner = new JSpinner();
+        UdpPortSpinner = new JSpinner();
         label14 = new JLabel();
-        cMsgNameSpaceTextField = new JTextField();
         label15 = new JLabel();
-        cMsgSubjectTextField = new JTextField();
-        label16 = new JLabel();
-        cMsgTypeTextField = new JTextField();
+        UdpFpgaLinkIp = new JTextField();
+        UdpBufferSizeSpinner = new JSpinner();
+        UdpUseLoadBalancer = new JCheckBox();
+        UdpUseErsap = new JCheckBox();
         action1 = new CancelAction();
         action2 = new ClearAction();
         action3 = new OkAction();
@@ -781,7 +771,7 @@ public class SNLinkForm extends JFrame {
                                                         .addComponent(checkBoxEtCreate)
                                                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                         .addComponent(label9)))
-                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                                                 .addComponent(etWait, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
                                     .addComponent(etNameLabel))
                                 .addContainerGap())
@@ -963,7 +953,7 @@ public class SNLinkForm extends JFrame {
                         .addGroup(panel4Layout.createParallelGroup()
                             .addGroup(panel4Layout.createSequentialGroup()
                                 .addComponent(emuFatPipeCheckBox)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 341, Short.MAX_VALUE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 344, Short.MAX_VALUE)
                                 .addComponent(label18)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(fpgaLinkIpTextField, GroupLayout.PREFERRED_SIZE, 134, GroupLayout.PREFERRED_SIZE))
@@ -980,7 +970,7 @@ public class SNLinkForm extends JFrame {
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(label17)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(emuSubnetTextField, GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)))
+                                .addComponent(emuSubnetTextField, GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)))
                         .addContainerGap())
             );
             panel4Layout.setVerticalGroup(
@@ -1000,19 +990,16 @@ public class SNLinkForm extends JFrame {
                             .addComponent(emuFatPipeCheckBox)
                             .addComponent(fpgaLinkIpTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                             .addComponent(label18))
-                        .addContainerGap(7, Short.MAX_VALUE))
+                        .addContainerGap(8, Short.MAX_VALUE))
             );
         }
 
         //======== panel5 ========
         {
-            panel5.setBorder(new TitledBorder("cMsg"));
+            panel5.setBorder(new TitledBorder("UdpStream"));
 
             //---- label11 ----
             label11.setText("Host");
-
-            //---- cMsgHostTextField ----
-            cMsgHostTextField.addActionListener(e -> cMsgHostTextFieldActionPerformed(e));
 
             //---- label12 ----
             label12.setText("( IP address )");
@@ -1021,17 +1008,37 @@ public class SNLinkForm extends JFrame {
             //---- label13 ----
             label13.setText("Port");
 
-            //---- cMsgPortSpinner ----
-            cMsgPortSpinner.setModel(new SpinnerNumberModel(46100, 1, 99999, 1));
+            //---- UdpPortSpinner ----
+            UdpPortSpinner.setModel(new SpinnerNumberModel(46100, 1, 99999, 1));
 
             //---- label14 ----
-            label14.setText("NS");
+            label14.setText("BufferSize");
 
             //---- label15 ----
-            label15.setText("Subject");
+            label15.setText("FPGA_IP");
 
-            //---- label16 ----
-            label16.setText("Type");
+            //---- UdpBufferSizeSpinner ----
+            UdpBufferSizeSpinner.setModel(new SpinnerNumberModel(4200, 1, 100000, 1));
+            UdpBufferSizeSpinner.setEnabled(false);
+
+            //---- UdpUseLoadBalancer ----
+            UdpUseLoadBalancer.setText("LoadBalancer");
+            UdpUseLoadBalancer.setSelected(true);
+            UdpUseLoadBalancer.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    checkBoxEtCreateMouseClicked(e);
+                }
+            });
+
+            //---- UdpUseErsap ----
+            UdpUseErsap.setText("ERSAP");
+            UdpUseErsap.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    checkBoxEtCreateMouseClicked(e);
+                }
+            });
 
             GroupLayout panel5Layout = new GroupLayout(panel5);
             panel5.setLayout(panel5Layout);
@@ -1043,49 +1050,45 @@ public class SNLinkForm extends JFrame {
                             .addGroup(panel5Layout.createSequentialGroup()
                                 .addComponent(label11)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cMsgHostTextField)
+                                .addComponent(UdpHostTextField, GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(label12)
-                                .addGap(14, 14, 14))
+                                .addGap(14, 14, 14)
+                                .addComponent(label13)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(UdpPortSpinner, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                                .addComponent(label14)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(UdpBufferSizeSpinner, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE)
+                                .addGap(34, 34, 34))
                             .addGroup(panel5Layout.createSequentialGroup()
                                 .addComponent(label15)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cMsgSubjectTextField)))
-                        .addGroup(panel5Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                            .addGroup(panel5Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(label13)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cMsgPortSpinner, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(label14)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cMsgNameSpaceTextField))
-                            .addGroup(panel5Layout.createSequentialGroup()
-                                .addGap(24, 24, 24)
-                                .addComponent(label16)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cMsgTypeTextField)))
-                        .addContainerGap())
+                                .addComponent(UdpFpgaLinkIp, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
+                                .addGap(68, 68, 68)
+                                .addComponent(UdpUseLoadBalancer)
+                                .addGap(55, 55, 55)
+                                .addComponent(UdpUseErsap)
+                                .addGap(0, 157, Short.MAX_VALUE))))
             );
             panel5Layout.setVerticalGroup(
                 panel5Layout.createParallelGroup()
                     .addGroup(panel5Layout.createSequentialGroup()
-                        .addGroup(panel5Layout.createParallelGroup()
-                            .addGroup(panel5Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                .addComponent(label11)
-                                .addComponent(cMsgHostTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                .addComponent(label12)
-                                .addComponent(label13)
-                                .addComponent(cMsgPortSpinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                .addComponent(label14))
-                            .addComponent(cMsgNameSpaceTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                        .addGroup(panel5Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(label11)
+                            .addComponent(UdpHostTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label12)
+                            .addComponent(label13)
+                            .addComponent(UdpBufferSizeSpinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label14)
+                            .addComponent(UdpPortSpinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(panel5Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                             .addComponent(label15)
-                            .addComponent(cMsgTypeTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label16)
-                            .addComponent(cMsgSubjectTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                            .addComponent(UdpFpgaLinkIp, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(UdpUseLoadBalancer)
+                            .addComponent(UdpUseErsap))
                         .addGap(0, 13, Short.MAX_VALUE))
             );
         }
@@ -1209,16 +1212,16 @@ public class SNLinkForm extends JFrame {
     private JTextField fpgaLinkIpTextField;
     private JPanel panel5;
     private JLabel label11;
-    private JTextField cMsgHostTextField;
+    private JTextField UdpHostTextField;
     private JLabel label12;
     private JLabel label13;
-    private JSpinner cMsgPortSpinner;
+    private JSpinner UdpPortSpinner;
     private JLabel label14;
-    private JTextField cMsgNameSpaceTextField;
     private JLabel label15;
-    private JTextField cMsgSubjectTextField;
-    private JLabel label16;
-    private JTextField cMsgTypeTextField;
+    private JTextField UdpFpgaLinkIp;
+    private JSpinner UdpBufferSizeSpinner;
+    private JCheckBox UdpUseLoadBalancer;
+    private JCheckBox UdpUseErsap;
     private CancelAction action1;
     private ClearAction action2;
     private OkAction action3;
@@ -1367,12 +1370,12 @@ public class SNLinkForm extends JFrame {
 
             sourceTransport.setEmuFatPipe(emuFatPipeCheckBox.isSelected());
 
-            //cMsg
-            destinationTransport.setcMsgHost(cMsgHostTextField.getText());
-            destinationTransport.setcMsgNameSpace(cMsgNameSpaceTextField.getText());
-            destinationTransport.setcMsgPort((Integer) cMsgPortSpinner.getValue());
-            destinationTransport.setcMsgSubject(cMsgSubjectTextField.getText());
-            destinationTransport.setcMsgType(cMsgTypeTextField.getText());
+            //Udp
+            destinationTransport.setUdpHost(UdpHostTextField.getText());
+            destinationTransport.setUdpPort((Integer) UdpPortSpinner.getValue());
+            destinationTransport.setUdpBufferSize((Integer)UdpBufferSizeSpinner.getValue());
+            destinationTransport.setLB(UdpUseLoadBalancer.isSelected());
+            destinationTransport.setErsap(UdpUseErsap.isSelected());
 
             // update subtype of the destination component if it is of type File
             JCGComponent tc = canvas.getGCMPs().get(link.getDestinationComponentName());
@@ -1432,13 +1435,13 @@ public class SNLinkForm extends JFrame {
             fpgaLinkIpTextField.setText("undefined");
             emuFatPipeCheckBox.setSelected(false);
 
-            // cMsg
-            cMsgTypeTextField.setText("");
-            cMsgSubjectTextField.setText("");
-            cMsgHostTextField.setText("");
-            cMsgNameSpaceTextField.setText("");
-            cMsgPortSpinner.setValue(0);
-
+            // udpStream
+            UdpHostTextField.setText("");
+            UdpUseLoadBalancer.setSelected(false);
+            UdpUseErsap.setSelected(false);
+            UdpFpgaLinkIp.setText("");
+            UdpPortSpinner.setValue(0);
+            UdpBufferSizeSpinner.setValue(0);
         }
     }
 

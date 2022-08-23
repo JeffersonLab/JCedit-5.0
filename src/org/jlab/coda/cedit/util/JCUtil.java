@@ -86,9 +86,9 @@ public class JCUtil {
         sourceTransport.setEmuMaxBuffer(t.getEmuMaxBuffer());
         sourceTransport.setEmuWait(t.getEmuWait());
 
-        sourceTransport.setcMsgHost(t.getcMsgHost());
+        sourceTransport.setUdpHost(t.getUdpHost());
         sourceTransport.setcMsgNameSpace(t.getcMsgNameSpace());
-        sourceTransport.setcMsgPort(t.getcMsgPort());
+        sourceTransport.setUdpPort(t.getUdpPort());
         sourceTransport.setcMsgSubject(t.getcMsgSubject());
         sourceTransport.setcMsgType(t.getcMsgType());
         return sourceTransport;

@@ -23,6 +23,7 @@
 package org.jlab.coda.cedit.system;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Objects;
 
 @XmlRootElement(name = "transport")
 public class JCGTransport {
@@ -54,11 +55,11 @@ public class JCGTransport {
     private String  fpgaLinkIp     = "undefined";
     private boolean emuFatPipe     = false;
 
-    private String  cMsgHost       = "platform";
-    private int     cMsgPort       = 45000;
-    private String  cMsgNameSpace  = "undefined";
-    private String  cMsgSubject    = "undefined";
-    private String  cMsgType       = "undefined";
+    private String  udpHost        = "undefined";
+    private int     udpPort        = 45000;
+    private int     udpBufferSize  = 9000;
+    private boolean isLB           = false;
+    private boolean isErsap        = false;
 
     private String  fileName    = "undefined";
     private String  fileType    = "coda";
@@ -79,7 +80,7 @@ public class JCGTransport {
                         int etChunkSize, int inputEtChunkSize, String single, int etGroups, int etRecvBuf, int etSendBuf,
                         String etMethodCon, String etHostName, String etSubNet, String destinationEtCreate, int emuDirectPort,
                         int emuMaxBuffer, int emuWait, String emuSubNet, String fpgaLinkIp, boolean emuFatPipe,
-                        String cMsgHost, int cMsgPort, String cMsgNameSpace, String cMsgSubject, String cMsgType,
+                        String udpHost, int udpPort, int udpBufferSize,  boolean isLB, boolean isErsap,
                         String fileName, String fileType, long fileSplit, int fileInternalBuffer, boolean noLink,
                         int compression, int compressionThreads) {
         this.name = name;
@@ -108,11 +109,11 @@ public class JCGTransport {
         this.emuSubNet = emuSubNet;
         this.fpgaLinkIp = fpgaLinkIp;
         this.emuFatPipe = emuFatPipe;
-        this.cMsgHost = cMsgHost;
-        this.cMsgPort = cMsgPort;
-        this.cMsgNameSpace = cMsgNameSpace;
-        this.cMsgSubject = cMsgSubject;
-        this.cMsgType = cMsgType;
+        this.udpHost = udpHost;
+        this.udpPort = udpPort;
+        this.udpBufferSize = udpBufferSize;
+        this.isLB = isLB;
+        this.isErsap = isErsap;
         this.fileName = fileName;
         this.fileType = fileType;
         this.fileSplit = fileSplit;
@@ -362,44 +363,44 @@ public class JCGTransport {
         this.emuWait = emuWait;
     }
 
-    public String getcMsgHost() {
-        return cMsgHost;
+    public String getUdpHost() {
+        return udpHost;
     }
 
-    public void setcMsgHost(String cMsgHost) {
-        this.cMsgHost = cMsgHost;
+    public void setUdpHost(String udpHost) {
+        this.udpHost = udpHost;
     }
 
-    public int getcMsgPort() {
-        return cMsgPort;
+    public int getUdpPort() {
+        return udpPort;
     }
 
-    public void setcMsgPort(int cMsgPort) {
-        this.cMsgPort = cMsgPort;
+    public void setUdpPort(int udpPort) {
+        this.udpPort = udpPort;
     }
 
-    public String getcMsgNameSpace() {
-        return cMsgNameSpace;
+    public int getUdpBufferSize() {
+        return udpBufferSize;
     }
 
-    public void setcMsgNameSpace(String cMsgNameSpace) {
-        this.cMsgNameSpace = cMsgNameSpace;
+    public void setUdpBufferSize(int udpBufferSize) {
+        this.udpBufferSize = udpBufferSize;
     }
 
-    public String getcMsgSubject() {
-        return cMsgSubject;
+    public boolean isLB() {
+        return isLB;
     }
 
-    public void setcMsgSubject(String cMsgSubject) {
-        this.cMsgSubject = cMsgSubject;
+    public void setLB(boolean LB) {
+        isLB = LB;
     }
 
-    public String getcMsgType() {
-        return cMsgType;
+    public boolean isErsap() {
+        return isErsap;
     }
 
-    public void setcMsgType(String cMsgType) {
-        this.cMsgType = cMsgType;
+    public void setErsap(boolean ersap) {
+        isErsap = ersap;
     }
 
     public String getSingle() {
@@ -429,52 +430,41 @@ public class JCGTransport {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
+        if (!(o instanceof JCGTransport)) return false;
         JCGTransport that = (JCGTransport) o;
+        return  getEtTcpPort() == that.getEtTcpPort() && getEtUdpPort() == that.getEtUdpPort() &&
+                getEtWait() == that.getEtWait() && getEtEventNum() == that.getEtEventNum() &&
+                getEtEventSize() == that.getEtEventSize() && getInputEtChunkSize() == that.getInputEtChunkSize() &&
+                getEtChunkSize() == that.getEtChunkSize() && getEtGroups() == that.getEtGroups() &&
+                getEtRecvBuf() == that.getEtRecvBuf() && getEtSendBuf() == that.getEtSendBuf() &&
+                getEmuDirectPort() == that.getEmuDirectPort() && getEmuMaxBuffer() == that.getEmuMaxBuffer() &&
+                getEmuWait() == that.getEmuWait() && isEmuFatPipe() == that.isEmuFatPipe() &&
+                getUdpPort() == that.getUdpPort() && getUdpBufferSize() == that.getUdpBufferSize() &&
+                isLB() == that.isLB() && isErsap() == that.isErsap() && getFileSplit() == that.getFileSplit() &&
+                getFileInternalBuffer() == that.getFileInternalBuffer() && isNoLink() == that.isNoLink() &&
+                getCompression() == that.getCompression() && getCompressionThreads() == that.getCompressionThreads() &&
+                Objects.equals(getName(), that.getName()) && Objects.equals(getTransClass(), that.getTransClass()) &&
+                Objects.equals(getEtName(), that.getEtName()) && Objects.equals(getmAddress(), that.getmAddress()) &&
+                Objects.equals(getSingle(), that.getSingle()) && Objects.equals(getEtMethodCon(), that.getEtMethodCon()) &&
+                Objects.equals(getEtHostName(), that.getEtHostName()) && Objects.equals(getEtSubNet(), that.getEtSubNet()) &&
+                Objects.equals(getDestinationEtCreate(), that.getDestinationEtCreate()) &&
+                Objects.equals(getEmuSubNet(), that.getEmuSubNet()) && Objects.equals(getFpgaLinkIp(), that.getFpgaLinkIp()) &&
+                Objects.equals(getUdpHost(), that.getUdpHost()) && Objects.equals(getFileName(), that.getFileName()) &&
+                Objects.equals(getFileType(), that.getFileType());
+    // removed isEtCreate from the check
+//        isEtCreate() == that.isEtCreate() &&
+    }
 
-//        if (etCreate != that.isEtCreate()) return false;
-        if (etEventNum != that.getEtEventNum()) return false;
-        if (etEventSize != that.getEtEventSize()) return false;
-        if (etChunkSize != that.getEtChunkSize()) return false;
-        if (inputEtChunkSize != that.getInputEtChunkSize()) return false;
-        if (etGroups != that.getEtGroups()) return false;
-        if (etRecvBuf != that.getEtRecvBuf()) return false;
-        if (etSendBuf != that.getEtSendBuf()) return false;
-        if (etTcpPort != that.getEtTcpPort()) return false;
-        if (etUdpPort != that.getEtUdpPort()) return false;
-        if (etWait != that.getEtWait()) return false;
-        if (etHostName != null ? !etHostName.equals(that.getEtHostName()) : that.getEtHostName() != null) return false;
-        if (etSubNet != null ? !etSubNet.equals(that.getEtSubNet()) : that.getEtSubNet() != null) return false;
-        if (destinationEtCreate != null ? !destinationEtCreate.equals(that.getDestinationEtCreate()) : that.getDestinationEtCreate() != null) return false;
-        if (etMethodCon != null ? !etMethodCon.equals(that.getEtMethodCon()) : that.getEtMethodCon() != null) return false;
-        if (etName != null ? !etName.equals(that.getEtName()) : that.getEtName() != null) return false;
-        if (mAddress != null ? !mAddress.equals(that.getmAddress()) : that.getmAddress() != null) return false;
-
-        if (emuWait != that.getEmuWait()) return false;
-        if (emuDirectPort != that.getEmuDirectPort()) return false;
-        if (emuMaxBuffer != that.getEmuMaxBuffer()) return false;
-        if (emuSubNet != null ? !emuSubNet.equals(that.getEmuSubNet()) : that.getEmuSubNet() != null) return false;
-        if (fpgaLinkIp != null ? !fpgaLinkIp.equals(that.getFpgaLinkIp()) : that.getFpgaLinkIp() != null) return false;
-        if (emuFatPipe != that.isEmuFatPipe()) return false;
-
-        if (!cMsgHost.equals(getcMsgHost())) return false;
-        if (!cMsgNameSpace.equals(getcMsgNameSpace())) return false;
-        if (cMsgPort != that.getcMsgPort()) return false;
-        if (!cMsgSubject.equals(getcMsgSubject())) return false;
-        if (!cMsgType.equals(getcMsgType())) return false;
-
-        if (fileSplit != that.getFileSplit()) return false;
-        if (fileInternalBuffer != that.getFileInternalBuffer()) return false;
-        if (noLink != that.isNoLink()) return false;
-        if (fileName != null ? !fileName.equals(that.getFileName()) : that.getFileName() != null) return false;
-        if (fileType != null ? !fileType.equals(that.getFileType()) : that.getFileType() != null) return false;
-        if (name != null ? !name.equals(that.getName()) : that.getName() != null) return false;
-        if (transClass != null ? !transClass.equals(that.getTransClass()) : that.getTransClass() != null) return false;
-        if (compression != that.getCompression()) return false;
-        if (compressionThreads != that.getCompressionThreads()) return false;
-        return single.equals(that.getSingle());
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), getTransClass(), getEtName(), isEtCreate(), getEtTcpPort(),
+                getEtUdpPort(), getEtWait(), getmAddress(), getEtEventNum(), getEtEventSize(),
+                getInputEtChunkSize(), getEtChunkSize(), getSingle(), getEtGroups(), getEtRecvBuf(),
+                getEtSendBuf(), getEtMethodCon(), getEtHostName(), getEtSubNet(), getDestinationEtCreate(),
+                getEmuDirectPort(), getEmuMaxBuffer(), getEmuWait(), getEmuSubNet(), getFpgaLinkIp(),
+                isEmuFatPipe(), getUdpHost(), getUdpPort(), getUdpBufferSize(), isLB(), isErsap(),
+                getFileName(), getFileType(), getFileSplit(), getFileInternalBuffer(), isNoLink(),
+                getCompression(), getCompressionThreads());
     }
 
     @Override

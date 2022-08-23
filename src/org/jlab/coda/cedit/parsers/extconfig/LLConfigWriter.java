@@ -585,22 +585,18 @@ public class LLConfigWriter {
                     }
                 }
                 break;
-            case "cMsg":
-                String udl = "platform";
-                if (!tr.getcMsgHost().equals("platform")) {
-                    udl = "cMsg://" + tr.getcMsgHost() + ":" + tr.getcMsgPort() + "/cMsg/" + tr.getcMsgNameSpace();
-                }
-                if(isStreaming) {
-                    out.append("     <server name=\"" + tr.getName() + "\" " +
+            case "UdpStream":
+                if(ec.getType().equals(ACodaType.DC.name())){
+                    out.append("     <client name=\"" + tr.getName() + "\" " +
                             "streaming=\"" + "on" + "\" " +
-                            "class=\"Cmsg\" " +
-                            "udl=\"" + udl + "\" " +
+                            "class=\"UdpStream\" \n" +
+                            "     <server name=\"" + "LB_transport" + "\" " +
+                            "class=\"UdpStream\" " +
                             "/>\n\n");
-
                 } else {
                     out.append("     <server name=\"" + tr.getName() + "\" " +
-                            "class=\"Cmsg\" " +
-                            "udl=\"" + udl + "\" " +
+                            "streaming=\"" + "on" + "\" " +
+                            "class=\"UdpStream\" \n" +
                             "/>\n\n");
                 }
                 break;
@@ -1037,12 +1033,15 @@ public class LLConfigWriter {
                         "sockets=\"" + socketCount + "\" " +
                         "/>\n\n");
             }
-        } else if (ch.getTransport() != null && ch.getTransport().getTransClass().equals("cMsg")) {
+        } else if (ch.getTransport() != null && ch.getTransport().getTransClass().equals("UdpStream")) {
             out.append("         <outchannel id=\"" + id + "\" " +
                     "name=\"" + ch.getName() + "\" " +
                     "transp=\"" + ch.getTransport().getName() + "\" " +
-                    "subject=\"" + ch.getTransport().getcMsgSubject() + "\" " +
-                    "type=\"" + ch.getTransport().getcMsgType() + "\" " +
+                    "port=\"" + ch.getTransport().getUdpPort() + "\" " +
+                    "bufSize=\"" + ch.getTransport().getUdpBufferSize() + "\" " +
+                    "host=\"" + ch.getTransport().getUdpHost() + "\" " +
+                    "useLoadBalancer=\"" + ch.getTransport().isLB() + "\" " +
+                    "useErsapReHeader=\"" + ch.getTransport().isErsap() + "\" " +
                     "/>\n\n");
 
         }
@@ -1102,12 +1101,12 @@ public class LLConfigWriter {
                         "/>\n\n");
 
             }
-        } else if (ch.getTransport() != null && ch.getTransport().getTransClass().equals("cMsg")) {
+        } else if (ch.getTransport() != null && ch.getTransport().getTransClass().equals("UdpStream")) {
             out.append("         <inchannel id=\"" + ch.getId() + "\" " +
                     "name=\"" + ch.getName() + "\" " +
                     "transp=\"" + ch.getTransport().getName() + "\" " +
-                    "subject=\"" + ch.getTransport().getcMsgSubject() + "\" " +
-                    "type=\"" + ch.getTransport().getcMsgType() + "\" " +
+                    "port=\"" + ch.getTransport().getUdpPort() + "\" " +
+                    "bufSize=\"" + ch.getTransport().getUdpBufferSize() + "\" " +
                     "/>\n\n");
 
         }

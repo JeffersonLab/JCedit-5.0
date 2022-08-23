@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<java version="11.0.9.1" class="java.beans.XMLDecoder">
+<java version="11.0.13" class="java.beans.XMLDecoder">
  <object class="com.jformdesigner.model.FormModel">
   <void property="contentType">
    <string>form/swing</string>
@@ -156,7 +156,7 @@
          <class>org.jdesktop.layout.GroupLayout</class>
          <void method="setProperty">
           <string>$horizontalGroup</string>
-          <string>par l {seq {space :::p, par l {seq {par l {seq l {par l {comp etTcpPortLabel:::p::p, comp etHostLabel::l:p::p}, space :::p, par l {seq l {par t:::p {comp etHostTextField::::230:x:3, comp etNameTextField::::230:x}, space :::p, par l {seq l {space :0:0:x, comp etConnectionMethodLabel:::p::p, space :::p, comp connectionMethodComboBox:::p::p}, seq l {comp label4:::p::p, space s:::p, comp etSubnetLabel:::p::p, space :::p, comp etSubnetTextField:::::x}}}, seq l {par t {seq t {comp label6:::p::p, space :::p, comp etEventSize:::p:93:p}, seq l {comp etTcpPortSpinner:::p:76:p, space :p:34:p, comp etUdpPortLabel:::p::p, space :::p, comp etUdpPortSpinner:::p:75:p, space u:::p, comp etMAddressLabel:::p::p}}, par t:::p {seq t {space :p:46:p, comp mAddressTextField:::p:124:p}, seq t {space s:::p, comp checkBoxEtCreate:::p::p, space :::x, comp label9:::p::p}}, space ::31:x, comp etWait:::p::p}}}, comp etNameLabel:::p::p}, space :::p}, seq {par l:::p {seq l {comp label5:::p::p, space :::x, comp etNumberEvents:::p:78:p, space :p:202:p}, seq l {comp label19:::p::p, space :::p, comp inputEtChunkSize:::p:71:p, space s:::p, comp label20:::p::p, space :::p, comp etChunkSize:::p:69:p}}, space :0:0:x}}}}</string>
+          <string>par l {seq {space :::p, par l {seq {par l {seq l {par l {comp etTcpPortLabel:::p::p, comp etHostLabel::l:p::p}, space :::p, par l {seq l {par t:::p {comp etHostTextField::::230:x:3, comp etNameTextField::::230:x}, space :::p, par l {seq l {space :0:0:x, comp etConnectionMethodLabel:::p::p, space :::p, comp connectionMethodComboBox:::p::p}, seq l {comp label4:::p::p, space s:::p, comp etSubnetLabel:::p::p, space :::p, comp etSubnetTextField:::::x}}}, seq l {par t {seq t {comp label6:::p::p, space :::p, comp etEventSize:::p:93:p}, seq l {comp etTcpPortSpinner:::p:76:p, space :p:34:p, comp etUdpPortLabel:::p::p, space :::p, comp etUdpPortSpinner:::p:75:p, space u:::p, comp etMAddressLabel:::p::p}}, par t:::p {seq t {space :p:46:p, comp mAddressTextField:::p:124:p}, seq t {space s:::p, comp checkBoxEtCreate:::p::p, space :::x, comp label9:::p::p}}, space ::32:x, comp etWait:::p::p}}}, comp etNameLabel:::p::p}, space :::p}, seq {par l:::p {seq l {comp label5:::p::p, space :::x, comp etNumberEvents:::p:78:p, space :p:202:p}, seq l {comp label19:::p::p, space :::p, comp inputEtChunkSize:::p:71:p, space s:::p, comp label20:::p::p, space :::p, comp etChunkSize:::p:69:p}}, space :0:0:x}}}}</string>
          </void>
          <void method="setProperty">
           <string>$verticalGroup</string>
@@ -404,7 +404,7 @@
           <string>javax.swing.JSpinner</string>
           <void method="setProperty">
            <string>model</string>
-           <object class="javax.swing.SpinnerNumberModel">
+           <object class="javax.swing.SpinnerNumberModel" id="SpinnerNumberModel0">
             <int>4200</int>
             <int>1</int>
             <int>100000</int>
@@ -747,11 +747,11 @@
          <class>org.jdesktop.layout.GroupLayout</class>
          <void method="setProperty">
           <string>$horizontalGroup</string>
-          <string>par l {seq l {space :::p, comp etTcpPortLabel2:::p::p, space :::p, par l {seq {comp emuFatPipeCheckBox:::p::p, space ::341:x, comp label18:::p::p, space :::p, comp fpgaLinkIpTextField:::p:134:p}, seq {comp emuPortSpinner:::p:76:p, space :p:18:p, comp label7:::p::p, space :::p, comp emuMaxBufferSpinner:::p:93:p, space s:::p, comp label10:::p::p, space :::p, comp emuSocketWaitSpinner:::p::p, space :::p, comp label17:::p::p, space :::p, comp emuSubnetTextField::::134:x}}, space :::p}}</string>
+          <string>par l {seq l {space :::p, comp etTcpPortLabel2:::p::p, space :::p, par l {seq {comp emuFatPipeCheckBox:::p::p, space ::344:x, comp label18:::p::p, space :::p, comp fpgaLinkIpTextField:::p:134:p}, seq {comp emuPortSpinner:::p:76:p, space :p:18:p, comp label7:::p::p, space :::p, comp emuMaxBufferSpinner:::p:93:p, space s:::p, comp label10:::p::p, space :::p, comp emuSocketWaitSpinner:::p::p, space :::p, comp label17:::p::p, space :::p, comp emuSubnetTextField::::137:x}}, space :::p}}</string>
          </void>
          <void method="setProperty">
           <string>$verticalGroup</string>
-          <string>par l {seq {par b {comp etTcpPortLabel2::b:p::p, comp label7::b:p::p, comp emuMaxBufferSpinner::b:p::p, comp label10::b:p::p, comp emuSocketWaitSpinner::b:p::p, comp emuPortSpinner::b:p::p, comp label17::b:p::p, comp emuSubnetTextField::b:p::p}, space :::p, par b {comp emuFatPipeCheckBox::b:p::p, comp fpgaLinkIpTextField::b:p::p, comp label18::b:p::p}, space ::7:x}}</string>
+          <string>par l {seq {par b {comp etTcpPortLabel2::b:p::p, comp label7::b:p::p, comp emuMaxBufferSpinner::b:p::p, comp label10::b:p::p, comp emuSocketWaitSpinner::b:p::p, comp emuPortSpinner::b:p::p, comp label17::b:p::p, comp emuSubnetTextField::b:p::p}, space :::p, par b {comp emuFatPipeCheckBox::b:p::p, comp fpgaLinkIpTextField::b:p::p, comp label18::b:p::p}, space ::8:x}}</string>
          </void>
         </object>
         <void method="setProperty">
@@ -911,17 +911,17 @@
          <class>org.jdesktop.layout.GroupLayout</class>
          <void method="setProperty">
           <string>$horizontalGroup</string>
-          <string>par l {seq {space :p::p, par l {seq l {comp label11:::p::p, space :p::p, comp cMsgHostTextField:::::x, space :p::p, comp label12:::p::p, space :14:14:p}, seq l {comp label15:::p::p, space :p::p, comp cMsgSubjectTextField:::::x}}, par t {seq {space s:p::p, comp label13:::p::p, space :p::p, comp cMsgPortSpinner:::p:76:p, space s:p::p, comp label14:::p::p, space u:p::p, comp cMsgNameSpaceTextField:::::x}, seq {space :p:24:p, comp label16:::p::p, space :::p, comp cMsgTypeTextField:::::x}}, space :p::p}}</string>
+          <string>par l {seq {space :p::p, par l {seq l {comp label11:::p::p, space :p::p, comp UdpHostTextField::::162:x, space :p::p, comp label12:::p::p, space :14:14:p, comp label13:::p::p, space :::p, comp UdpPortSpinner:::p:86:p, space ::55:x, comp label14:::p::p, space :::p, comp UdpBufferSizeSpinner:::p:93:p, space :p:34:p}, seq l {comp label15:::p::p, space :::p, comp UdpFpgaLinkIp:::p:160:p, space :p:68:p, comp UdpUseLoadBalancer:::p::p, space :p:55:p, comp UdpUseErsap:::p::p, space :0:157:x}}}}</string>
          </void>
          <void method="setProperty">
           <string>$verticalGroup</string>
-          <string>par l {seq {par l {par b {comp label11::b:p::p, comp cMsgHostTextField::b:p::p, comp label12::b:p::p, comp label13::b:p::p, comp cMsgPortSpinner::b:p::p, comp label14::b:p::p}, comp cMsgNameSpaceTextField:::p::p}, space u:::p, par b {comp label15::b:p::p, comp cMsgTypeTextField::b:p::p, comp label16::b:p::p, comp cMsgSubjectTextField::b:p::p}, space :0:13:x}}</string>
+          <string>par l {seq {par b {comp label11::b:p::p, comp UdpHostTextField::b:p::p, comp label12::b:p::p, comp label13::b:p::p, comp UdpBufferSizeSpinner::b:p::p, comp label14::b:p::p, comp UdpPortSpinner::b:p::p}, space u:::p, par b {comp label15::b:p::p, comp UdpFpgaLinkIp::b:p::p, comp UdpUseLoadBalancer::b:p::p, comp UdpUseErsap::b:p::p}, space :0:13:x}}</string>
          </void>
         </object>
         <void method="setProperty">
          <string>border</string>
          <object class="javax.swing.border.TitledBorder">
-          <string>cMsg</string>
+          <string>UdpStream</string>
          </object>
         </void>
         <void property="name">
@@ -943,15 +943,7 @@
          <object class="com.jformdesigner.model.FormComponent">
           <string>javax.swing.JTextField</string>
           <void property="name">
-           <string>cMsgHostTextField</string>
-          </void>
-          <void method="addEvent">
-           <object class="com.jformdesigner.model.FormEvent">
-            <string>java.awt.event.ActionListener</string>
-            <string>actionPerformed</string>
-            <string>cMsgHostTextFieldActionPerformed</string>
-            <boolean>true</boolean>
-           </object>
+           <string>UdpHostTextField</string>
           </void>
          </object>
         </void>
@@ -996,7 +988,7 @@
            </object>
           </void>
           <void property="name">
-           <string>cMsgPortSpinner</string>
+           <string>UdpPortSpinner</string>
           </void>
          </object>
         </void>
@@ -1005,7 +997,7 @@
           <string>javax.swing.JLabel</string>
           <void method="setProperty">
            <string>text</string>
-           <string>NS</string>
+           <string>BufferSize</string>
           </void>
           <void property="name">
            <string>label14</string>
@@ -1014,18 +1006,10 @@
         </void>
         <void method="add">
          <object class="com.jformdesigner.model.FormComponent">
-          <string>javax.swing.JTextField</string>
-          <void property="name">
-           <string>cMsgNameSpaceTextField</string>
-          </void>
-         </object>
-        </void>
-        <void method="add">
-         <object class="com.jformdesigner.model.FormComponent">
           <string>javax.swing.JLabel</string>
           <void method="setProperty">
            <string>text</string>
-           <string>Subject</string>
+           <string>FPGA_IP</string>
           </void>
           <void property="name">
            <string>label15</string>
@@ -1036,27 +1020,67 @@
          <object class="com.jformdesigner.model.FormComponent">
           <string>javax.swing.JTextField</string>
           <void property="name">
-           <string>cMsgSubjectTextField</string>
+           <string>UdpFpgaLinkIp</string>
           </void>
          </object>
         </void>
         <void method="add">
          <object class="com.jformdesigner.model.FormComponent">
-          <string>javax.swing.JLabel</string>
+          <string>javax.swing.JSpinner</string>
+          <void method="setProperty">
+           <string>model</string>
+           <object idref="SpinnerNumberModel0"/>
+          </void>
+          <void method="setProperty">
+           <string>enabled</string>
+           <boolean>false</boolean>
+          </void>
+          <void property="name">
+           <string>UdpBufferSizeSpinner</string>
+          </void>
+         </object>
+        </void>
+        <void method="add">
+         <object class="com.jformdesigner.model.FormComponent">
+          <string>javax.swing.JCheckBox</string>
           <void method="setProperty">
            <string>text</string>
-           <string>Type</string>
+           <string>LoadBalancer</string>
+          </void>
+          <void method="setProperty">
+           <string>selected</string>
+           <boolean>true</boolean>
           </void>
           <void property="name">
-           <string>label16</string>
+           <string>UdpUseLoadBalancer</string>
+          </void>
+          <void method="addEvent">
+           <object class="com.jformdesigner.model.FormEvent">
+            <string>java.awt.event.MouseListener</string>
+            <string>mouseClicked</string>
+            <string>checkBoxEtCreateMouseClicked</string>
+            <boolean>true</boolean>
+           </object>
           </void>
          </object>
         </void>
         <void method="add">
          <object class="com.jformdesigner.model.FormComponent">
-          <string>javax.swing.JTextField</string>
+          <string>javax.swing.JCheckBox</string>
+          <void method="setProperty">
+           <string>text</string>
+           <string>ERSAP</string>
+          </void>
           <void property="name">
-           <string>cMsgTypeTextField</string>
+           <string>UdpUseErsap</string>
+          </void>
+          <void method="addEvent">
+           <object class="com.jformdesigner.model.FormEvent">
+            <string>java.awt.event.MouseListener</string>
+            <string>mouseClicked</string>
+            <string>checkBoxEtCreateMouseClicked</string>
+            <boolean>true</boolean>
+           </object>
           </void>
          </object>
         </void>

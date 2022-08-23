@@ -805,7 +805,7 @@ public class JCTools {
                 c.getEtHostName(),
                 c.getEtSubNet(), c.getDestinationEtCreate(), c.getEmuDirectPort(), c.getEmuMaxBuffer(), c.getEmuWait(),
                 c.getEmuSubNet(), c.getFpgaLinkIp(), c.isEmuFatPipe(),
-                c.getcMsgHost(), c.getcMsgPort(), c.getcMsgNameSpace(), c.getcMsgSubject(), c.getcMsgType(),
+                c.getUdpHost(), c.getUdpPort(), c.getcMsgNameSpace(), c.getcMsgSubject(), c.getcMsgType(),
                 c.getFileName(), c.getFileType(), c.getFileSplit(), c.getFileInternalBuffer(), c.isNoLink(),
                 c.getCompression(), c.getCompressionThreads());
     }
