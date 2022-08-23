@@ -596,7 +596,7 @@ public class LLConfigWriter {
                 } else {
                     out.append("     <server name=\"" + tr.getName() + "\" " +
                             "streaming=\"" + "on" + "\" " +
-                            "class=\"UdpStream\" \n" +
+                            "class=\"UdpStream\"" +
                             "/>\n\n");
                 }
                 break;

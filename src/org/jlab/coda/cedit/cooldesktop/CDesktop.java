@@ -109,7 +109,7 @@ public class CDesktop extends JFrame {
             }
         });
         me = this;
-        setTitle("COOL Database Editor v4.2   db = "+stp.getCoolHome()+"                                                                                                      ");
+        setTitle("COOL Database Editor v5.0   db = "+stp.getCoolHome()+"                                                                                                      ");
         setSize(1100, 930);
         setLocationByPlatform(true);
         rdfParser = new JCParser();
