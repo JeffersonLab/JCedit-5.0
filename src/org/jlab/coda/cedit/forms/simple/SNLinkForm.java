@@ -253,11 +253,9 @@ public class SNLinkForm extends JFrame {
         // Udp
         UdpHostTextField.setText(destinationTransport.getUdpHost());
         UdpPortSpinner.setValue(destinationTransport.getUdpPort());
-
-        destinationTransport.setUdpBufferSize((Integer)UdpBufferSizeSpinner.getValue());
-        destinationTransport.setLB(UdpUseLoadBalancer.isSelected());
-        destinationTransport.setErsap(UdpUseErsap.isSelected());
-
+        UdpBufferSizeSpinner.setValue(destinationTransport.getUdpBufferSize());
+        UdpUseLoadBalancer.setSelected(destinationTransport.isLB());
+        UdpUseErsap.setSelected(destinationTransport.isErsap());
         checkTrClass();
     }
 
