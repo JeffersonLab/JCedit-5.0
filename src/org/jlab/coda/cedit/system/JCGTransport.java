@@ -432,27 +432,29 @@ public class JCGTransport {
         if (this == o) return true;
         if (!(o instanceof JCGTransport)) return false;
         JCGTransport that = (JCGTransport) o;
-        return  getEtTcpPort() == that.getEtTcpPort() && getEtUdpPort() == that.getEtUdpPort() &&
-                getEtWait() == that.getEtWait() && getEtEventNum() == that.getEtEventNum() &&
-                getEtEventSize() == that.getEtEventSize() && getInputEtChunkSize() == that.getInputEtChunkSize() &&
-                getEtChunkSize() == that.getEtChunkSize() && getEtGroups() == that.getEtGroups() &&
-                getEtRecvBuf() == that.getEtRecvBuf() && getEtSendBuf() == that.getEtSendBuf() &&
-                getEmuDirectPort() == that.getEmuDirectPort() && getEmuMaxBuffer() == that.getEmuMaxBuffer() &&
-                getEmuWait() == that.getEmuWait() && isEmuFatPipe() == that.isEmuFatPipe() &&
-                getUdpPort() == that.getUdpPort() && getUdpBufferSize() == that.getUdpBufferSize() &&
-                isLB() == that.isLB() && isErsap() == that.isErsap() && getFileSplit() == that.getFileSplit() &&
+        return isEtCreate() == that.isEtCreate() && getEtTcpPort() == that.getEtTcpPort() &&
+                getEtUdpPort() == that.getEtUdpPort() && getEtWait() == that.getEtWait() &&
+                getEtEventNum() == that.getEtEventNum() && getEtEventSize() == that.getEtEventSize() &&
+                getInputEtChunkSize() == that.getInputEtChunkSize() && getEtChunkSize() == that.getEtChunkSize() &&
+                getEtGroups() == that.getEtGroups() && getEtRecvBuf() == that.getEtRecvBuf() &&
+                getEtSendBuf() == that.getEtSendBuf() && getEmuDirectPort() == that.getEmuDirectPort() &&
+                getEmuMaxBuffer() == that.getEmuMaxBuffer() && getEmuWait() == that.getEmuWait() &&
+                isEmuFatPipe() == that.isEmuFatPipe() && getUdpPort() == that.getUdpPort() &&
+                getUdpBufferSize() == that.getUdpBufferSize() && isLB() == that.isLB() &&
+                isErsap() == that.isErsap() && getFileSplit() == that.getFileSplit() &&
                 getFileInternalBuffer() == that.getFileInternalBuffer() && isNoLink() == that.isNoLink() &&
                 getCompression() == that.getCompression() && getCompressionThreads() == that.getCompressionThreads() &&
                 Objects.equals(getName(), that.getName()) && Objects.equals(getTransClass(), that.getTransClass()) &&
                 Objects.equals(getEtName(), that.getEtName()) && Objects.equals(getmAddress(), that.getmAddress()) &&
-                Objects.equals(getSingle(), that.getSingle()) && Objects.equals(getEtMethodCon(), that.getEtMethodCon()) &&
-                Objects.equals(getEtHostName(), that.getEtHostName()) && Objects.equals(getEtSubNet(), that.getEtSubNet()) &&
+                Objects.equals(getSingle(), that.getSingle()) &&
+                Objects.equals(getEtMethodCon(), that.getEtMethodCon()) &&
+                Objects.equals(getEtHostName(), that.getEtHostName()) &&
+                Objects.equals(getEtSubNet(), that.getEtSubNet()) &&
                 Objects.equals(getDestinationEtCreate(), that.getDestinationEtCreate()) &&
-                Objects.equals(getEmuSubNet(), that.getEmuSubNet()) && Objects.equals(getFpgaLinkIp(), that.getFpgaLinkIp()) &&
+                Objects.equals(getEmuSubNet(), that.getEmuSubNet()) &&
+                Objects.equals(getFpgaLinkIp(), that.getFpgaLinkIp()) &&
                 Objects.equals(getUdpHost(), that.getUdpHost()) && Objects.equals(getFileName(), that.getFileName()) &&
                 Objects.equals(getFileType(), that.getFileType());
-    // removed isEtCreate from the check
-//        isEtCreate() == that.isEtCreate() &&
     }
 
     @Override
