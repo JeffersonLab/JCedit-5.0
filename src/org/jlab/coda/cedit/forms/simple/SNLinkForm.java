@@ -1373,9 +1373,7 @@ public class SNLinkForm extends JFrame {
             destinationTransport.setUdpPort((Integer) UdpPortSpinner.getValue());
             destinationTransport.setUdpBufferSize((Integer)UdpBufferSizeSpinner.getValue());
             destinationTransport.setLB(UdpUseLoadBalancer.isSelected());
-            System.out.println("DDD "+ destinationTransport.isLB() +" "+ UdpUseLoadBalancer.isSelected());
             destinationTransport.setErsap(UdpUseErsap.isSelected());
-            System.out.println("DDD "+ destinationTransport.isErsap() +" "+ UdpUseErsap.isSelected());
 
             // update subtype of the destination component if it is of type File
             JCGComponent tc = canvas.getGCMPs().get(link.getDestinationComponentName());

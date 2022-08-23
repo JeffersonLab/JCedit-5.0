@@ -432,7 +432,7 @@ public class JCGTransport {
         if (this == o) return true;
         if (!(o instanceof JCGTransport)) return false;
         JCGTransport that = (JCGTransport) o;
-        return isEtCreate() == that.isEtCreate() && getEtTcpPort() == that.getEtTcpPort() &&
+        return  getEtTcpPort() == that.getEtTcpPort() &&
                 getEtUdpPort() == that.getEtUdpPort() && getEtWait() == that.getEtWait() &&
                 getEtEventNum() == that.getEtEventNum() && getEtEventSize() == that.getEtEventSize() &&
                 getInputEtChunkSize() == that.getInputEtChunkSize() && getEtChunkSize() == that.getEtChunkSize() &&
