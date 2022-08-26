@@ -65,7 +65,7 @@ public class JCGTransport {
 
     private String  udpHost        = "undefined";
     private int     udpPort        = 45000;
-    private int     udpBufferSize  = 9000;
+    private int     udpBufferSize  = 100000; // in Bytes
     private String  UdpFpgaLinkIp  = "undefined";
     private int udpStreams         = 1;
     private boolean isLB           = false;

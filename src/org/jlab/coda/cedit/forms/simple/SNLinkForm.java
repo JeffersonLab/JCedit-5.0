@@ -260,12 +260,12 @@ public class SNLinkForm extends JFrame {
         UdpPortSpinner.setValue(destinationTransport.getUdpPort());
         UdpBufferSizeSpinner.setValue(destinationTransport.getUdpBufferSize());
         UdpFpgaLinkIp.setText(destinationTransport.getUdpFpgaLinkIp());
-        UdpStreamsSpinner.setValue(sourceTransport.getUdpStreams());
+        UdpStreamsSpinner.setValue(destinationTransport.getUdpStreams());
         UdpUseLoadBalancer.setSelected(destinationTransport.isLB());
         UdpUseErsap.setSelected(destinationTransport.isErsap());
 
         // tcpStream
-        tcpStreamsSpinner.setValue(sourceTransport.getEmuTcpStreams());
+        tcpStreamsSpinner.setValue(destinationTransport.getEmuTcpStreams());
         tcpStreamPortSpinner.setValue(destinationTransport.getTcpStreamDirectPort());
         tcpStreamSocketWaitSpinner.setValue(destinationTransport.getTcpStreamWait());
         tcpStreamMaxBufferSpinner.setValue(destinationTransport.getTcpStreamMaxBuffer() / 1000);
@@ -982,7 +982,7 @@ public class SNLinkForm extends JFrame {
             etTcpPortLabel2.setText("Port");
 
             //---- label7 ----
-            label7.setText("Max Buffer (KByte)");
+            label7.setText("Max Buffer (KB)");
 
             //---- emuMaxBufferSpinner ----
             emuMaxBufferSpinner.setModel(new SpinnerNumberModel(4100, 1, 30000, 1));
@@ -1077,13 +1077,13 @@ public class SNLinkForm extends JFrame {
             UdpPortSpinner.setModel(new SpinnerNumberModel(46100, 1, 99999, 1));
 
             //---- label14 ----
-            label14.setText("BufferSize");
+            label14.setText("BufferSize (KB)");
 
             //---- label15 ----
             label15.setText("FPGA Link Ip");
 
             //---- UdpBufferSizeSpinner ----
-            UdpBufferSizeSpinner.setModel(new SpinnerNumberModel(100000, 100, 1000000, 1));
+            UdpBufferSizeSpinner.setModel(new SpinnerNumberModel(100, 1, 3000, 1));
 
             //---- UdpUseLoadBalancer ----
             UdpUseLoadBalancer.setText("LoadBalancer");
@@ -1176,7 +1176,7 @@ public class SNLinkForm extends JFrame {
             etTcpPortLabel3.setText("Port");
 
             //---- label8 ----
-            label8.setText("Max Buffer (KByte)");
+            label8.setText("Max Buffer (KB)");
 
             //---- tcpStreamMaxBufferSpinner ----
             tcpStreamMaxBufferSpinner.setModel(new SpinnerNumberModel(4100, 1, 30000, 1));
@@ -1559,12 +1559,13 @@ public class SNLinkForm extends JFrame {
             destinationTransport.setTcpStreamWait((int) tcpStreamSocketWaitSpinner.getValue());
             destinationTransport.setTcpStreamSubNet(tcpStreamSubnetTextField.getText());
             destinationTransport.setTcpStreamFpgaLinkIp(tcpStreamFpgaLinkIpTextField.getText());
-            sourceTransport.setEmuTcpStreams((Integer)tcpStreamsSpinner.getValue());
+            destinationTransport.setEmuTcpStreams((Integer)tcpStreamsSpinner.getValue());
 
             //Udp
             destinationTransport.setUdpHost(UdpHostTextField.getText());
-            destinationTransport.setUdpPort((Integer) UdpPortSpinner.getValue());
-            destinationTransport.setUdpBufferSize((Integer)UdpBufferSizeSpinner.getValue());
+            destinationTransport.setUdpPort((int) UdpPortSpinner.getValue());
+            destinationTransport.setUdpBufferSize((int)UdpBufferSizeSpinner.getValue() * 1000);
+            destinationTransport.setUdpStreams((int)UdpStreamsSpinner.getValue());
             destinationTransport.setLB(UdpUseLoadBalancer.isSelected());
             destinationTransport.setErsap(UdpUseErsap.isSelected());
 

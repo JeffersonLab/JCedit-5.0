@@ -44,10 +44,8 @@
         </object>
         <void method="setProperty">
          <string>border</string>
-         <object class="javax.swing.border.TitledBorder" id="TitledBorder0">
+         <object class="javax.swing.border.TitledBorder">
           <string>General</string>
-          <void id="Integer0" property="titlePosition"/>
-          <void id="Integer1" property="titleJustification"/>
          </object>
         </void>
         <void property="name">
@@ -461,8 +459,8 @@
           <void method="setProperty">
            <string>model</string>
            <object class="javax.swing.SpinnerNumberModel">
-            <object idref="Integer0"/>
-            <object idref="Integer0"/>
+            <int>0</int>
+            <int>0</int>
             <int>30</int>
             <int>1</int>
            </object>
@@ -633,7 +631,7 @@
            <string>model</string>
            <object class="javax.swing.SpinnerNumberModel">
             <int>2000</int>
-            <object idref="Integer0"/>
+            <int>0</int>
             <int>1000000</int>
             <int>1</int>
            </object>
@@ -782,7 +780,7 @@
           <string>javax.swing.JLabel</string>
           <void method="setProperty">
            <string>text</string>
-           <string>Max Buffer (KByte)</string>
+           <string>Max Buffer (KB)</string>
           </void>
           <void property="name">
            <string>label7</string>
@@ -825,7 +823,7 @@
            <string>model</string>
            <object class="javax.swing.SpinnerNumberModel" id="SpinnerNumberModel1">
             <int>5</int>
-            <object idref="Integer0"/>
+            <int>0</int>
             <int>30</int>
             <int>1</int>
            </object>
@@ -999,7 +997,7 @@
           <string>javax.swing.JLabel</string>
           <void method="setProperty">
            <string>text</string>
-           <string>BufferSize</string>
+           <string>BufferSize (KB)</string>
           </void>
           <void property="name">
            <string>label14</string>
@@ -1032,9 +1030,9 @@
           <void method="setProperty">
            <string>model</string>
            <object class="javax.swing.SpinnerNumberModel">
-            <int>100000</int>
             <int>100</int>
-            <int>1000000</int>
+            <int>1</int>
+            <int>3000</int>
             <int>1</int>
            </object>
           </void>
@@ -1095,7 +1093,7 @@
            <object class="javax.swing.SpinnerNumberModel">
             <int>1</int>
             <int>1</int>
-            <object idref="Integer1"/>
+            <int>4</int>
             <int>1</int>
            </object>
           </void>
@@ -1158,7 +1156,7 @@
           <string>javax.swing.JLabel</string>
           <void method="setProperty">
            <string>text</string>
-           <string>Max Buffer (KByte)</string>
+           <string>Max Buffer (KB)</string>
           </void>
           <void property="name">
            <string>label8</string>
@@ -1420,7 +1418,7 @@
       <void method="setProperty">
        <string>location</string>
        <object class="java.awt.Point">
-        <object idref="Integer0"/>
+        <int>0</int>
         <int>675</int>
        </object>
       </void>
@@ -1644,7 +1642,7 @@
       <void method="setProperty">
        <string>location</string>
        <object class="java.awt.Point">
-        <object idref="Integer0"/>
+        <int>0</int>
         <int>720</int>
        </object>
       </void>

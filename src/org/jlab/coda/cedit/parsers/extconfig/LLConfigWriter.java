@@ -192,7 +192,6 @@ public class LLConfigWriter {
                     for (JCGTransport tr : ec.getTransports()) {
                         // avoid writing the same transport twice.
                         String tName = tr.getName();
-
                         if (!tpNames.contains(tName)) {
                             out.write(writeTransport(ec, tr, nl, ec.isStreaming()));
                             tpNames.add(tName);
@@ -431,13 +430,27 @@ public class LLConfigWriter {
                 break;
 
             case "UdpStream":
-                if (ec.getType().equals(ACodaType.DC.name())) {
+                boolean isInChannel = false;
+                boolean isOutChannel = false;
+
+                for(JCGChannel ch: ec.getiChannels().values()){
+                    if(ch.getTransport().getName().equals(tr.getName())){
+                        isInChannel = true;
+                        break;
+                    } else if(ch.getTransport().getName().equals(tr.getName())){
+                        isOutChannel = true;
+                        break;
+                    }
+                }
+                if (isInChannel) {
                     out.append("     <client name=\"" + tr.getName() + "\" " +
                             "streaming=\"" + "on" + "\" " +
                             "class=\"UdpStream\"" +
-                            "/>\n\n" +
-                            "     <server name=\"" + "LB_transport" + "\" " +
-                            "class=\"UdpStream\" " +
+                            "/>\n\n");
+                } else if (isOutChannel){
+                    out.append("     <server name=\"" + tr.getName() + "\" " +
+                            "streaming=\"" + "on" + "\" " +
+                            "class=\"UdpStream\"" +
                             "/>\n\n");
                 } else {
                     out.append("     <server name=\"" + tr.getName() + "\" " +
@@ -476,7 +489,7 @@ public class LLConfigWriter {
                 // EB module =============================================
                 if (cmp.isCodaVersion2()) {
                     if (isEndianLittle) {
-                        out.append("     <EbModule class=\"" + md.getModuleClass(ACodaType.EB.name()) + "\" " +
+                        out.append("     <EbModule class=\"" + "Aggregator" + "\" " +
                                 "streaming=\"" + "on" + "\" " +
                                 "id=\"" + md.getId() + "\" " +
                                 "threads=\"" + md.getThreads() + "\" " +
@@ -488,7 +501,7 @@ public class LLConfigWriter {
                                 "endian=\"" + "little" + "\"" +
                                 "> \n\n");
                     } else {
-                        out.append("     <EbModule class=\"" + md.getModuleClass(ACodaType.EB.name()) + "\" " +
+                        out.append("     <EbModule class=\"" + "Aggregator" + "\" " +
                                 "streaming=\"" + "on" + "\" " +
                                 "id=\"" + md.getId() + "\" " +
                                 "threads=\"" + md.getThreads() + "\" " +
@@ -611,7 +624,7 @@ public class LLConfigWriter {
                     break;
                 }
             }
-            if (isEndianLittle) endian = "littel";
+            if (isEndianLittle) endian = "little";
 
             // here we assume that all modules share the same source and USR source
             out.append("   <modules>\n\n");
