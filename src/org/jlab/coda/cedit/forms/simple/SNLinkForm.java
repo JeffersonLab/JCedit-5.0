@@ -1083,8 +1083,7 @@ public class SNLinkForm extends JFrame {
             label15.setText("FPGA Link Ip");
 
             //---- UdpBufferSizeSpinner ----
-            UdpBufferSizeSpinner.setModel(new SpinnerNumberModel(4200, 1, 100000, 1));
-            UdpBufferSizeSpinner.setEnabled(false);
+            UdpBufferSizeSpinner.setModel(new SpinnerNumberModel(100000, 100, 1000000, 1));
 
             //---- UdpUseLoadBalancer ----
             UdpUseLoadBalancer.setText("LoadBalancer");
@@ -1107,7 +1106,6 @@ public class SNLinkForm extends JFrame {
 
             //---- UdpStreamsSpinner ----
             UdpStreamsSpinner.setModel(new SpinnerNumberModel(1, 1, 4, 1));
-            UdpStreamsSpinner.setEnabled(false);
 
             //---- label16 ----
             label16.setText("Streams");
@@ -1200,7 +1198,6 @@ public class SNLinkForm extends JFrame {
 
             //---- tcpStreamsSpinner ----
             tcpStreamsSpinner.setModel(new SpinnerNumberModel(1, 1, 2, 1));
-            tcpStreamsSpinner.setEnabled(false);
 
             //---- label25 ----
             label25.setText("Streams");

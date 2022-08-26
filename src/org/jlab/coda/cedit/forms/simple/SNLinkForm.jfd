@@ -44,8 +44,10 @@
         </object>
         <void method="setProperty">
          <string>border</string>
-         <object class="javax.swing.border.TitledBorder">
+         <object class="javax.swing.border.TitledBorder" id="TitledBorder0">
           <string>General</string>
+          <void id="Integer0" property="titlePosition"/>
+          <void id="Integer1" property="titleJustification"/>
          </object>
         </void>
         <void property="name">
@@ -404,7 +406,7 @@
           <string>javax.swing.JSpinner</string>
           <void method="setProperty">
            <string>model</string>
-           <object class="javax.swing.SpinnerNumberModel" id="SpinnerNumberModel0">
+           <object class="javax.swing.SpinnerNumberModel">
             <int>4200</int>
             <int>1</int>
             <int>100000</int>
@@ -459,8 +461,8 @@
           <void method="setProperty">
            <string>model</string>
            <object class="javax.swing.SpinnerNumberModel">
-            <int>0</int>
-            <int>0</int>
+            <object idref="Integer0"/>
+            <object idref="Integer0"/>
             <int>30</int>
             <int>1</int>
            </object>
@@ -631,7 +633,7 @@
            <string>model</string>
            <object class="javax.swing.SpinnerNumberModel">
             <int>2000</int>
-            <int>0</int>
+            <object idref="Integer0"/>
             <int>1000000</int>
             <int>1</int>
            </object>
@@ -792,7 +794,7 @@
           <string>javax.swing.JSpinner</string>
           <void method="setProperty">
            <string>model</string>
-           <object class="javax.swing.SpinnerNumberModel" id="SpinnerNumberModel1">
+           <object class="javax.swing.SpinnerNumberModel" id="SpinnerNumberModel0">
             <int>4100</int>
             <int>1</int>
             <int>30000</int>
@@ -821,9 +823,9 @@
           <string>javax.swing.JSpinner</string>
           <void method="setProperty">
            <string>model</string>
-           <object class="javax.swing.SpinnerNumberModel" id="SpinnerNumberModel2">
+           <object class="javax.swing.SpinnerNumberModel" id="SpinnerNumberModel1">
             <int>5</int>
-            <int>0</int>
+            <object idref="Integer0"/>
             <int>30</int>
             <int>1</int>
            </object>
@@ -838,7 +840,7 @@
           <string>javax.swing.JSpinner</string>
           <void method="setProperty">
            <string>model</string>
-           <object class="javax.swing.SpinnerNumberModel" id="SpinnerNumberModel3">
+           <object class="javax.swing.SpinnerNumberModel" id="SpinnerNumberModel2">
             <int>46100</int>
             <int>1</int>
             <int>99999</int>
@@ -1029,11 +1031,12 @@
           <string>javax.swing.JSpinner</string>
           <void method="setProperty">
            <string>model</string>
-           <object idref="SpinnerNumberModel0"/>
-          </void>
-          <void method="setProperty">
-           <string>enabled</string>
-           <boolean>false</boolean>
+           <object class="javax.swing.SpinnerNumberModel">
+            <int>100000</int>
+            <int>100</int>
+            <int>1000000</int>
+            <int>1</int>
+           </object>
           </void>
           <void property="name">
            <string>UdpBufferSizeSpinner</string>
@@ -1092,13 +1095,9 @@
            <object class="javax.swing.SpinnerNumberModel">
             <int>1</int>
             <int>1</int>
-            <int>4</int>
+            <object idref="Integer1"/>
             <int>1</int>
            </object>
-          </void>
-          <void method="setProperty">
-           <string>enabled</string>
-           <boolean>false</boolean>
           </void>
           <void property="name">
            <string>UdpStreamsSpinner</string>
@@ -1171,7 +1170,7 @@
           <string>javax.swing.JSpinner</string>
           <void method="setProperty">
            <string>model</string>
-           <object idref="SpinnerNumberModel1"/>
+           <object idref="SpinnerNumberModel0"/>
           </void>
           <void property="name">
            <string>tcpStreamMaxBufferSpinner</string>
@@ -1195,7 +1194,7 @@
           <string>javax.swing.JSpinner</string>
           <void method="setProperty">
            <string>model</string>
-           <object idref="SpinnerNumberModel2"/>
+           <object idref="SpinnerNumberModel1"/>
           </void>
           <void property="name">
            <string>tcpStreamSocketWaitSpinner</string>
@@ -1207,7 +1206,7 @@
           <string>javax.swing.JSpinner</string>
           <void method="setProperty">
            <string>model</string>
-           <object idref="SpinnerNumberModel3"/>
+           <object idref="SpinnerNumberModel2"/>
           </void>
           <void property="name">
            <string>tcpStreamPortSpinner</string>
@@ -1265,10 +1264,6 @@
             <int>2</int>
             <int>1</int>
            </object>
-          </void>
-          <void method="setProperty">
-           <string>enabled</string>
-           <boolean>false</boolean>
           </void>
           <void property="name">
            <string>tcpStreamsSpinner</string>
@@ -1425,7 +1420,7 @@
       <void method="setProperty">
        <string>location</string>
        <object class="java.awt.Point">
-        <int>0</int>
+        <object idref="Integer0"/>
         <int>675</int>
        </object>
       </void>
@@ -1649,7 +1644,7 @@
       <void method="setProperty">
        <string>location</string>
        <object class="java.awt.Point">
-        <int>0</int>
+        <object idref="Integer0"/>
         <int>720</int>
        </object>
       </void>

@@ -260,13 +260,9 @@ public class LLConfigWriter {
         StringBuilder out = new StringBuilder();
 
         switch (tr.getTransClass()) {
-            case "Et":
-                if ((tr.getName().equals((cName + "_transport"))) && (tr.getDestinationEtCreate().equals("true"))) {
-                    tr.setEtCreate(true);
-                } else {
-                    tr.setEtCreate(false);
-                }
 
+            case "Et":
+                tr.setEtCreate((tr.getName().equals((cName + "_transport"))) && (tr.getDestinationEtCreate().equals("true")));
                 int etEvtMin1 = (nl * 2 * tr.getEtChunkSize()) * 2;
                 int etEvtMin2 = (tr.getInputEtChunkSize() * 4) * 2;
 
@@ -293,130 +289,64 @@ public class LLConfigWriter {
                         }
                     }
                 }
-
-                if(isStreaming) {
-                    if (tr.isEtCreate()) {
-                        out.append("     <server name=\"" + tr.getName() + "\" " +
-                                "streaming=\"" + "on" + "\" " +
-                                "class=\"Et\" " +
-                                "etName=\"" + tr.getEtName() + "\" " +
-                                "create=\"" + tr.getDestinationEtCreate() + "\" " +
-                                "uPort=\"" + tr.getEtUdpPort() + "\" " +
-                                "port=\"" + tr.getEtTcpPort() + "\" " +
-                                "mAddr=\"" + tr.getmAddress() + "\" " +
-                                "eventNum=\"" + tr.getEtEventNum() + "\" " +
-                                "eventSize=\"" + tr.getEtEventSize() + "\" " +
-                                "groups=\"" + nl + "\" " +
+                if (tr.isEtCreate()) {
+                    out.append("     <server name=\"" + tr.getName() + "\" " +
+                            "streaming=\"" + "on" + "\" " +
+                            "class=\"Et\" " +
+                            "etName=\"" + tr.getEtName() + "\" " +
+                            "create=\"" + tr.getDestinationEtCreate() + "\" " +
+                            "uPort=\"" + tr.getEtUdpPort() + "\" " +
+                            "port=\"" + tr.getEtTcpPort() + "\" " +
+                            "mAddr=\"" + tr.getmAddress() + "\" " +
+                            "eventNum=\"" + tr.getEtEventNum() + "\" " +
+                            "eventSize=\"" + tr.getEtEventSize() + "\" " +
+                            "groups=\"" + nl + "\" " +
 //                        "wait=\"" + tr.getEtWait() + "\" " +
-                                "/>\n\n");
-
-                    } else {
-                        if (tr.getEtSubNet().equals("undefined") || tr.getEtSubNet().equals("")) {
-                            out.append("     <server name=\"" + tr.getName() + "\" " +
-                                    "streaming=\"" + "on" + "\" " +
-                                    "class=\"Et\" " +
-                                    "etName=\"" + tr.getEtName() + "\" " + "" +
-                                    "method=\"" + tr.getEtMethodCon() + "\" " +
-                                    "host=\"" + tr.getEtHostName() + "\" " +
-                                    "port=\"" + tr.getEtTcpPort() + "\" " +
-                                    "uPort=\"" + tr.getEtUdpPort() + "\" " +
-                                    "wait=\"" + tr.getEtWait() + "\"" +
-                                    "/>\n\n");
-                        } else {
-                            out.append("     <server name=\"" + tr.getName() + "\" " +
-                                    "streaming=\"" + "on" + "\" " +
-                                    "class=\"Et\" " +
-                                    "etName=\"" + tr.getEtName() + "\" " + "" +
-                                    "method=\"" + tr.getEtMethodCon() + "\" " +
-                                    "host=\"" + tr.getEtHostName() + "\" " +
-                                    "port=\"" + tr.getEtTcpPort() + "\" " +
-                                    "uPort=\"" + tr.getEtUdpPort() + "\" " +
-                                    "subnet=\"" + tr.getEtSubNet() + "\" " +
-                                    "wait=\"" + tr.getEtWait() + "\"" +
-                                    "/>\n\n");
-                        }
-                    }
-
+                            "/>\n\n");
                 } else {
-                    if (tr.isEtCreate()) {
+                    if (tr.getEtSubNet().equals("undefined") || tr.getEtSubNet().equals("")) {
                         out.append("     <server name=\"" + tr.getName() + "\" " +
-                                "streaming=\"" + "on" + "\" " +
                                 "class=\"Et\" " +
-                                "etName=\"" + tr.getEtName() + "\" " +
-                                "create=\"" + tr.getDestinationEtCreate() + "\" " +
-                                "uPort=\"" + tr.getEtUdpPort() + "\" " +
+                                "etName=\"" + tr.getEtName() + "\" " + "" +
+                                "method=\"" + tr.getEtMethodCon() + "\" " +
+                                "host=\"" + tr.getEtHostName() + "\" " +
                                 "port=\"" + tr.getEtTcpPort() + "\" " +
-                                "mAddr=\"" + tr.getmAddress() + "\" " +
-                                "eventNum=\"" + tr.getEtEventNum() + "\" " +
-                                "eventSize=\"" + tr.getEtEventSize() + "\" " +
-                                "groups=\"" + nl + "\" " +
-//                        "wait=\"" + tr.getEtWait() + "\" " +
+                                "uPort=\"" + tr.getEtUdpPort() + "\" " +
+                                "wait=\"" + tr.getEtWait() + "\"" +
                                 "/>\n\n");
-
                     } else {
-                        if (tr.getEtSubNet().equals("undefined") || tr.getEtSubNet().equals("")) {
-                            out.append("     <server name=\"" + tr.getName() + "\" " +
-                                    "class=\"Et\" " +
-                                    "etName=\"" + tr.getEtName() + "\" " + "" +
-                                    "method=\"" + tr.getEtMethodCon() + "\" " +
-                                    "host=\"" + tr.getEtHostName() + "\" " +
-                                    "port=\"" + tr.getEtTcpPort() + "\" " +
-                                    "uPort=\"" + tr.getEtUdpPort() + "\" " +
-                                    "wait=\"" + tr.getEtWait() + "\"" +
-                                    "/>\n\n");
-                        } else {
-                            out.append("     <server name=\"" + tr.getName() + "\" " +
-                                    "class=\"Et\" " +
-                                    "etName=\"" + tr.getEtName() + "\" " + "" +
-                                    "method=\"" + tr.getEtMethodCon() + "\" " +
-                                    "host=\"" + tr.getEtHostName() + "\" " +
-                                    "port=\"" + tr.getEtTcpPort() + "\" " +
-                                    "uPort=\"" + tr.getEtUdpPort() + "\" " +
-                                    "subnet=\"" + tr.getEtSubNet() + "\" " +
-                                    "wait=\"" + tr.getEtWait() + "\"" +
-                                    "/>\n\n");
-                        }
+                        out.append("     <server name=\"" + tr.getName() + "\" " +
+                                "class=\"Et\" " +
+                                "etName=\"" + tr.getEtName() + "\" " + "" +
+                                "method=\"" + tr.getEtMethodCon() + "\" " +
+                                "host=\"" + tr.getEtHostName() + "\" " +
+                                "port=\"" + tr.getEtTcpPort() + "\" " +
+                                "uPort=\"" + tr.getEtUdpPort() + "\" " +
+                                "subnet=\"" + tr.getEtSubNet() + "\" " +
+                                "wait=\"" + tr.getEtWait() + "\"" +
+                                "/>\n\n");
                     }
                 }
-
                 break;
+
             case "EmuSocket":
-                if (isStreaming) {
-                    if (tr.getName().equals((cName + "_transport"))) {
-                        out.append("     <client name=\"" + tr.getName() + "\" " +
-                                "streaming=\"" + "on" + "\" " +
-                                "class=\"Emu\" " +
-                                "port=\"" + tr.getEmuDirectPort() + "\" " +
-                                "/>\n\n");
-                    } else {
-                        out.append("     <server name=\"" + tr.getName() + "\" " +
-                                "streaming=\"" + "on" + "\" " +
-                                "class=\"Emu\" " +
-                                "/>\n\n");
-                    }
-
+                if (tr.getName().equals((cName + "_transport"))) {
+                    out.append("     <client name=\"" + tr.getName() + "\" " +
+                            "class=\"Emu\" " +
+                            "port=\"" + tr.getEmuDirectPort() + "\" " +
+                            "/>\n\n");
                 } else {
-                    if (tr.getName().equals((cName + "_transport"))) {
-                        out.append("     <client name=\"" + tr.getName() + "\" " +
-                                "class=\"Emu\" " +
-                                "port=\"" + tr.getEmuDirectPort() + "\" " +
-                                "/>\n\n");
-                    } else {
-                        out.append("     <server name=\"" + tr.getName() + "\" " +
-                                "class=\"Emu\" " +
-                                "/>\n\n");
-                    }
+                    out.append("     <server name=\"" + tr.getName() + "\" " +
+                            "class=\"Emu\" " +
+                            "/>\n\n");
                 }
                 break;
+
             case "EmuSocket+Et":
                 if (ec.getType().equals(ACodaType.ER.name()) ||
                         ec.getType().equals(ACodaType.EBER.name())) {
                     // ET
-                    if ((tr.getName().equals((cName + "_transport"))) && (tr.getDestinationEtCreate().equals("true"))) {
-                        tr.setEtCreate(true);
-                    } else {
-                        tr.setEtCreate(false);
-                    }
+                    tr.setEtCreate((tr.getName().equals((cName + "_transport"))) && (tr.getDestinationEtCreate().equals("true")));
 
                     etEvtMin1 = (nl * 2 * tr.getEtChunkSize()) * 2;
                     etEvtMin2 = (tr.getInputEtChunkSize() * 4) * 2;
@@ -444,152 +374,68 @@ public class LLConfigWriter {
                             }
                         }
                     }
-
-                    if (isStreaming) {
-                        if (tr.isEtCreate()) {
-                            out.append("     <server name=\"" + tr.getName() + "_async" + "\" " +
-                                    "streaming=\"" + "on" + "\" " +
-                                    "class=\"Et\" " +
-                                    "etName=\"" + tr.getEtName() + "\" " +
-                                    "create=\"" + tr.getDestinationEtCreate() + "\" " +
-                                    "uPort=\"" + tr.getEtUdpPort() + "\" " +
-                                    "port=\"" + tr.getEtTcpPort() + "\" " +
-                                    "mAddr=\"" + tr.getmAddress() + "\" " +
-                                    "eventNum=\"" + tr.getEtEventNum() + "\" " +
-                                    "eventSize=\"" + tr.getEtEventSize() + "\" " +
-                                    "groups=\"" + nl + "\" " +
+                    if (tr.isEtCreate()) {
+                        out.append("     <server name=\"" + tr.getName() + "_async" + "\" " +
+                                "class=\"Et\" " +
+                                "etName=\"" + tr.getEtName() + "\" " +
+                                "create=\"" + tr.getDestinationEtCreate() + "\" " +
+                                "uPort=\"" + tr.getEtUdpPort() + "\" " +
+                                "port=\"" + tr.getEtTcpPort() + "\" " +
+                                "mAddr=\"" + tr.getmAddress() + "\" " +
+                                "eventNum=\"" + tr.getEtEventNum() + "\" " +
+                                "eventSize=\"" + tr.getEtEventSize() + "\" " +
+                                "groups=\"" + nl + "\" " +
 //                        "wait=\"" + tr.getEtWait() + "\" " +
-                                    "/>\n\n");
-
-                        } else {
-                            if (tr.getEtSubNet().equals("undefined") || tr.getEtSubNet().equals("")) {
-                                out.append("     <server name=\"" + tr.getName() + "_async" + "\" " +
-                                        "streaming=\"" + "on" + "\" " +
-                                        "class=\"Et\" " +
-                                        "etName=\"" + tr.getEtName() + "\" " + "" +
-                                        "method=\"" + tr.getEtMethodCon() + "\" " +
-                                        "host=\"" + tr.getEtHostName() + "\" " +
-                                        "port=\"" + tr.getEtTcpPort() + "\" " +
-                                        "uPort=\"" + tr.getEtUdpPort() + "\" " +
-                                        "wait=\"" + tr.getEtWait() + "\"" +
-                                        "/>\n\n");
-                            } else {
-                                out.append("     <server name=\"" + tr.getName() + "_async" + "\" " +
-                                        "streaming=\"" + "on" + "\" " +
-                                        "class=\"Et\" " +
-                                        "etName=\"" + tr.getEtName() + "\" " + "" +
-                                        "method=\"" + tr.getEtMethodCon() + "\" " +
-                                        "host=\"" + tr.getEtHostName() + "\" " +
-                                        "port=\"" + tr.getEtTcpPort() + "\" " +
-                                        "uPort=\"" + tr.getEtUdpPort() + "\" " +
-                                        "subnet=\"" + tr.getEtSubNet() + "\" " +
-                                        "wait=\"" + tr.getEtWait() + "\"" +
-                                        "/>\n\n");
-                            }
-                        }
-
+                                "/>\n\n");
                     } else {
-                        if (tr.isEtCreate()) {
+                        if (tr.getEtSubNet().equals("undefined") || tr.getEtSubNet().equals("")) {
                             out.append("     <server name=\"" + tr.getName() + "_async" + "\" " +
                                     "class=\"Et\" " +
-                                    "etName=\"" + tr.getEtName() + "\" " +
-                                    "create=\"" + tr.getDestinationEtCreate() + "\" " +
-                                    "uPort=\"" + tr.getEtUdpPort() + "\" " +
+                                    "etName=\"" + tr.getEtName() + "\" " + "" +
+                                    "method=\"" + tr.getEtMethodCon() + "\" " +
+                                    "host=\"" + tr.getEtHostName() + "\" " +
                                     "port=\"" + tr.getEtTcpPort() + "\" " +
-                                    "mAddr=\"" + tr.getmAddress() + "\" " +
-                                    "eventNum=\"" + tr.getEtEventNum() + "\" " +
-                                    "eventSize=\"" + tr.getEtEventSize() + "\" " +
-                                    "groups=\"" + nl + "\" " +
-//                        "wait=\"" + tr.getEtWait() + "\" " +
-                                    "/>\n\n");
-
-                        } else {
-                            if (tr.getEtSubNet().equals("undefined") || tr.getEtSubNet().equals("")) {
-                                out.append("     <server name=\"" + tr.getName() + "_async" + "\" " +
-                                        "class=\"Et\" " +
-                                        "etName=\"" + tr.getEtName() + "\" " + "" +
-                                        "method=\"" + tr.getEtMethodCon() + "\" " +
-                                        "host=\"" + tr.getEtHostName() + "\" " +
-                                        "port=\"" + tr.getEtTcpPort() + "\" " +
-                                        "uPort=\"" + tr.getEtUdpPort() + "\" " +
-                                        "wait=\"" + tr.getEtWait() + "\"" +
-                                        "/>\n\n");
-                            } else {
-                                out.append("     <server name=\"" + tr.getName() + "_async" + "\" " +
-                                        "class=\"Et\" " +
-                                        "etName=\"" + tr.getEtName() + "\" " + "" +
-                                        "method=\"" + tr.getEtMethodCon() + "\" " +
-                                        "host=\"" + tr.getEtHostName() + "\" " +
-                                        "port=\"" + tr.getEtTcpPort() + "\" " +
-                                        "uPort=\"" + tr.getEtUdpPort() + "\" " +
-                                        "subnet=\"" + tr.getEtSubNet() + "\" " +
-                                        "wait=\"" + tr.getEtWait() + "\"" +
-                                        "/>\n\n");
-                            }
-                        }
-                    }
-
-                    // EMU
-                    if(isStreaming) {
-                        if (tr.getName().equals((cName + "_transport"))) {
-                            out.append("     <client name=\"" + tr.getName() + "\" " +
-                                    "streaming=\"" + "on" + "\" " +
-                                    "class=\"Emu\" " +
-                                    "port=\"" + tr.getEmuDirectPort() + "\" " +
+                                    "uPort=\"" + tr.getEtUdpPort() + "\" " +
+                                    "wait=\"" + tr.getEtWait() + "\"" +
                                     "/>\n\n");
                         } else {
-                            out.append("     <server name=\"" + tr.getName() + "\" " +
-                                    "streaming=\"" + "on" + "\" " +
-                                    "class=\"Emu\" " +
-                                    "/>\n\n");
-                        }
-                    } else {
-                        if (tr.getName().equals((cName + "_transport"))) {
-                            out.append("     <client name=\"" + tr.getName() + "\" " +
-                                    "class=\"Emu\" " +
-                                    "port=\"" + tr.getEmuDirectPort() + "\" " +
-                                    "/>\n\n");
-                        } else {
-                            out.append("     <server name=\"" + tr.getName() + "\" " +
-                                    "class=\"Emu\" " +
-                                    "/>\n\n");
-                        }
-                    }
-                } else {
-                    // EMU
-                    if(isStreaming) {
-                        if (tr.getName().equals((cName + "_transport"))) {
-                            out.append("     <client name=\"" + tr.getName() + "\" " +
-                                    "streaming=\"" + "on" + "\" " +
-                                    "class=\"Emu\" " +
-                                    "port=\"" + tr.getEmuDirectPort() + "\" " +
-                                    "/>\n\n");
-                        } else {
-                            out.append("     <server name=\"" + tr.getName() + "\" " +
-                                    "streaming=\"" + "on" + "\" " +
-                                    "class=\"Emu\" " +
-                                    "/>\n\n");
-                        }
-
-                    } else {
-                        if (tr.getName().equals((cName + "_transport"))) {
-                            out.append("     <client name=\"" + tr.getName() + "\" " +
-                                    "class=\"Emu\" " +
-                                    "port=\"" + tr.getEmuDirectPort() + "\" " +
-                                    "/>\n\n");
-                        } else {
-                            out.append("     <server name=\"" + tr.getName() + "\" " +
-                                    "class=\"Emu\" " +
+                            out.append("     <server name=\"" + tr.getName() + "_async" + "\" " +
+                                    "class=\"Et\" " +
+                                    "etName=\"" + tr.getEtName() + "\" " + "" +
+                                    "method=\"" + tr.getEtMethodCon() + "\" " +
+                                    "host=\"" + tr.getEtHostName() + "\" " +
+                                    "port=\"" + tr.getEtTcpPort() + "\" " +
+                                    "uPort=\"" + tr.getEtUdpPort() + "\" " +
+                                    "subnet=\"" + tr.getEtSubNet() + "\" " +
+                                    "wait=\"" + tr.getEtWait() + "\"" +
                                     "/>\n\n");
                         }
                     }
                 }
                 break;
-            case "UdpStream":
-                if(ec.getType().equals(ACodaType.DC.name())){
+
+            case "TcpStream":
+                if (tr.getName().equals((cName + "_transport"))) {
                     out.append("     <client name=\"" + tr.getName() + "\" " +
                             "streaming=\"" + "on" + "\" " +
-                            "class=\"UdpStream\" \n" +
+                            "class=\"TcpStream\" " +
+                            "port=\"" + tr.getEmuDirectPort() + "\" " +
+                            "/>\n\n");
+                } else {
+                    out.append("     <server name=\"" + tr.getName() + "\" " +
+                            "streaming=\"" + "on" + "\" " +
+                            "class=\"TcpStream\" " +
+                            "/>\n\n");
+                }
+
+                break;
+
+            case "UdpStream":
+                if (ec.getType().equals(ACodaType.DC.name())) {
+                    out.append("     <client name=\"" + tr.getName() + "\" " +
+                            "streaming=\"" + "on" + "\" " +
+                            "class=\"UdpStream\"" +
+                            "/>\n\n" +
                             "     <server name=\"" + "LB_transport" + "\" " +
                             "class=\"UdpStream\" " +
                             "/>\n\n");
@@ -600,8 +446,8 @@ public class LLConfigWriter {
                             "/>\n\n");
                 }
                 break;
-            case "File":
 
+            case "File":
                 out.append("     <server name=\"" + tr.getName() + "\" " +
                         "class=\"File\" " +
                         "/>\n\n");
@@ -755,6 +601,7 @@ public class LLConfigWriter {
         JCGModule md;
         boolean isEndianLittle = false;
 
+        String endian = "big";
         md = cmp.getModule();
         if (md != null) {
 
@@ -764,38 +611,25 @@ public class LLConfigWriter {
                     break;
                 }
             }
+            if (isEndianLittle) endian = "littel";
+
             // here we assume that all modules share the same source and USR source
             out.append("   <modules>\n\n");
             // ------ ER --------
             if (cmp.getType().equals(ACodaType.ER.name())) {
                 if (cmp.isCodaVersion2()) {
-                    if (isEndianLittle) {
-                        out.append("     <ErModule class=\"" + md.getModuleClass(ACodaType.ER.name()) + "\" " +
-                                "streaming=\"" + "on" + "\" " +
-                                "id=\"" + md.getId() + "\" " +
-                                "timeStats=\"off\" " +
-                                "endian=\"" + "little" + "\"" +
-                                "> \n\n");
-                    } else {
-                        out.append("     <ErModule class=\"" + md.getModuleClass(ACodaType.ER.name()) + "\" " +
-                                "streaming=\"" + "on" + "\" " +
-                                "id=\"" + md.getId() + "\" " +
-                                "timeStats=\"off\" " +
-                                "> \n\n");
-                    }
+                    out.append("     <ErModule class=\"" + md.getModuleClass(ACodaType.ER.name()) + "\" " +
+                            "streaming=\"" + "on" + "\" " +
+                            "id=\"" + md.getId() + "\" " +
+                            "timeStats=\"off\" " +
+                            "endian=\"" + endian + "\"" +
+                            "> \n\n");
                 } else {
-                    if (isEndianLittle) {
-                        out.append("     <ErModule class=\"" + md.getModuleClass(ACodaType.ER.name()) + "\" " +
-                                "id=\"" + md.getId() + "\" " +
-                                "timeStats=\"off\" " +
-                                "endian=\"" + "little" + "\"" +
-                                "> \n\n");
-                    } else {
-                        out.append("     <ErModule class=\"" + md.getModuleClass(ACodaType.ER.name()) + "\" " +
-                                "id=\"" + md.getId() + "\" " +
-                                "timeStats=\"off\" " +
-                                "> \n\n");
-                    }
+                    out.append("     <ErModule class=\"" + md.getModuleClass(ACodaType.ER.name()) + "\" " +
+                            "id=\"" + md.getId() + "\" " +
+                            "timeStats=\"off\" " +
+                            "endian=\"" + endian + "\"" +
+                            "> \n\n");
                 }
                 // ------ GT --------
             } else if (cmp.getType().equals(ACodaType.GT.name())) {
@@ -842,8 +676,8 @@ public class LLConfigWriter {
 
                 // ------ TS --------
             } else if (cmp.getType().equals(ACodaType.TS.name())) {
+                List<String> r_list = new ArrayList<>();
                 if (cmp.isCodaVersion2()) {
-                    List<String> r_list = new ArrayList<>();
                     for (JCGComponent c : components) {
                         if (c.getType().equals(ACodaType.ROC.name())) {
                             r_list.add(c.getName());
@@ -856,9 +690,7 @@ public class LLConfigWriter {
                         i = i + 1;
                         out.append("r" + i + "=\"" + s + "\" ");
                     }
-                    out.append("> \n\n");
                 } else {
-                    List<String> r_list = new ArrayList<>();
                     for (JCGComponent c : components) {
                         if (c.getType().equals(ACodaType.ROC.name())) {
                             r_list.add(c.getName());
@@ -870,94 +702,51 @@ public class LLConfigWriter {
                         i = i + 1;
                         out.append("r" + i + "=\"" + s + "\" ");
                     }
-                    out.append("> \n\n");
                 }
+                out.append("> \n\n");
 
                 // ------ ROC --------
             } else if (cmp.getType().equals(ACodaType.ROC.name())) {
                 if (cmp.isCodaVersion2()) {
-                    if (isEndianLittle) {
-                        out.append("     <RocModule class=\"" + md.getModuleClass(ACodaType.ROC.name()) + "\" " +
-                                "streaming=\"" + "on" + "\" " +
-                                "id=\"" + md.getId() + "\" " +
-                                "timeStats=\"off\" " +
-                                "endian=\"" + "little" + "\"" +
-                                "> \n\n");
-                    } else {
-                        out.append("     <RocModule class=\"" + md.getModuleClass(ACodaType.ROC.name()) + "\" " +
-                                "streaming=\"" + "on" + "\" " +
-                                "id=\"" + md.getId() + "\" " +
-                                "timeStats=\"off\" " +
-                                "> \n\n");
-                    }
-
+                    out.append("     <RocModule class=\"" + md.getModuleClass(ACodaType.ROC.name()) + "\" " +
+                            "streaming=\"" + "on" + "\" " +
+                            "id=\"" + md.getId() + "\" " +
+                            "timeStats=\"off\" " +
+                            "endian=\"" + endian + "\"" +
+                            "> \n\n");
                 } else {
-                    if (isEndianLittle) {
-                        out.append("     <RocModule class=\"" + md.getModuleClass(ACodaType.ROC.name()) + "\" " +
-                                "id=\"" + md.getId() + "\" " +
-                                "timeStats=\"off\" " +
-                                "endian=\"" + "little" + "\"" +
-                                "> \n\n");
-                    } else {
-                        out.append("     <RocModule class=\"" + md.getModuleClass(ACodaType.ROC.name()) + "\" " +
-                                "id=\"" + md.getId() + "\" " +
-                                "timeStats=\"off\" " +
-                                "> \n\n");
-                    }
+                    out.append("     <RocModule class=\"" + md.getModuleClass(ACodaType.ROC.name()) + "\" " +
+                            "id=\"" + md.getId() + "\" " +
+                            "timeStats=\"off\" " +
+                            "endian=\"" + endian + "\"" +
+                            "> \n\n");
                 }
 
                 // -------- All the rest of types (DC, PEB, SEB, EB) -----
             } else {
                 if (cmp.isCodaVersion2()) {
-                    if (isEndianLittle) {
-                        out.append("     <EbModule class=\"" + "Aggregator" + "\" " +
-                                "streaming=\"" + "on" + "\" " +
-                                "id=\"" + md.getId() + "\" " +
-                                "threads=\"" + md.getThreads() + "\" " +
-                                "timeStats=\"off\" " +
-                                "runData=\"" + md.isRunData() + "\" " +
-                                "tsCheck=\"" + md.isTsCheck() + "\" " +
-                                "tsSlop=\"" + md.getTsSlop() + "\" " +
-                                "sparsify=\"" + md.isSparsify() + "\" " +
-                                "endian=\"" + "little" + "\"" +
-                                "> \n\n");
-
-                    } else {
-                        out.append("     <EbModule class=\"" + "Aggregator" + "\" " +
-                                "streaming=\"" + "on" + "\" " +
-                                "id=\"" + md.getId() + "\" " +
-                                "threads=\"" + md.getThreads() + "\" " +
-                                "timeStats=\"off\" " +
-                                "runData=\"" + md.isRunData() + "\" " +
-                                "tsCheck=\"" + md.isTsCheck() + "\" " +
-                                "tsSlop=\"" + md.getTsSlop() + "\" " +
-                                "sparsify=\"" + md.isSparsify() + "\"" +
-                                "> \n\n");
-                    }
+                    out.append("     <EbModule class=\"" + "Aggregator" + "\" " +
+                            "streaming=\"" + "on" + "\" " +
+                            "id=\"" + md.getId() + "\" " +
+                            "threads=\"" + md.getThreads() + "\" " +
+                            "timeStats=\"off\" " +
+                            "runData=\"" + md.isRunData() + "\" " +
+                            "tsCheck=\"" + md.isTsCheck() + "\" " +
+                            "tsSlop=\"" + md.getTsSlop() + "\" " +
+                            "sparsify=\"" + md.isSparsify() + "\" " +
+                            "endian=\"" + endian + "\"" +
+                            "> \n\n");
                 } else {
-                    if (isEndianLittle) {
-                        out.append("     <EbModule class=\"" + md.getModuleClass(ACodaType.PEB.name()) + "\" " +
-                                "id=\"" + md.getId() + "\" " +
-                                "threads=\"" + md.getThreads() + "\" " +
-                                "timeStats=\"off\" " +
-                                "runData=\"" + md.isRunData() + "\" " +
-                                "tsCheck=\"" + md.isTsCheck() + "\" " +
-                                "tsSlop=\"" + md.getTsSlop() + "\" " +
-                                "sparsify=\"" + md.isSparsify() + "\" " +
-                                "endian=\"" + "little" + "\"" +
-                                "> \n\n");
-
-                    } else {
-                        out.append("     <EbModule class=\"" + md.getModuleClass(ACodaType.PEB.name()) + "\" " +
-                                "id=\"" + md.getId() + "\" " +
-                                "threads=\"" + md.getThreads() + "\" " +
-                                "timeStats=\"off\" " +
-                                "runData=\"" + md.isRunData() + "\" " +
-                                "tsCheck=\"" + md.isTsCheck() + "\" " +
-                                "tsSlop=\"" + md.getTsSlop() + "\" " +
-                                "sparsify=\"" + md.isSparsify() + "\"" +
-                                "> \n\n");
-                    }
+                    out.append("     <EbModule class=\"" + md.getModuleClass(ACodaType.PEB.name()) + "\" " +
+                            "id=\"" + md.getId() + "\" " +
+                            "threads=\"" + md.getThreads() + "\" " +
+                            "timeStats=\"off\" " +
+                            "runData=\"" + md.isRunData() + "\" " +
+                            "tsCheck=\"" + md.isTsCheck() + "\" " +
+                            "tsSlop=\"" + md.getTsSlop() + "\" " +
+                            "sparsify=\"" + md.isSparsify() + "\" " +
+                            "endian=\"" + endian + "\"" +
+                            "> \n\n");
                 }
             }
         }
@@ -1033,6 +822,16 @@ public class LLConfigWriter {
                         "sockets=\"" + socketCount + "\" " +
                         "/>\n\n");
             }
+        } else if (ch.getTransport() != null && ch.getTransport().getTransClass().equals("TcpStream")) {
+            out.append("         <outchannel id=\"" + id + "\" " +
+                    "name=\"" + ch.getName() + "\" " +
+                    "transp=\"" + ch.getTransport().getName() + "\" " +
+                    "timeout=\"" + ch.getTransport().getTcpStreamWait() + "\" " +
+                    "port=\"" + ch.getTransport().getTcpStreamDirectPort() + "\" " +
+                    "maxBuf=\"" + ch.getTransport().getTcpStreamMaxBuffer() + "\" " +
+                    "streams=\"" + ch.getTransport().getEmuTcpStreams() + "\" " +
+                    "/>\n\n");
+
         } else if (ch.getTransport() != null && ch.getTransport().getTransClass().equals("UdpStream")) {
             out.append("         <outchannel id=\"" + id + "\" " +
                     "name=\"" + ch.getName() + "\" " +
@@ -1042,6 +841,7 @@ public class LLConfigWriter {
                     "host=\"" + ch.getTransport().getUdpHost() + "\" " +
                     "useLoadBalancer=\"" + ch.getTransport().isLB() + "\" " +
                     "useErsapReHeader=\"" + ch.getTransport().isErsap() + "\" " +
+                    "streams=\"" + ch.getTransport().getUdpStreams() + "\" " +
                     "/>\n\n");
 
         }
@@ -1101,6 +901,12 @@ public class LLConfigWriter {
                         "/>\n\n");
 
             }
+        } else if (ch.getTransport() != null && ch.getTransport().getTransClass().equals("TcpStream")) {
+            out.append("         <inchannel id=\"" + ch.getId() + "\" " +
+                    "name=\"" + ch.getName() + "\" " +
+                    "transp=\"" + ch.getTransport().getName() + "\" " +
+                    "/>\n\n");
+
         } else if (ch.getTransport() != null && ch.getTransport().getTransClass().equals("UdpStream")) {
             out.append("         <inchannel id=\"" + ch.getId() + "\" " +
                     "name=\"" + ch.getName() + "\" " +
