@@ -55,9 +55,19 @@ public class JCGTransport {
     private String  fpgaLinkIp     = "undefined";
     private boolean emuFatPipe     = false;
 
+
+    private int     tcpStreamDirectPort  = 46100;
+    private int     tcpStreamMaxBuffer   = 1000000; // in Bytes
+    private int     tcpStreamWait        = 5;
+    private String  tcpStreamSubNet      = "undefined";
+    private String  tcpStreamFpgaLinkIp  = "undefined";
+    private int     emuTcpStreams        = 1;
+
     private String  udpHost        = "undefined";
     private int     udpPort        = 45000;
     private int     udpBufferSize  = 9000;
+    private String  UdpFpgaLinkIp  = "undefined";
+    private int udpStreams         = 1;
     private boolean isLB           = false;
     private boolean isErsap        = false;
 
@@ -80,7 +90,8 @@ public class JCGTransport {
                         int etChunkSize, int inputEtChunkSize, String single, int etGroups, int etRecvBuf, int etSendBuf,
                         String etMethodCon, String etHostName, String etSubNet, String destinationEtCreate, int emuDirectPort,
                         int emuMaxBuffer, int emuWait, String emuSubNet, String fpgaLinkIp, boolean emuFatPipe,
-                        String udpHost, int udpPort, int udpBufferSize,  boolean isLB, boolean isErsap,
+                        int tcpStreamMaxBuffer, int tcpStreamWait, String tcpStreamSubNet, String tcpStreamFpgaLinkIp, int emuTcpStreams,
+                        String udpHost, int udpPort, int udpBufferSize,  String UdpFpgaLinkIp, int udpStreams, boolean isLB, boolean isErsap,
                         String fileName, String fileType, long fileSplit, int fileInternalBuffer, boolean noLink,
                         int compression, int compressionThreads) {
         this.name = name;
@@ -103,17 +114,28 @@ public class JCGTransport {
         this.etHostName = etHostName;
         this.etSubNet = etSubNet;
         this.destinationEtCreate = destinationEtCreate;
+
         this.emuDirectPort = emuDirectPort;
         this.emuMaxBuffer = emuMaxBuffer;
         this.emuWait = emuWait;
         this.emuSubNet = emuSubNet;
         this.fpgaLinkIp = fpgaLinkIp;
+        this.UdpFpgaLinkIp = UdpFpgaLinkIp;
         this.emuFatPipe = emuFatPipe;
+
+        this.tcpStreamMaxBuffer = tcpStreamMaxBuffer;
+        this.tcpStreamWait = tcpStreamWait;
+        this.tcpStreamSubNet = tcpStreamSubNet;
+        this.tcpStreamFpgaLinkIp = tcpStreamFpgaLinkIp;
+        this.emuTcpStreams = emuTcpStreams;
+
         this.udpHost = udpHost;
         this.udpPort = udpPort;
         this.udpBufferSize = udpBufferSize;
+        this.udpStreams = udpStreams;
         this.isLB = isLB;
         this.isErsap = isErsap;
+
         this.fileName = fileName;
         this.fileType = fileType;
         this.fileSplit = fileSplit;
@@ -275,6 +297,30 @@ public class JCGTransport {
         this.fpgaLinkIp = fpgaLinkIp;
     }
 
+    public String getUdpFpgaLinkIp() {
+        return UdpFpgaLinkIp;
+    }
+
+    public void setUdpFpgaLinkIp(String udpFpgaLinkIp) {
+        UdpFpgaLinkIp = udpFpgaLinkIp;
+    }
+
+    public int getEmuTcpStreams() {
+        return emuTcpStreams;
+    }
+
+    public void setEmuTcpStreams(int emuTcpStreams) {
+        this.emuTcpStreams = emuTcpStreams;
+    }
+
+    public int getUdpStreams() {
+        return udpStreams;
+    }
+
+    public void setUdpStreams(int udpStreams) {
+        this.udpStreams = udpStreams;
+    }
+
     public boolean isEmuFatPipe() {
         return emuFatPipe;
     }
@@ -427,23 +473,66 @@ public class JCGTransport {
         this.compressionThreads = compressionThreads;
     }
 
+    public int getTcpStreamDirectPort() {
+        return tcpStreamDirectPort;
+    }
+
+    public void setTcpStreamDirectPort(int tcpStreamDirectPort) {
+        this.tcpStreamDirectPort = tcpStreamDirectPort;
+    }
+
+    public int getTcpStreamMaxBuffer() {
+        return tcpStreamMaxBuffer;
+    }
+
+    public void setTcpStreamMaxBuffer(int tcpStreamMaxBuffer) {
+        this.tcpStreamMaxBuffer = tcpStreamMaxBuffer;
+    }
+
+    public int getTcpStreamWait() {
+        return tcpStreamWait;
+    }
+
+    public void setTcpStreamWait(int tcpStreamWait) {
+        this.tcpStreamWait = tcpStreamWait;
+    }
+
+    public String getTcpStreamSubNet() {
+        return tcpStreamSubNet;
+    }
+
+    public void setTcpStreamSubNet(String tcpStreamSubNet) {
+        this.tcpStreamSubNet = tcpStreamSubNet;
+    }
+
+    public String getTcpStreamFpgaLinkIp() {
+        return tcpStreamFpgaLinkIp;
+    }
+
+    public void setTcpStreamFpgaLinkIp(String tcpStreamFpgaLinkIp) {
+        this.tcpStreamFpgaLinkIp = tcpStreamFpgaLinkIp;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof JCGTransport)) return false;
         JCGTransport that = (JCGTransport) o;
-        return  getEtTcpPort() == that.getEtTcpPort() &&
-                getEtUdpPort() == that.getEtUdpPort() && getEtWait() == that.getEtWait() &&
-                getEtEventNum() == that.getEtEventNum() && getEtEventSize() == that.getEtEventSize() &&
-                getInputEtChunkSize() == that.getInputEtChunkSize() && getEtChunkSize() == that.getEtChunkSize() &&
-                getEtGroups() == that.getEtGroups() && getEtRecvBuf() == that.getEtRecvBuf() &&
-                getEtSendBuf() == that.getEtSendBuf() && getEmuDirectPort() == that.getEmuDirectPort() &&
-                getEmuMaxBuffer() == that.getEmuMaxBuffer() && getEmuWait() == that.getEmuWait() &&
-                isEmuFatPipe() == that.isEmuFatPipe() && getUdpPort() == that.getUdpPort() &&
-                getUdpBufferSize() == that.getUdpBufferSize() && isLB() == that.isLB() &&
-                isErsap() == that.isErsap() && getFileSplit() == that.getFileSplit() &&
-                getFileInternalBuffer() == that.getFileInternalBuffer() && isNoLink() == that.isNoLink() &&
-                getCompression() == that.getCompression() && getCompressionThreads() == that.getCompressionThreads() &&
+        return getEtTcpPort() == that.getEtTcpPort() && getEtUdpPort() == that.getEtUdpPort() &&
+                getEtWait() == that.getEtWait() && getEtEventNum() == that.getEtEventNum() &&
+                getEtEventSize() == that.getEtEventSize() && getInputEtChunkSize() == that.getInputEtChunkSize() &&
+                getEtChunkSize() == that.getEtChunkSize() && getEtGroups() == that.getEtGroups() &&
+                getEtRecvBuf() == that.getEtRecvBuf() && getEtSendBuf() == that.getEtSendBuf() &&
+                getEmuDirectPort() == that.getEmuDirectPort() && getEmuMaxBuffer() == that.getEmuMaxBuffer() &&
+                getEmuWait() == that.getEmuWait() && isEmuFatPipe() == that.isEmuFatPipe() &&
+                getTcpStreamDirectPort() == that.getTcpStreamDirectPort() &&
+                getTcpStreamMaxBuffer() == that.getTcpStreamMaxBuffer() &&
+                getTcpStreamWait() == that.getTcpStreamWait() && getEmuTcpStreams() == that.getEmuTcpStreams() &&
+                getUdpPort() == that.getUdpPort() && getUdpBufferSize() == that.getUdpBufferSize() &&
+                getUdpStreams() == that.getUdpStreams() && isLB() == that.isLB() && isErsap() == that.isErsap() &&
+                getFileSplit() == that.getFileSplit() && getFileInternalBuffer() == that.getFileInternalBuffer() &&
+                isNoLink() == that.isNoLink() && getCompression() == that.getCompression() &&
+                getCompressionThreads() == that.getCompressionThreads() &&
                 Objects.equals(getName(), that.getName()) && Objects.equals(getTransClass(), that.getTransClass()) &&
                 Objects.equals(getEtName(), that.getEtName()) && Objects.equals(getmAddress(), that.getmAddress()) &&
                 Objects.equals(getSingle(), that.getSingle()) &&
@@ -453,8 +542,11 @@ public class JCGTransport {
                 Objects.equals(getDestinationEtCreate(), that.getDestinationEtCreate()) &&
                 Objects.equals(getEmuSubNet(), that.getEmuSubNet()) &&
                 Objects.equals(getFpgaLinkIp(), that.getFpgaLinkIp()) &&
-                Objects.equals(getUdpHost(), that.getUdpHost()) && Objects.equals(getFileName(), that.getFileName()) &&
-                Objects.equals(getFileType(), that.getFileType());
+                Objects.equals(getTcpStreamSubNet(), that.getTcpStreamSubNet()) &&
+                Objects.equals(getTcpStreamFpgaLinkIp(), that.getTcpStreamFpgaLinkIp()) &&
+                Objects.equals(getUdpHost(), that.getUdpHost()) &&
+                Objects.equals(getUdpFpgaLinkIp(), that.getUdpFpgaLinkIp()) &&
+                Objects.equals(getFileName(), that.getFileName()) && Objects.equals(getFileType(), that.getFileType());
     }
 
     @Override
@@ -464,38 +556,62 @@ public class JCGTransport {
                 getInputEtChunkSize(), getEtChunkSize(), getSingle(), getEtGroups(), getEtRecvBuf(),
                 getEtSendBuf(), getEtMethodCon(), getEtHostName(), getEtSubNet(), getDestinationEtCreate(),
                 getEmuDirectPort(), getEmuMaxBuffer(), getEmuWait(), getEmuSubNet(), getFpgaLinkIp(),
-                isEmuFatPipe(), getUdpHost(), getUdpPort(), getUdpBufferSize(), isLB(), isErsap(),
-                getFileName(), getFileType(), getFileSplit(), getFileInternalBuffer(), isNoLink(),
-                getCompression(), getCompressionThreads());
+                isEmuFatPipe(), getTcpStreamDirectPort(), getTcpStreamMaxBuffer(), getTcpStreamWait(),
+                getTcpStreamSubNet(), getTcpStreamFpgaLinkIp(), getEmuTcpStreams(), getUdpHost(),
+                getUdpPort(), getUdpBufferSize(), getUdpFpgaLinkIp(), getUdpStreams(), isLB(),
+                isErsap(), getFileName(), getFileType(), getFileSplit(), getFileInternalBuffer(),
+                isNoLink(), getCompression(), getCompressionThreads());
     }
 
     @Override
     public String toString() {
         return "JCGTransport{" +
                 "name='" + name + '\'' +
-                ", \ntransClass='" + transClass + '\'' +
-                ", \netName='" + etName + '\'' +
-                ", \netCreate=" + etCreate +
-                ", \netTcpPort=" + etTcpPort +
-                ", \netUdpPort=" + etUdpPort +
-                ", \netWait=" + etWait +
-                ", \nmAddress='" + mAddress + '\'' +
-                ", \netEventNum=" + etEventNum +
-                ", \netEventSize=" + etEventSize +
-                ", \netGroups=" + etGroups +
-                ", \netRecvBuf=" + etRecvBuf +
-                ", \netSendBuf=" + etSendBuf +
-                ", \netMethodCon='" + etMethodCon + '\'' +
-                ", \netHostName='" + etHostName + '\'' +
-                ", \netSubNet='" + etSubNet + '\'' +
-                ", \ndestinationEtCreate='" + destinationEtCreate + '\'' +
-                ", \nfileName='" + fileName + '\'' +
-                ", \nfileType='" + fileType + '\'' +
-                ", \nfileSplit=" + fileSplit +
-                ", \nfileInternalBf=" + fileInternalBuffer +
-                ", \nnoLink=" + noLink +
-                ", \ncompression=" + compression +
-                ", \ncompressionThreads=" + compressionThreads +
+                ", transClass='" + transClass + '\'' +
+                ", etName='" + etName + '\'' +
+                ", etCreate=" + etCreate +
+                ", etTcpPort=" + etTcpPort +
+                ", etUdpPort=" + etUdpPort +
+                ", etWait=" + etWait +
+                ", mAddress='" + mAddress + '\'' +
+                ", etEventNum=" + etEventNum +
+                ", etEventSize=" + etEventSize +
+                ", inputEtChunkSize=" + inputEtChunkSize +
+                ", etChunkSize=" + etChunkSize +
+                ", single='" + single + '\'' +
+                ", etGroups=" + etGroups +
+                ", etRecvBuf=" + etRecvBuf +
+                ", etSendBuf=" + etSendBuf +
+                ", etMethodCon='" + etMethodCon + '\'' +
+                ", etHostName='" + etHostName + '\'' +
+                ", etSubNet='" + etSubNet + '\'' +
+                ", destinationEtCreate='" + destinationEtCreate + '\'' +
+                ", emuDirectPort=" + emuDirectPort +
+                ", emuMaxBuffer=" + emuMaxBuffer +
+                ", emuWait=" + emuWait +
+                ", emuSubNet='" + emuSubNet + '\'' +
+                ", fpgaLinkIp='" + fpgaLinkIp + '\'' +
+                ", emuFatPipe=" + emuFatPipe +
+                ", tcpStreamDirectPort=" + tcpStreamDirectPort +
+                ", tcpStreamMaxBuffer=" + tcpStreamMaxBuffer +
+                ", tcpStreamWait=" + tcpStreamWait +
+                ", tcpStreamSubNet='" + tcpStreamSubNet + '\'' +
+                ", tcpStreamFpgaLinkIp='" + tcpStreamFpgaLinkIp + '\'' +
+                ", emuTcpStreams=" + emuTcpStreams +
+                ", udpHost='" + udpHost + '\'' +
+                ", udpPort=" + udpPort +
+                ", udpBufferSize=" + udpBufferSize +
+                ", UdpFpgaLinkIp='" + UdpFpgaLinkIp + '\'' +
+                ", udpStreams=" + udpStreams +
+                ", isLB=" + isLB +
+                ", isErsap=" + isErsap +
+                ", fileName='" + fileName + '\'' +
+                ", fileType='" + fileType + '\'' +
+                ", fileSplit=" + fileSplit +
+                ", fileInternalBuffer=" + fileInternalBuffer +
+                ", noLink=" + noLink +
+                ", compression=" + compression +
+                ", compressionThreads=" + compressionThreads +
                 '}';
     }
 }
