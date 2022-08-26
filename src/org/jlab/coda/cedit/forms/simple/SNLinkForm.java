@@ -258,7 +258,7 @@ public class SNLinkForm extends JFrame {
         // UdpStream
         UdpHostTextField.setText(destinationTransport.getUdpHost());
         UdpPortSpinner.setValue(destinationTransport.getUdpPort());
-        UdpBufferSizeSpinner.setValue(destinationTransport.getUdpBufferSize());
+        UdpBufferSizeSpinner.setValue(destinationTransport.getUdpBufferSize() / 1000);
         UdpFpgaLinkIp.setText(destinationTransport.getUdpFpgaLinkIp());
         UdpStreamsSpinner.setValue(destinationTransport.getUdpStreams());
         UdpUseLoadBalancer.setSelected(destinationTransport.isLB());
@@ -1623,16 +1623,26 @@ public class SNLinkForm extends JFrame {
             emuPortSpinner.setValue(46100);
             emuSocketWaitSpinner.setValue(0);
             emuMaxBufferSpinner.setValue(2100);
-            emuSubnetTextField.setText("undefined");
-            fpgaLinkIpTextField.setText("undefined");
+            emuSubnetTextField.setText("");
+            fpgaLinkIpTextField.setText("");
             emuFatPipeCheckBox.setSelected(false);
+
+            // tcpStream
+            tcpStreamPortSpinner.setValue(46100);
+            tcpStreamSocketWaitSpinner.setValue(0);
+            tcpStreamMaxBufferSpinner.setValue(100);
+            tcpStreamSubnetTextField.setText("");
+            tcpStreamFpgaLinkIpTextField.setText("");
+            tcpStreamsSpinner.setValue(1);
 
             // udpStream
             UdpHostTextField.setText("");
             UdpUseLoadBalancer.setSelected(false);
             UdpUseErsap.setSelected(false);
-            UdpPortSpinner.setValue(0);
-            UdpBufferSizeSpinner.setValue(0);
+            UdpPortSpinner.setValue(1);
+            UdpBufferSizeSpinner.setValue(100);
+            fpgaLinkIpTextField.setText("");
+
         }
     }
 
