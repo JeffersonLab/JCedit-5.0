@@ -842,7 +842,6 @@ public class LLConfigWriter {
                     "timeout=\"" + ch.getTransport().getTcpStreamWait() + "\" " +
                     "port=\"" + ch.getTransport().getTcpStreamDirectPort() + "\" " +
                     "maxBuf=\"" + ch.getTransport().getTcpStreamMaxBuffer() + "\" " +
-                    "streams=\"" + ch.getTransport().getEmuTcpStreams() + "\" " +
                     "/>\n\n");
 
         } else if (ch.getTransport() != null && ch.getTransport().getTransClass().equals("UdpStream")) {
@@ -854,7 +853,6 @@ public class LLConfigWriter {
                     "host=\"" + ch.getTransport().getUdpHost() + "\" " +
                     "useLoadBalancer=\"" + ch.getTransport().isLB() + "\" " +
                     "useErsapReHeader=\"" + ch.getTransport().isErsap() + "\" " +
-                    "streams=\"" + ch.getTransport().getUdpStreams() + "\" " +
                     "/>\n\n");
 
         }
@@ -918,6 +916,7 @@ public class LLConfigWriter {
             out.append("         <inchannel id=\"" + ch.getId() + "\" " +
                     "name=\"" + ch.getName() + "\" " +
                     "transp=\"" + ch.getTransport().getName() + "\" " +
+                    "streams=\"" + ch.getTransport().getEmuTcpStreams() + "\" " +
                     "/>\n\n");
 
         } else if (ch.getTransport() != null && ch.getTransport().getTransClass().equals("UdpStream")) {
@@ -926,6 +925,7 @@ public class LLConfigWriter {
                     "transp=\"" + ch.getTransport().getName() + "\" " +
                     "port=\"" + ch.getTransport().getUdpPort() + "\" " +
                     "bufSize=\"" + ch.getTransport().getUdpBufferSize() + "\" " +
+                    "streams=\"" + ch.getTransport().getUdpStreams() + "\" " +
                     "/>\n\n");
 
         }
