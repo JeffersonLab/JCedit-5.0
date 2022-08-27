@@ -1560,6 +1560,7 @@ public class SNLinkForm extends JFrame {
             destinationTransport.setTcpStreamSubNet(tcpStreamSubnetTextField.getText());
             destinationTransport.setTcpStreamFpgaLinkIp(tcpStreamFpgaLinkIpTextField.getText());
             destinationTransport.setEmuTcpStreams((Integer)tcpStreamsSpinner.getValue());
+            destinationTransport.setTcpStreamFpgaLinkIp(tcpStreamFpgaLinkIpTextField.getText());
 
             //Udp
             destinationTransport.setUdpHost(UdpHostTextField.getText());
@@ -1568,6 +1569,7 @@ public class SNLinkForm extends JFrame {
             destinationTransport.setUdpStreams((int)UdpStreamsSpinner.getValue());
             destinationTransport.setLB(UdpUseLoadBalancer.isSelected());
             destinationTransport.setErsap(UdpUseErsap.isSelected());
+            destinationTransport.setUdpFpgaLinkIp(UdpFpgaLinkIp.getText());
 
             // update subtype of the destination component if it is of type File
             JCGComponent tc = canvas.getGCMPs().get(link.getDestinationComponentName());
