@@ -926,6 +926,7 @@ public class LLConfigWriter {
                     "port=\"" + ch.getTransport().getUdpPort() + "\" " +
                     "bufSize=\"" + ch.getTransport().getUdpBufferSize() + "\" " +
                     "streams=\"" + ch.getTransport().getUdpStreams() + "\" " +
+                    "useErsapReHeader=\"" + ch.getTransport().isErsap() + "\" " +
                     "/>\n\n");
 
         }
