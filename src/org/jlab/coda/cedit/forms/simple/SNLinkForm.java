@@ -144,6 +144,7 @@ public class SNLinkForm extends JFrame {
                     break;
                 }
             }
+
             if (destinationTransport != null) {
                 if (DrawingCanvas.getComp(DName).getType().equals(ACodaType.FILE.name())) {
                     destinationTransport.setEtName("undefined");
@@ -1022,7 +1023,7 @@ public class SNLinkForm extends JFrame {
                                 .addComponent(emuFatPipeCheckBox)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(label18)))
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                         .addGroup(panel4Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                             .addGroup(panel4Layout.createSequentialGroup()
                                 .addComponent(fpgaLinkIpTextField, GroupLayout.PREFERRED_SIZE, 134, GroupLayout.PREFERRED_SIZE)
@@ -1213,13 +1214,13 @@ public class SNLinkForm extends JFrame {
                                 .addComponent(etTcpPortLabel3)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(tcpStreamPortSpinner, GroupLayout.PREFERRED_SIZE, 88, GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                                 .addComponent(label8))
                             .addGroup(panel6Layout.createSequentialGroup()
                                 .addComponent(label24)
                                 .addGap(18, 18, 18)
                                 .addComponent(tcpStreamFpgaLinkIpTextField, GroupLayout.PREFERRED_SIZE, 134, GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panel6Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                             .addGroup(panel6Layout.createSequentialGroup()
                                 .addComponent(label25)
@@ -1242,13 +1243,13 @@ public class SNLinkForm extends JFrame {
                     .addGroup(panel6Layout.createSequentialGroup()
                         .addGroup(panel6Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                             .addComponent(etTcpPortLabel3)
-                            .addComponent(label8)
                             .addComponent(tcpStreamMaxBufferSpinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                             .addComponent(tcpStreamPortSpinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                             .addComponent(label22)
                             .addComponent(tcpStreamSocketWaitSpinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                             .addComponent(label23)
-                            .addComponent(tcpStreamSubnetTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tcpStreamSubnetTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label8))
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panel6Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                             .addComponent(tcpStreamsSpinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)

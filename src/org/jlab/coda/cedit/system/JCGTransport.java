@@ -90,7 +90,7 @@ public class JCGTransport {
                         int etChunkSize, int inputEtChunkSize, String single, int etGroups, int etRecvBuf, int etSendBuf,
                         String etMethodCon, String etHostName, String etSubNet, String destinationEtCreate, int emuDirectPort,
                         int emuMaxBuffer, int emuWait, String emuSubNet, String fpgaLinkIp, boolean emuFatPipe,
-                        int tcpStreamMaxBuffer, int tcpStreamWait, String tcpStreamSubNet, String tcpStreamFpgaLinkIp, int emuTcpStreams,
+                        int tcpStreamDirectPort, int tcpStreamMaxBuffer, int tcpStreamWait, String tcpStreamSubNet, String tcpStreamFpgaLinkIp, int emuTcpStreams,
                         String udpHost, int udpPort, int udpBufferSize,  String UdpFpgaLinkIp, int udpStreams, boolean isLB, boolean isErsap,
                         String fileName, String fileType, long fileSplit, int fileInternalBuffer, boolean noLink,
                         int compression, int compressionThreads) {
@@ -123,6 +123,7 @@ public class JCGTransport {
         this.UdpFpgaLinkIp = UdpFpgaLinkIp;
         this.emuFatPipe = emuFatPipe;
 
+        this.tcpStreamDirectPort = tcpStreamDirectPort;
         this.tcpStreamMaxBuffer = tcpStreamMaxBuffer;
         this.tcpStreamWait = tcpStreamWait;
         this.tcpStreamSubNet = tcpStreamSubNet;
