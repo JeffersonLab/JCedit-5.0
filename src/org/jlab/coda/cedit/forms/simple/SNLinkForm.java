@@ -346,7 +346,6 @@ public class SNLinkForm extends JFrame {
         emuSubnetTextField.setEnabled(true);
         fpgaLinkIpTextField.setEnabled(true);
         emuFatPipeCheckBox.setEnabled(true);
-        tcpStreamsSpinner.setEnabled(true);
     }
 
     private void disableEmu() {
@@ -356,7 +355,6 @@ public class SNLinkForm extends JFrame {
         emuSubnetTextField.setEnabled(false);
         fpgaLinkIpTextField.setEnabled(false);
         emuFatPipeCheckBox.setEnabled(false);
-        tcpStreamsSpinner.setEnabled(false);
     }
 
     private void enableTcpStream() {
@@ -1119,20 +1117,6 @@ public class SNLinkForm extends JFrame {
                         .addContainerGap()
                         .addGroup(panel5Layout.createParallelGroup()
                             .addGroup(panel5Layout.createSequentialGroup()
-                                .addComponent(label11)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(UdpHostTextField)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(label12)
-                                .addGap(14, 14, 14)
-                                .addComponent(label13)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(UdpPortSpinner, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(label14)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(UdpBufferSizeSpinner, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE))
-                            .addGroup(panel5Layout.createSequentialGroup()
                                 .addComponent(label15)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(UdpFpgaLinkIp, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE)
@@ -1140,10 +1124,27 @@ public class SNLinkForm extends JFrame {
                                 .addComponent(label16)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(UdpStreamsSpinner, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE)
-                                .addGap(63, 63, 63)
+                                .addGap(59, 59, 59))
+                            .addGroup(panel5Layout.createSequentialGroup()
+                                .addComponent(label11)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(UdpHostTextField, GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(label12)
+                                .addGap(41, 41, 41)
+                                .addComponent(label13)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(UdpPortSpinner, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
+                                .addGap(30, 30, 30)))
+                        .addGroup(panel5Layout.createParallelGroup()
+                            .addGroup(GroupLayout.Alignment.TRAILING, panel5Layout.createSequentialGroup()
                                 .addComponent(UdpUseLoadBalancer)
                                 .addGap(18, 18, 18)
-                                .addComponent(UdpUseErsap)))
+                                .addComponent(UdpUseErsap))
+                            .addGroup(GroupLayout.Alignment.TRAILING, panel5Layout.createSequentialGroup()
+                                .addComponent(label14)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(UdpBufferSizeSpinner, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE)))
                         .addGap(34, 34, 34))
             );
             panel5Layout.setVerticalGroup(
@@ -1151,12 +1152,12 @@ public class SNLinkForm extends JFrame {
                     .addGroup(panel5Layout.createSequentialGroup()
                         .addGroup(panel5Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                             .addComponent(label11)
-                            .addComponent(UdpHostTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label12)
-                            .addComponent(label13)
                             .addComponent(UdpBufferSizeSpinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                             .addComponent(label14)
-                            .addComponent(UdpPortSpinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                            .addComponent(UdpPortSpinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label13)
+                            .addComponent(label12)
+                            .addComponent(UdpHostTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(panel5Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                             .addComponent(label15)
@@ -1560,7 +1561,7 @@ public class SNLinkForm extends JFrame {
             destinationTransport.setTcpStreamWait((int) tcpStreamSocketWaitSpinner.getValue());
             destinationTransport.setTcpStreamSubNet(tcpStreamSubnetTextField.getText());
             destinationTransport.setTcpStreamFpgaLinkIp(tcpStreamFpgaLinkIpTextField.getText());
-            destinationTransport.setEmuTcpStreams((Integer)tcpStreamsSpinner.getValue());
+            destinationTransport.setEmuTcpStreams((int)tcpStreamsSpinner.getValue());
             destinationTransport.setTcpStreamFpgaLinkIp(tcpStreamFpgaLinkIpTextField.getText());
 
             //Udp

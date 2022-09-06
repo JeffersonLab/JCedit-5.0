@@ -911,11 +911,11 @@
          <class>org.jdesktop.layout.GroupLayout</class>
          <void method="setProperty">
           <string>$horizontalGroup</string>
-          <string>par l {seq {space :p::p, par l {seq {comp label11:::p::p, space :p::p, comp UdpHostTextField:::::x, space :p::p, comp label12:::p::p, space :14:14:p, comp label13:::p::p, space :::p, comp UdpPortSpinner:::p:86:p, space :::x, comp label14:::p::p, space :::p, comp UdpBufferSizeSpinner:::p:93:p}, seq {comp label15:::p::p, space :::p, comp UdpFpgaLinkIp:::p:135:p, space ::26:x, comp label16:::p::p, space :::p, comp UdpStreamsSpinner:::p:93:p, space :p:63:p, comp UdpUseLoadBalancer:::p::p, space s:::p, comp UdpUseErsap:::p::p}}, space :p:34:p}}</string>
+          <string>par l {seq {space :p::p, par l {seq l {comp label15:::p::p, space :::p, comp UdpFpgaLinkIp:::p:135:p, space ::26:x, comp label16:::p::p, space :::p, comp UdpStreamsSpinner:::p:93:p, space :p:59:p}, seq l {comp label11:::p::p, space :::p, comp UdpHostTextField::::140:x, space :::p, comp label12:::p::p, space :p:41:p, comp label13:::p::p, space :::p, comp UdpPortSpinner:::p:86:p, space :p:30:p}}, par l {seq t {comp UdpUseLoadBalancer:::p::p, space s:::p, comp UdpUseErsap:::p::p}, seq t {comp label14:::p::p, space :::p, comp UdpBufferSizeSpinner:::p:93:p}}, space :p:34:p}}</string>
          </void>
          <void method="setProperty">
           <string>$verticalGroup</string>
-          <string>par l {seq {par b {comp label11::b:p::p, comp UdpHostTextField::b:p::p, comp label12::b:p::p, comp label13::b:p::p, comp UdpBufferSizeSpinner::b:p::p, comp label14::b:p::p, comp UdpPortSpinner::b:p::p}, space u:::p, par b {comp label15::b:p::p, comp UdpUseErsap::b:p::p, comp UdpUseLoadBalancer::b:p::p, comp UdpStreamsSpinner::b:p::p, comp label16::b:p::p, comp UdpFpgaLinkIp::b:p::p}, space :0:13:x}}</string>
+          <string>par l {seq {par b {comp label11::b:p::p, comp UdpBufferSizeSpinner::b:p::p, comp label14::b:p::p, comp UdpPortSpinner::b:p::p, comp label13::b:p::p, comp label12::b:p::p, comp UdpHostTextField::b:p::p}, space u:::p, par b {comp label15::b:p::p, comp UdpUseErsap::b:p::p, comp UdpUseLoadBalancer::b:p::p, comp UdpStreamsSpinner::b:p::p, comp label16::b:p::p, comp UdpFpgaLinkIp::b:p::p}, space :0:13:x}}</string>
          </void>
         </object>
         <void method="setProperty">

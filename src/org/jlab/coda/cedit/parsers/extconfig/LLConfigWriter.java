@@ -1039,6 +1039,34 @@ public class LLConfigWriter {
                                             out.write("emuTimeOut            = " + tt.getEmuWait() + "\n");
 
                                             break;
+                                        case "UdpStream":
+                                            out.write("output                = " + tt.getTransClass() + "\n");
+                                            out.write("emuName               = " + l.getDestinationComponentName() + "\n");
+                                            out.write("emuHost               = " + tt.getUdpHost() + "\n");
+                                            out.write("emuPort               = " + tt.getUdpPort() + "\n");
+                                            if (cmp.getType().equals(ACodaType.FPGA.name())) {
+                                                out.write("fpgaNet               = " + tt.getUdpFpgaLinkIp() + "\n");
+                                                out.write("emuNet                = NA" + "\n");
+                                            }
+                                            out.write("emuMaxBufferSize      = " + tt.getUdpBufferSize() + "\n");
+                                            out.write("emuLinks            = " + tt.getUdpStreams() + "\n");
+
+                                            break;
+                                        case "TcpStream":
+                                            out.write("output                = " + tt.getTransClass() + "\n");
+                                            out.write("emuName               = " + l.getDestinationComponentName() + "\n");
+                                            out.write("emuPort               = " + tt.getTcpStreamDirectPort() + "\n");
+                                            if (cmp.getType().equals(ACodaType.FPGA.name())) {
+                                                out.write("fpgaNet               = " + tt.getTcpStreamFpgaLinkIp() + "\n");
+                                                out.write("emuNet                = NA" + "\n");
+                                            } else {
+                                                out.write("fpgaNet               = NA" + "\n");
+                                                out.write("emuNet                = " + tt.getTcpStreamSubNet() + "\n");
+                                            }
+                                            out.write("emuMaxBufferSize      = " + tt.getTcpStreamMaxBuffer() + "\n");
+                                            out.write("emuLinks            = " + tt.getEmuTcpStreams() + "\n");
+
+                                            break;
                                         case "File":
                                             out.write("output                = " + tt.getTransClass() + "\n");
                                             out.write("dataFile              = " + tt.getFileName() + "\n");
