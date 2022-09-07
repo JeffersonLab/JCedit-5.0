@@ -1049,7 +1049,7 @@ public class LLConfigWriter {
                                                 out.write("emuNet                = NA" + "\n");
                                             }
                                             out.write("emuMaxBufferSize      = " + tt.getUdpBufferSize() + "\n");
-                                            out.write("emuLinks            = " + tt.getUdpStreams() + "\n");
+                                            out.write("emuLinks              = " + tt.getUdpStreams() + "\n");
 
                                             break;
                                         case "TcpStream":
@@ -1064,7 +1064,7 @@ public class LLConfigWriter {
                                                 out.write("emuNet                = " + tt.getTcpStreamSubNet() + "\n");
                                             }
                                             out.write("emuMaxBufferSize      = " + tt.getTcpStreamMaxBuffer() + "\n");
-                                            out.write("emuLinks            = " + tt.getEmuTcpStreams() + "\n");
+                                            out.write("emuLinks              = " + tt.getEmuTcpStreams() + "\n");
 
                                             break;
                                         case "File":
