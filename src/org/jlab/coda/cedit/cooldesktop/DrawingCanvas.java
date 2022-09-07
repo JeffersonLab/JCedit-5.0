@@ -667,19 +667,25 @@ public class DrawingCanvas extends JPanel {
 
                 new SNLinkForm(me, gle,isEditable).setVisible(true);
             } else {
-                gle = new JCGLink();
-                gle.setName(lineStartGc + "_" + lineEndGc);
-                gle.setStartX((int) lineStartX);
-                gle.setStartY((int) lineStartY);
-                gle.setEndX((int)lineEndX);
-                gle.setEndY((int)lineEndY);
-                gle.setSourceComponentName(GCMPs.get(lineStartGc).getName());
-                gle.setSourceComponentType(GCMPs.get(lineStartGc).getType());
-                gle.setDestinationComponentName(GCMPs.get(lineEndGc).getName());
-                gle.setDestinationComponentType(GCMPs.get(lineEndGc).getType());
-                gle.setSourceModuleName(GCMPs.get(lineStartGc).getModule().getName());
-                gle.setDestinationModuleName(GCMPs.get(lineEndGc).getModule().getName());
-                new SNLinkForm(me, gle,isEditable).setVisible(true);
+                //09.07.22 vg
+                // linked components must be streaming or non-streaming.
+                // We cannot have mixture of streaming and non-streaming components in the link.
+                if( (isLineStartGcStreaming && isLineEndGcStreaming) ||
+                        (!isLineStartGcStreaming && !isLineEndGcStreaming)) {
+                    gle = new JCGLink();
+                    gle.setName(lineStartGc + "_" + lineEndGc);
+                    gle.setStartX((int) lineStartX);
+                    gle.setStartY((int) lineStartY);
+                    gle.setEndX((int) lineEndX);
+                    gle.setEndY((int) lineEndY);
+                    gle.setSourceComponentName(GCMPs.get(lineStartGc).getName());
+                    gle.setSourceComponentType(GCMPs.get(lineStartGc).getType());
+                    gle.setDestinationComponentName(GCMPs.get(lineEndGc).getName());
+                    gle.setDestinationComponentType(GCMPs.get(lineEndGc).getType());
+                    gle.setSourceModuleName(GCMPs.get(lineStartGc).getModule().getName());
+                    gle.setDestinationModuleName(GCMPs.get(lineEndGc).getModule().getName());
+                    new SNLinkForm(me, gle, isEditable).setVisible(true);
+                }
             }
         } else {
 //            JOptionPane.showMessageDialog(null,"Link not allowed.", "COOL Warning",JOptionPane.WARNING_MESSAGE);
