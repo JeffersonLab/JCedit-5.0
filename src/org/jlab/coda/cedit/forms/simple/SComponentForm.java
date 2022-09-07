@@ -336,7 +336,7 @@ public class SComponentForm extends JFrame {
 
         masterRocCheckBox.setSelected(comp.isMaster());
 
-        streamingCheckBox.setSelected(comp.isCodaVersion2());
+        streamingCheckBox.setSelected(comp.isStreaming());
     }
 
     public void addProcessCombo(String name){
@@ -460,9 +460,9 @@ public class SComponentForm extends JFrame {
             }
             if(streamingCheckBox.isEnabled()){
                 if(streamingCheckBox.isSelected()){
-                    component.setCodaVersion2(true);
+                    component.setStreaming(true);
                 } else {
-                    component.setCodaVersion2(false);
+                    component.setStreaming(false);
                 }
             }
 

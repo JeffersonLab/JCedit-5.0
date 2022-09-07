@@ -786,7 +786,7 @@ public class JCTools {
                 c.getType(), c.getSubType(), c.getRol1(), c.getRol1UsrString(),
                 c.getRol2(), c.getRol2UsrString(), c.getDescription(),
                 c.getUserConfig(), c.getPriority(), c.isCodaComponent(),
-                c.isCodaVersion2(), c.isPreDefined(), c.getNodeList(),
+                c.isStreaming(), c.isPreDefined(), c.getNodeList(),
                 c.getCommand(), c.isMaster(), c.getModule(), c.getLnks(),
                 c.getTrnsports(), c.getPrcesses(), c.getImage());
     }

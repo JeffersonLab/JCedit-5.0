@@ -99,6 +99,7 @@ public class DrawingCanvas extends JPanel {
     private double lineStartX, lineStartY, lineEndX, lineEndY;
     private String lineStartGc = "undefined", lineEndGc = "undefined";
     private String lineStartGcType = "undefined", lineEndGcType = "undefined";
+    private boolean isLineStartGcStreaming = false, isLineEndGcStreaming = false;
 
     private ArrayList<String> sourceNetworkInfo = new ArrayList<String>();
     private ArrayList<String> destinationNetworkInfo = new ArrayList<String>();
@@ -566,6 +567,7 @@ public class DrawingCanvas extends JPanel {
                 lineStartY = gc.getY()+gc.getH()/2;
                 lineStartGc = gc.getName();
                 lineStartGcType = gc.getType();
+                isLineStartGcStreaming = gc.isStreaming();
                 selectedGCmpName = lineStartGc;
                 return;
             } else {
@@ -583,6 +585,7 @@ public class DrawingCanvas extends JPanel {
                 lineEndY = gc.getY()+gc.getH()/2;
                 lineEndGc = gc.getName();
                 lineEndGcType = gc.getType();
+                isLineEndGcStreaming = gc.isStreaming();
                 return;
             } else {
                 lineEndX = 0;
@@ -646,8 +649,14 @@ public class DrawingCanvas extends JPanel {
             JCGLink gle = null;
             for(JCGLink l:GCMPs.get(lineEndGc).getLnks()){
                 if(l.getDestinationComponentName().equals(lineEndGc) && l.getSourceComponentName().equals(lineStartGc)){
-                    gle = l;
-                    break;
+                    //09.07.22 vg
+                    // linked components must be streaming or non-streaming.
+                    // We cannot have mixture of streaming and non-streaming components in the link.
+                    if( (isLineStartGcStreaming && isLineEndGcStreaming) ||
+                            (!isLineStartGcStreaming && !isLineEndGcStreaming)) {
+                        gle = l;
+                        break;
+                    }
                 }
             }
             if(gle!=null){

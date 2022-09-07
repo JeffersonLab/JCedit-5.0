@@ -105,7 +105,7 @@ public class LLConfigWriter {
             dCfg = new ExternalConfig();
             dCfg.setName(cmp.getName());
             dCfg.setType(cmp.getType());
-            dCfg.setStreaming(cmp.isCodaVersion2());
+            dCfg.setStreaming(cmp.isStreaming());
         }
 
         // get component input links and get destination transports and channels
@@ -487,7 +487,7 @@ public class LLConfigWriter {
             out.append("   <modules>\n\n");
             if (cmp.getType().equals(ACodaType.EBER.name())) {
                 // EB module =============================================
-                if (cmp.isCodaVersion2()) {
+                if (cmp.isStreaming()) {
                     if (isEndianLittle) {
                         out.append("     <EbModule class=\"" + "Aggregator" + "\" " +
                                 "streaming=\"" + "on" + "\" " +
@@ -554,7 +554,7 @@ public class LLConfigWriter {
                 out.append("     </EbModule>\n\n");
 
                 // ER module =============================================
-                if (cmp.isCodaVersion2()) {
+                if (cmp.isStreaming()) {
                     if (isEndianLittle) {
                         out.append("     <ErModule class=\"" + md.getModuleClass(ACodaType.ER.name()) + "\" " +
                                 "streaming=\"" + "on" + "\" " +
@@ -630,7 +630,7 @@ public class LLConfigWriter {
             out.append("   <modules>\n\n");
             // ------ ER --------
             if (cmp.getType().equals(ACodaType.ER.name())) {
-                if (cmp.isCodaVersion2()) {
+                if (cmp.isStreaming()) {
                     out.append("     <ErModule class=\"" + md.getModuleClass(ACodaType.ER.name()) + "\" " +
                             "streaming=\"" + "on" + "\" " +
                             "id=\"" + md.getId() + "\" " +
@@ -646,7 +646,7 @@ public class LLConfigWriter {
                 }
                 // ------ GT --------
             } else if (cmp.getType().equals(ACodaType.GT.name())) {
-                if (cmp.isCodaVersion2()) {
+                if (cmp.isStreaming()) {
                     out.append("     <GTriggerModule class=\"" + md.getModuleClass(ACodaType.GT.name()) + "\" " +
                             "streaming=\"" + "on" + "\" " +
                             "id=\"" + md.getId() + "\" " +
@@ -661,7 +661,7 @@ public class LLConfigWriter {
 
                 // ------ FPGA --------
             } else if (cmp.getType().equals(ACodaType.FPGA.name())) {
-                if (cmp.isCodaVersion2()) {
+                if (cmp.isStreaming()) {
                     out.append("     <FPGATriggerModule class=\"" + md.getModuleClass(ACodaType.FPGA.name()) + "\" " +
                             "streaming=\"" + "on" + "\" " +
                             "id=\"" + md.getId() + "\" " +
@@ -676,7 +676,7 @@ public class LLConfigWriter {
 
                 // ------ USR --------
             } else if (cmp.getType().equals(ACodaType.USR.name())) {
-                if (cmp.isCodaVersion2()) {
+                if (cmp.isStreaming()) {
                     out.append("     <UsrModule class=\"" + cmp.getUserConfig() + "\" " +
                             "streaming=\"" + "on" + "\" " +
                             "id=\"" + md.getId() + "\" " +
@@ -690,7 +690,7 @@ public class LLConfigWriter {
                 // ------ TS --------
             } else if (cmp.getType().equals(ACodaType.TS.name())) {
                 List<String> r_list = new ArrayList<>();
-                if (cmp.isCodaVersion2()) {
+                if (cmp.isStreaming()) {
                     for (JCGComponent c : components) {
                         if (c.getType().equals(ACodaType.ROC.name())) {
                             r_list.add(c.getName());
@@ -720,7 +720,7 @@ public class LLConfigWriter {
 
                 // ------ ROC --------
             } else if (cmp.getType().equals(ACodaType.ROC.name())) {
-                if (cmp.isCodaVersion2()) {
+                if (cmp.isStreaming()) {
                     out.append("     <RocModule class=\"" + md.getModuleClass(ACodaType.ROC.name()) + "\" " +
                             "streaming=\"" + "on" + "\" " +
                             "id=\"" + md.getId() + "\" " +
@@ -737,7 +737,7 @@ public class LLConfigWriter {
 
                 // -------- All the rest of types (DC, PEB, SEB, EB) -----
             } else {
-                if (cmp.isCodaVersion2()) {
+                if (cmp.isStreaming()) {
                     out.append("     <EbModule class=\"" + "Aggregator" + "\" " +
                             "streaming=\"" + "on" + "\" " +
                             "id=\"" + md.getId() + "\" " +

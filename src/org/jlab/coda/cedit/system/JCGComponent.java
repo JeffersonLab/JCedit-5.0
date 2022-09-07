@@ -52,7 +52,7 @@ public class JCGComponent {
     private String                                 userConfig           = "undefined";
     private int                                    priority             = -1;
     private boolean                                codaComponent        = true;
-    private boolean                                codaVersion2         = false;
+    private boolean                                isStreaming          = false;
     private boolean                                preDefined           = false;
     private String                                 nodeList             = "undefined";
     private String                                 command              = "undefined";
@@ -89,7 +89,7 @@ public class JCGComponent {
     public JCGComponent(double x, double y, double gridX, double gridY, double w, double h, double px, double py,
                         int id, String name, String type, String subType, String rol1, String rol1UsrString,
                         String rol2, String rol2UsrString, String description, String userConfig, int priority,
-                        boolean codaComponent, boolean codaVersion2, boolean preDefined, String nodeList,
+                        boolean codaComponent, boolean isStreaming, boolean preDefined, String nodeList,
                         String command, boolean isMaster, JCGModule module, Set<JCGLink> links,
                         Set<JCGTransport> transports, Set<JCGProcess> processes, BufferedImage image) {
         this.x = x;
@@ -112,7 +112,7 @@ public class JCGComponent {
         this.userConfig = userConfig;
         this.priority = priority;
         this.codaComponent = codaComponent;
-        this.codaVersion2 = codaVersion2;
+        this.isStreaming = isStreaming;
         this.preDefined = preDefined;
         this.nodeList = nodeList;
         this.command = command;
@@ -141,12 +141,12 @@ public class JCGComponent {
         this.codaComponent = codaComponent;
     }
 
-    public boolean isCodaVersion2() {
-        return codaVersion2;
+    public boolean isStreaming() {
+        return isStreaming;
     }
 
-    public void setCodaVersion2(boolean codaVersion2) {
-        this.codaVersion2 = codaVersion2;
+    public void setStreaming(boolean codaVersion2) {
+        this.isStreaming = codaVersion2;
     }
 
     public String getName() {
@@ -510,7 +510,7 @@ public class JCGComponent {
 
         JCGComponent that = (JCGComponent) o;
         if (codaComponent != that.isCodaComponent()) return false;
-        if (codaVersion2 != that.isCodaVersion2()) return false;
+        if (isStreaming != that.isStreaming()) return false;
         if (Double.compare(that.getH(), h) != 0) return false;
         if (id != that.id) return false;
         if (isMaster != that.isMaster) return false;
@@ -599,7 +599,7 @@ public class JCGComponent {
                 ",\n description='" + description + '\'' +
                 ",\n userConfig='" + userConfig + '\'' +
                 ",\n codaComponent=" + codaComponent +
-                ",\n codaVersion2=" + codaVersion2 +
+                ",\n codaVersion2=" + isStreaming +
                 ",\n preDefined=" + preDefined +
                 ",\n nodeList='" + nodeList + '\'' +
                 ",\n command='" + command + '\'' +

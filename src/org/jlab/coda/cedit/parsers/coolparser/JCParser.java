@@ -365,7 +365,7 @@ public class JCParser {
 
             tmps = getValue(x,"representsCoda2Component");
             if(tmps!=null && tmps.equalsIgnoreCase("true")){
-                cmp.setCodaVersion2(true);
+                cmp.setStreaming(true);
             }
 
             tmps = getValue(x,"isCodaComponent");
