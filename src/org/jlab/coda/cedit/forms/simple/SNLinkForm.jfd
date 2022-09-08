@@ -1093,7 +1093,7 @@
            <object class="javax.swing.SpinnerNumberModel">
             <int>1</int>
             <int>1</int>
-            <int>4</int>
+            <int>16</int>
             <int>1</int>
            </object>
           </void>

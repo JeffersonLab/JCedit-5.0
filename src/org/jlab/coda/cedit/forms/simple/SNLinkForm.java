@@ -1120,7 +1120,7 @@ public class SNLinkForm extends JFrame {
             });
 
             //---- UdpStreamsSpinner ----
-            UdpStreamsSpinner.setModel(new SpinnerNumberModel(1, 1, 4, 1));
+            UdpStreamsSpinner.setModel(new SpinnerNumberModel(1, 1, 16, 1));
 
             //---- label16 ----
             label16.setText("Streams");
