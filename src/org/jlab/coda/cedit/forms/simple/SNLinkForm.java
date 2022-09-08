@@ -43,6 +43,8 @@ public class SNLinkForm extends JFrame {
     private DrawingCanvas canvas;
     private JCGTransport destinationTransport = null;
     private JCGTransport sourceTransport = null;
+    private JCGComponent destinationComponent = null;
+    private JCGComponent sourceComponent = null;
     private JCGSetup stp = JCGSetup.getInstance();
 
     private ComboBoxModel comboModel;
@@ -56,9 +58,6 @@ public class SNLinkForm extends JFrame {
             comboModel = new DefaultComboBoxModel(new String[]{
                     "File",
                     "Et",
-                    "EmuSocket",
-                    "TcpStream",
-                    "UdpStream",
                     "Debug",
                     "None"
             });
@@ -66,10 +65,15 @@ public class SNLinkForm extends JFrame {
             comboModel = new DefaultComboBoxModel(new String[]{
                     "EmuSocket+Et",
                     "EmuSocket",
+            });
+        } else if (gl.getDestinationComponentType().equals(ACodaType.FPGA.name())) {
+            comboModel = new DefaultComboBoxModel(new String[]{
+                    "Et",
+                    "EmuSocket",
                     "TcpStream",
                     "UdpStream"
             });
-        } else if (gl.getDestinationComponentType().equals(ACodaType.ER.name())) {
+        } else if (gl.getDestinationComponentType().equals(ACodaType.DC.name())) {
             comboModel = new DefaultComboBoxModel(new String[]{
                     "Et",
                     "EmuSocket",
@@ -80,8 +84,6 @@ public class SNLinkForm extends JFrame {
             comboModel = new DefaultComboBoxModel(new String[]{
                     "Et",
                     "EmuSocket",
-                    "TcpStream",
-                    "UdpStream"
             });
         }
 
@@ -133,12 +135,14 @@ public class SNLinkForm extends JFrame {
         String StName = SName + "_transport";
         String DtName = DName + "_transport";
 
+        destinationComponent = DrawingCanvas.getComp(DName);
+        sourceComponent = DrawingCanvas.getComp(SName);
         // get destination component transport
-        if (DrawingCanvas.getComp(DName).getTrnsports() != null &&
-                !DrawingCanvas.getComp(DName).getTrnsports().isEmpty()) {
+        if (destinationComponent.getTrnsports() != null &&
+                !destinationComponent.getTrnsports().isEmpty()) {
 
             // destination transport
-            for (JCGTransport tr : DrawingCanvas.getComp(DName).getTrnsports()) {
+            for (JCGTransport tr : destinationComponent.getTrnsports()) {
                 if (tr.getName().equals(DtName)) {
                     destinationTransport = tr;
                     break;
@@ -146,7 +150,7 @@ public class SNLinkForm extends JFrame {
             }
 
             if (destinationTransport != null) {
-                if (DrawingCanvas.getComp(DName).getType().equals(ACodaType.FILE.name())) {
+                if (destinationComponent.getType().equals(ACodaType.FILE.name())) {
                     destinationTransport.setEtName("undefined");
                     destinationTransport.setEtSubNet("undefined");
                     destinationTransport.setNoLink(false);
@@ -154,7 +158,7 @@ public class SNLinkForm extends JFrame {
             }
 
             // source transport
-            for (JCGTransport tr : DrawingCanvas.getComp(SName).getTrnsports()) {
+            for (JCGTransport tr : sourceComponent.getTrnsports()) {
                 if (tr.getName().equals(StName)) {
                     sourceTransport = tr;
                     break;
@@ -167,7 +171,7 @@ public class SNLinkForm extends JFrame {
             sourceTransport = new JCGTransport();
             sourceTransport.setName(StName);
             sourceTransport.setNoLink(false);
-            DrawingCanvas.getComp(SName).addTrnsport(sourceTransport);
+            sourceComponent.addTrnsport(sourceTransport);
         }
 
         // define a default transport for the destination component if it is not defined
@@ -364,6 +368,9 @@ public class SNLinkForm extends JFrame {
         tcpStreamSubnetTextField.setEnabled(true);
         tcpStreamFpgaLinkIpTextField.setEnabled(true);
         tcpStreamsSpinner.setEnabled(true);
+
+        destinationComponent.setStreaming(true);
+        sourceComponent.setStreaming(true);
     }
 
     private void disableTcpStream() {
@@ -373,6 +380,9 @@ public class SNLinkForm extends JFrame {
         tcpStreamSubnetTextField.setEnabled(false);
         tcpStreamFpgaLinkIpTextField.setEnabled(false);
         tcpStreamsSpinner.setEnabled(false);
+
+        destinationComponent.setStreaming(false);
+        sourceComponent.setStreaming(false);
     }
 
     private void enableUdp() {
@@ -383,6 +393,9 @@ public class SNLinkForm extends JFrame {
         UdpBufferSizeSpinner.setEnabled(true);
         UdpFpgaLinkIp.setEnabled(true);
         UdpStreamsSpinner.setEnabled(true);
+
+        destinationComponent.setStreaming(true);
+        sourceComponent.setStreaming(true);
     }
 
     private void disableUdp() {
@@ -393,6 +406,9 @@ public class SNLinkForm extends JFrame {
         UdpBufferSizeSpinner.setEnabled(false);
         UdpFpgaLinkIp.setEnabled(false);
         UdpStreamsSpinner.setEnabled(false);
+
+        destinationComponent.setStreaming(false);
+        sourceComponent.setStreaming(false);
     }
 
     private void enableFile() {
@@ -993,7 +1009,7 @@ public class SNLinkForm extends JFrame {
             emuSocketWaitSpinner.setModel(new SpinnerNumberModel(5, 0, 30, 1));
 
             //---- emuPortSpinner ----
-            emuPortSpinner.setModel(new SpinnerNumberModel(46100, 1, 99999, 1));
+            emuPortSpinner.setModel(new SpinnerNumberModel(46000, 1, 99999, 1));
 
             //---- label17 ----
             label17.setText("Subnet");
@@ -1507,7 +1523,7 @@ public class SNLinkForm extends JFrame {
 
             if (etHostTextField.isEnabled()) {
                 if (!JCUtil.IP_validate(etHostTextField.getText())) {
-                    showWarning("Host name must be a valide IP address (e.g. 129.57.29.62)");
+                    showWarning("Host name must be a valid IP address (e.g. 129.57.29.62)");
                     return;
                 }
             }
@@ -1624,7 +1640,7 @@ public class SNLinkForm extends JFrame {
             enableEtCustomization(false);
 
             // emuSocket
-            emuPortSpinner.setValue(46100);
+            emuPortSpinner.setValue(46000);
             emuSocketWaitSpinner.setValue(0);
             emuMaxBufferSpinner.setValue(2100);
             emuSubnetTextField.setText("");

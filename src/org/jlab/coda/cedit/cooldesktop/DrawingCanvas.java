@@ -621,9 +621,6 @@ public class DrawingCanvas extends JPanel {
                         endType.equals(ACodaType.USR.name());
                 break;
             case EBER:
-                res = endType.equals(ACodaType.FILE.name()) ||
-                        endType.equals(ACodaType.USR.name());
-                break;
             case ER:
                 res = endType.equals(ACodaType.FILE.name()) ||
                         endType.equals(ACodaType.USR.name());
@@ -649,14 +646,8 @@ public class DrawingCanvas extends JPanel {
             JCGLink gle = null;
             for(JCGLink l:GCMPs.get(lineEndGc).getLnks()){
                 if(l.getDestinationComponentName().equals(lineEndGc) && l.getSourceComponentName().equals(lineStartGc)){
-                    //09.07.22 vg
-                    // linked components must be streaming or non-streaming.
-                    // We cannot have mixture of streaming and non-streaming components in the link.
-                    if( (isLineStartGcStreaming && isLineEndGcStreaming) ||
-                            (!isLineStartGcStreaming && !isLineEndGcStreaming)) {
-                        gle = l;
+                         gle = l;
                         break;
-                    }
                 }
             }
             if(gle!=null){
@@ -667,11 +658,6 @@ public class DrawingCanvas extends JPanel {
 
                 new SNLinkForm(me, gle,isEditable).setVisible(true);
             } else {
-                //09.07.22 vg
-                // linked components must be streaming or non-streaming.
-                // We cannot have mixture of streaming and non-streaming components in the link.
-                if( (isLineStartGcStreaming && isLineEndGcStreaming) ||
-                        (!isLineStartGcStreaming && !isLineEndGcStreaming)) {
                     gle = new JCGLink();
                     gle.setName(lineStartGc + "_" + lineEndGc);
                     gle.setStartX((int) lineStartX);
@@ -685,7 +671,6 @@ public class DrawingCanvas extends JPanel {
                     gle.setSourceModuleName(GCMPs.get(lineStartGc).getModule().getName());
                     gle.setDestinationModuleName(GCMPs.get(lineEndGc).getModule().getName());
                     new SNLinkForm(me, gle, isEditable).setVisible(true);
-                }
             }
         } else {
 //            JOptionPane.showMessageDialog(null,"Link not allowed.", "COOL Warning",JOptionPane.WARNING_MESSAGE);

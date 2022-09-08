@@ -838,8 +838,8 @@
           <string>javax.swing.JSpinner</string>
           <void method="setProperty">
            <string>model</string>
-           <object class="javax.swing.SpinnerNumberModel" id="SpinnerNumberModel2">
-            <int>46100</int>
+           <object class="javax.swing.SpinnerNumberModel">
+            <int>46000</int>
             <int>1</int>
             <int>99999</int>
             <int>1</int>
@@ -1204,7 +1204,12 @@
           <string>javax.swing.JSpinner</string>
           <void method="setProperty">
            <string>model</string>
-           <object idref="SpinnerNumberModel2"/>
+           <object class="javax.swing.SpinnerNumberModel">
+            <int>46100</int>
+            <int>1</int>
+            <int>99999</int>
+            <int>1</int>
+           </object>
           </void>
           <void property="name">
            <string>tcpStreamPortSpinner</string>

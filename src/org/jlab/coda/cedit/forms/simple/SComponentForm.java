@@ -245,7 +245,6 @@ public class SComponentForm extends JFrame {
                 sparsifyCheckBox.setEnabled(false);
                 endianCheckBox.setEnabled(false);
                 masterRocCheckBox.setEnabled(true);
-                streamingCheckBox.setEnabled(true);
                 label4.setEnabled(false);
                 label6.setEnabled(false);
                 break;
@@ -336,7 +335,6 @@ public class SComponentForm extends JFrame {
 
         masterRocCheckBox.setSelected(comp.isMaster());
 
-        streamingCheckBox.setSelected(comp.isStreaming());
     }
 
     public void addProcessCombo(String name){
@@ -457,13 +455,6 @@ public class SComponentForm extends JFrame {
 //                    component.setMaster(false);
 //                    component.setPriority(ACodaType.getEnum(component.getType()).priority());
 //                }
-            }
-            if(streamingCheckBox.isEnabled()){
-                if(streamingCheckBox.isSelected()){
-                    component.setStreaming(true);
-                } else {
-                    component.setStreaming(false);
-                }
             }
 
             updateInMemory(pName);
@@ -624,7 +615,6 @@ public class SComponentForm extends JFrame {
         buildTreadsSpinner = new JSpinner();
         label6 = new JLabel();
         endianCheckBox = new JCheckBox();
-        streamingCheckBox = new JCheckBox();
         okButton = new JButton();
         clearButton = new JButton();
         cancelButton = new JButton();
@@ -835,9 +825,6 @@ public class SComponentForm extends JFrame {
                     }
                 });
 
-                //---- streamingCheckBox ----
-                streamingCheckBox.setText("Streaming");
-
                 GroupLayout contentPanelLayout = new GroupLayout(contentPanel);
                 contentPanel.setLayout(contentPanelLayout);
                 contentPanelLayout.setHorizontalGroup(
@@ -880,12 +867,9 @@ public class SComponentForm extends JFrame {
                                                         .addComponent(Rol1UserStrTextField)
                                                         .addComponent(Rol2UserStrTextField)))
                                                 .addGroup(contentPanelLayout.createSequentialGroup()
-                                                    .addGroup(contentPanelLayout.createParallelGroup()
-                                                        .addGroup(contentPanelLayout.createSequentialGroup()
-                                                            .addGap(24, 24, 24)
-                                                            .addComponent(label11))
-                                                        .addComponent(streamingCheckBox))
-                                                    .addGap(30, 30, 30)
+                                                    .addGap(24, 24, 24)
+                                                    .addComponent(label11)
+                                                    .addGap(63, 63, 63)
                                                     .addGroup(contentPanelLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                                                         .addComponent(typeTextField, GroupLayout.PREFERRED_SIZE, 159, GroupLayout.PREFERRED_SIZE)
                                                         .addGroup(contentPanelLayout.createSequentialGroup()
@@ -942,7 +926,6 @@ public class SComponentForm extends JFrame {
                             .addGroup(contentPanelLayout.createParallelGroup()
                                 .addGroup(contentPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                     .addComponent(label5)
-                                    .addComponent(streamingCheckBox)
                                     .addComponent(idTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                     .addComponent(label13))
                                 .addGroup(contentPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
@@ -1098,7 +1081,6 @@ public class SComponentForm extends JFrame {
     private JSpinner buildTreadsSpinner;
     private JLabel label6;
     private JCheckBox endianCheckBox;
-    private JCheckBox streamingCheckBox;
     private JButton okButton;
     private JButton clearButton;
     private JButton cancelButton;

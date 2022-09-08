@@ -48,7 +48,7 @@ public class JCGTransport {
     private String  etSubNet       = "undefined";
     private String  destinationEtCreate = "true";
 
-    private int     emuDirectPort  = 46100;
+    private int     emuDirectPort  = 46000;
     private int     emuMaxBuffer   = 1000000; // in Bytes
     private int     emuWait        = 5;
     private String  emuSubNet      = "undefined";
