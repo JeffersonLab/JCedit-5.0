@@ -10,4 +10,4 @@ setenv CLASSPATH "$CODA/common/jar/*:$CODA/common/jar/jena/*"
 #-Djavax.xml.parsers.SAXParserFactory="com.sun.org.apache.xerces.internal.jaxp.SAXParserFactoryImpl" \
 #org.jlab.coda.cedit.cooldesktop.CDesktopLimited $1
 
-$JAVA_HOME/bin/java -Xms200m -Xmx500m -Dcom.sun.management.jmxremote org.jlab.coda.cedit.cooldesktop.CDesktopLimited $1
+$JAVA_HOME/bin/java -Xms200m -Xmx500m -Dcom.sun.management.jmxremote -Dcom.sun.xml.bind.v2.bytecode.Clastailor.noOptimize org.jlab.coda.cedit.cooldesktop.CDesktopLimited $1

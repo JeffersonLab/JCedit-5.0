@@ -118,9 +118,13 @@ public class SComponentForm extends JFrame {
         } else if(comp.getType().equals(ACodaType.EBER.name())){
             priorityModel = new SpinnerNumberModel(ACodaType.EBER.priority(), ACodaType.EBER.priority(), ACodaType.EBER.priority()+100, 1);
         } else if(comp.getType().equals(ACodaType.PEB.name())){
-            priorityModel = new SpinnerNumberModel(ACodaType.PEB.priority(), ACodaType.PEB.priority(), ACodaType.PEB.priority()+100, 1);
+            priorityModel = new SpinnerNumberModel(ACodaType.PEB.priority(), ACodaType.PEB.priority(), ACodaType.PEB.priority()+50, 1);
+        } else if(comp.getType().equals(ACodaType.PAGG.name())){
+            priorityModel = new SpinnerNumberModel(ACodaType.PAGG.priority(), ACodaType.PAGG.priority(), ACodaType.PAGG.priority()+50, 1);
         } else if(comp.getType().equals(ACodaType.SEB.name())){
-            priorityModel = new SpinnerNumberModel(ACodaType.SEB.priority(), ACodaType.SEB.priority(), ACodaType.SEB.priority()+100, 1);
+            priorityModel = new SpinnerNumberModel(ACodaType.SEB.priority(), ACodaType.SEB.priority(), ACodaType.SEB.priority()+50, 1);
+        } else if(comp.getType().equals(ACodaType.SAGG.name())){
+            priorityModel = new SpinnerNumberModel(ACodaType.SAGG.priority(), ACodaType.SAGG.priority(), ACodaType.SAGG.priority()+50, 1);
         } else if(comp.getType().equals(ACodaType.DC.name())){
             priorityModel = new SpinnerNumberModel(ACodaType.DC.priority(), ACodaType.DC.priority(), ACodaType.DC.priority()+100, 1);
         } else if(comp.getType().equals(ACodaType.EB.name())){
@@ -1165,8 +1169,12 @@ public class SComponentForm extends JFrame {
                 prioritySpinner.setValue(ACodaType.EBER.priority());
             } else if(component.getType().equals(ACodaType.PEB.name())){
                 prioritySpinner.setValue(ACodaType.PEB.priority());
+            } else if(component.getType().equals(ACodaType.PAGG.name())){
+                prioritySpinner.setValue(ACodaType.PAGG.priority());
             } else if(component.getType().equals(ACodaType.SEB.name())){
                 prioritySpinner.setValue(ACodaType.SEB.priority());
+            } else if(component.getType().equals(ACodaType.SAGG.name())){
+                prioritySpinner.setValue(ACodaType.SAGG.priority());
             } else if(component.getType().equals(ACodaType.DC.name())){
                 prioritySpinner.setValue(ACodaType.DC.priority());
             } else if(component.getType().equals(ACodaType.ROC.name())){

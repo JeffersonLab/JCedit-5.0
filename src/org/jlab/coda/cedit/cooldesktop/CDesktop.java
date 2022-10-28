@@ -72,7 +72,9 @@ public class CDesktop extends JFrame {
             ACodaType.ROC.name(),
             ACodaType.DC.name(),
             ACodaType.PEB.name(),
+            ACodaType.PAGG.name(),
             ACodaType.SEB.name(),
+            ACodaType.SAGG.name(),
             ACodaType.EBER.name(),
             ACodaType.ER.name(),
             ACodaType.SLC.name(),
@@ -420,26 +422,34 @@ public class CDesktop extends JFrame {
                                     selectedType = ACodaType.PEB.name();
                                     break;
                                 case 6:
+                                    cbt(ACodaType.PAGG.name());
+                                    selectedType = ACodaType.PAGG.name();
+                                    break;
+                                case 7:
                                     cbt(ACodaType.SEB.name());
                                     selectedType = ACodaType.SEB.name();
                                     break;
-                                case 7:
+                                case 8:
+                                    cbt(ACodaType.SAGG.name());
+                                    selectedType = ACodaType.SAGG.name();
+                                    break;
+                                case 9:
                                     cbt(ACodaType.EBER.name());
                                     selectedType = ACodaType.EBER.name();
                                     break;
-                                case 8:
+                                case 10:
                                     cbt(ACodaType.ER.name());
                                     selectedType = ACodaType.ER.name();
                                     break;
-                                case 9:
+                                case 11:
                                     cbt(ACodaType.SLC.name());
                                     selectedType = ACodaType.SLC.name();
                                     break;
-                                case 10:
+                                case 12:
                                     cbt(ACodaType.USR.name());
                                     selectedType = ACodaType.USR.name();
                                     break;
-                                case 11:
+                                case 13:
                                     cbt(ACodaType.FILE.name());
                                     selectedType = ACodaType.FILE.name();
                                     break;

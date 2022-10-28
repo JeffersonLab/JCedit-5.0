@@ -282,7 +282,9 @@ public class JCTools {
         List<Integer> rtgIds = new ArrayList<Integer>();
         List<Integer> dcIds = new ArrayList<Integer>();
         List<Integer> pebIds = new ArrayList<Integer>();
+        List<Integer> pagIds = new ArrayList<Integer>();
         List<Integer> sebIds = new ArrayList<Integer>();
+        List<Integer> sagIds = new ArrayList<Integer>();
         List<Integer> eberIds = new ArrayList<Integer>();
         List<Integer> erIds = new ArrayList<Integer>();
         List<Integer> slcIds = new ArrayList<Integer>();
@@ -300,8 +302,12 @@ public class JCTools {
                 dcIds.add(p.getId());
             } else if (t.equals(ACodaType.PEB.name())) {
                 pebIds.add(p.getId());
+            } else if (t.equals(ACodaType.PAGG.name())) {
+                pagIds.add(p.getId());
             } else if (t.equals(ACodaType.SEB.name())) {
                 sebIds.add(p.getId());
+            } else if (t.equals(ACodaType.SAGG.name())) {
+                sagIds.add(p.getId());
             } else if (t.equals(ACodaType.EBER.name())) {
                 eberIds.add(p.getId());
             } else if (t.equals(ACodaType.ER.name())) {
