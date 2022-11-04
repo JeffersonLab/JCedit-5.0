@@ -39,15 +39,13 @@ import org.jlab.coda.cedit.util.JCUtil;
  * @author Vardan Gyurjyan
  */
 public class SNLinkForm extends JFrame {
-    private JCGLink link;
-    private DrawingCanvas canvas;
+    private final JCGLink link;
+    private final DrawingCanvas canvas;
     private JCGTransport destinationTransport = null;
     private JCGTransport sourceTransport = null;
-    private JCGComponent destinationComponent = null;
-    private JCGComponent sourceComponent = null;
-    private JCGSetup stp = JCGSetup.getInstance();
+    private final JCGSetup stp = JCGSetup.getInstance();
 
-    private ComboBoxModel comboModel;
+    private final ComboBoxModel comboModel;
 
     public SNLinkForm(DrawingCanvas canvas, JCGLink gl, boolean editable) {
         this.link = gl;
@@ -65,25 +63,39 @@ public class SNLinkForm extends JFrame {
             comboModel = new DefaultComboBoxModel(new String[]{
                     "EmuSocket+Et",
                     "EmuSocket",
+                    "None"
             });
-        } else if (gl.getDestinationComponentType().equals(ACodaType.FPGA.name())) {
+        } else if (gl.getDestinationComponentType().equals(ACodaType.PEB.name())) {
             comboModel = new DefaultComboBoxModel(new String[]{
                     "Et",
                     "EmuSocket",
-                    "TcpStream",
-                    "UdpStream"
+                    "None"
             });
         } else if (gl.getDestinationComponentType().equals(ACodaType.DC.name())) {
             comboModel = new DefaultComboBoxModel(new String[]{
                     "Et",
                     "EmuSocket",
+                    "None"
+            });
+        } else if (gl.getDestinationComponentType().equals(ACodaType.PAGG.name())) {
+            comboModel = new DefaultComboBoxModel(new String[]{
                     "TcpStream",
-                    "UdpStream"
+                    "UdpStream",
+                    "None"
+            });
+        } else if (gl.getDestinationComponentType().equals(ACodaType.SAGG.name())) {
+            comboModel = new DefaultComboBoxModel(new String[]{
+                    "TcpStream",
+                    "UdpStream",
+                    "None"
             });
         } else {
             comboModel = new DefaultComboBoxModel(new String[]{
                     "Et",
                     "EmuSocket",
+                    "TcpStream",
+                    "UdpStream",
+                    "None"
             });
         }
 
@@ -135,8 +147,9 @@ public class SNLinkForm extends JFrame {
         String StName = SName + "_transport";
         String DtName = DName + "_transport";
 
-        destinationComponent = DrawingCanvas.getComp(DName);
-        sourceComponent = DrawingCanvas.getComp(SName);
+        JCGComponent sourceComponent = canvas.getGCMPs().get(SName);
+        JCGComponent destinationComponent = canvas.getGCMPs().get(DName);
+
         // get destination component transport
         if (destinationComponent.getTrnsports() != null &&
                 !destinationComponent.getTrnsports().isEmpty()) {
@@ -369,8 +382,6 @@ public class SNLinkForm extends JFrame {
         tcpStreamFpgaLinkIpTextField.setEnabled(true);
         tcpStreamsSpinner.setEnabled(true);
 
-        destinationComponent.setStreaming(true);
-        sourceComponent.setStreaming(true);
     }
 
     private void disableTcpStream() {
@@ -381,8 +392,6 @@ public class SNLinkForm extends JFrame {
         tcpStreamFpgaLinkIpTextField.setEnabled(false);
         tcpStreamsSpinner.setEnabled(false);
 
-        destinationComponent.setStreaming(false);
-        sourceComponent.setStreaming(false);
     }
 
     private void enableUdp() {
@@ -394,8 +403,6 @@ public class SNLinkForm extends JFrame {
         UdpFpgaLinkIp.setEnabled(true);
         UdpStreamsSpinner.setEnabled(true);
 
-        destinationComponent.setStreaming(true);
-        sourceComponent.setStreaming(true);
     }
 
     private void disableUdp() {
@@ -407,8 +414,6 @@ public class SNLinkForm extends JFrame {
         UdpFpgaLinkIp.setEnabled(false);
         UdpStreamsSpinner.setEnabled(false);
 
-        destinationComponent.setStreaming(false);
-        sourceComponent.setStreaming(false);
     }
 
     private void enableFile() {
@@ -1601,6 +1606,16 @@ public class SNLinkForm extends JFrame {
             // add links
             canvas.getGCMPs().get(link.getSourceComponentName()).addLnk(link);
             canvas.getGCMPs().get(link.getDestinationComponentName()).addLnk(link);
+
+            if (transportClassComboBox.getSelectedItem().equals("UdpStream") ||
+                    transportClassComboBox.getSelectedItem().equals("TcpStream")) {
+                canvas.getGCMPs().get(link.getSourceComponentName()).setStreaming(true);
+                canvas.getGCMPs().get(link.getDestinationComponentName()).setStreaming(true);
+            } else {
+                canvas.getGCMPs().get(link.getSourceComponentName()).setStreaming(false);
+                canvas.getGCMPs().get(link.getDestinationComponentName()).setStreaming(false);
+            }
+
             canvas.repaint();
             dispose();
 
