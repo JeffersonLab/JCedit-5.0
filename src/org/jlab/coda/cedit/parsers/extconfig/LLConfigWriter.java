@@ -418,7 +418,7 @@ public class LLConfigWriter {
                     out.append("     <client name=\"" + tr.getName() + "\" " +
                             "streaming=\"" + "on" + "\" " +
                             "class=\"TcpStream\" " +
-                            "port=\"" + tr.getEmuDirectPort() + "\" " +
+                            "port=\"" + tr.getTcpStreamDirectPort() + "\" " +
                             "/>\n\n");
                 } else {
                     out.append("     <server name=\"" + tr.getName() + "\" " +
@@ -443,20 +443,44 @@ public class LLConfigWriter {
                     }
                 }
                 if (isInChannel) {
-                    out.append("     <client name=\"" + tr.getName() + "\" " +
-                            "streaming=\"" + "on" + "\" " +
-                            "class=\"UdpStream\"" +
-                            "/>\n\n");
+                    if (tr.getName().equals((cName + "_transport"))) {
+                        out.append("     <client name=\"" + tr.getName() + "\" " +
+                                "streaming=\"" + "on" + "\" " +
+                                "class=\"UdpStream\" " +
+                                "port=\"" + tr.getUdpPort() + "\" " +
+                                "/>\n\n");
+                    } else {
+                        out.append("     <client name=\"" + tr.getName() + "\" " +
+                                "streaming=\"" + "on" + "\" " +
+                                "class=\"UdpStream\"" +
+                                "/>\n\n");
+                    }
                 } else if (isOutChannel){
-                    out.append("     <server name=\"" + tr.getName() + "\" " +
-                            "streaming=\"" + "on" + "\" " +
-                            "class=\"UdpStream\"" +
-                            "/>\n\n");
+                    if (tr.getName().equals((cName + "_transport"))) {
+                        out.append("     <client name=\"" + tr.getName() + "\" " +
+                                "streaming=\"" + "on" + "\" " +
+                                "class=\"UdpStream\" " +
+                                "port=\"" + tr.getUdpPort() + "\" " +
+                                "/>\n\n");
+                    } else {
+                        out.append("     <server name=\"" + tr.getName() + "\" " +
+                                "streaming=\"" + "on" + "\" " +
+                                "class=\"UdpStream\"" +
+                                "/>\n\n");
+                    }
                 } else {
-                    out.append("     <server name=\"" + tr.getName() + "\" " +
-                            "streaming=\"" + "on" + "\" " +
-                            "class=\"UdpStream\"" +
-                            "/>\n\n");
+                    if (tr.getName().equals((cName + "_transport"))) {
+                        out.append("     <client name=\"" + tr.getName() + "\" " +
+                                "streaming=\"" + "on" + "\" " +
+                                "class=\"UdpStream\" " +
+                                "port=\"" + tr.getUdpPort() + "\" " +
+                                "/>\n\n");
+                    } else {
+                        out.append("     <server name=\"" + tr.getName() + "\" " +
+                                "streaming=\"" + "on" + "\" " +
+                                "class=\"UdpStream\"" +
+                                "/>\n\n");
+                    }
                 }
                 break;
 
