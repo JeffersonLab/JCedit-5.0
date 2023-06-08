@@ -553,6 +553,7 @@ public class SComponentForm extends JFrame {
         }
     }
 
+
     private void Rol1UserStrTextFieldKeyPressed(KeyEvent e) {
         okAllButton.setEnabled(true);
         Rol1UserStrTextField.setBackground(Color.YELLOW);
