@@ -25,9 +25,11 @@ package org.jlab.coda.cedit.forms.simple;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.event.*;
+import javax.swing.filechooser.FileSystemView;
 
 import org.jlab.coda.cedit.cooldesktop.CDesktop;
 import org.jlab.coda.cedit.cooldesktop.DrawingCanvas;
@@ -74,9 +76,12 @@ public class SComponentForm extends JFrame {
     private boolean _littleEndian_update = false;
     private boolean _ts_update = false;
 
+    private JFileChooser jfc;
     public SComponentForm(DrawingCanvas canvas, JCGComponent comp, boolean editable) {
         parentCanvas = canvas;
         component = comp;
+
+        jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
 
         initComponents();
 
@@ -528,12 +533,24 @@ public class SComponentForm extends JFrame {
         okAllButton.setEnabled(true);
         Rol1TextField.setBackground(Color.YELLOW);
         _rol1_update = true;
+        int returnValue = jfc.showOpenDialog(null);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = jfc.getSelectedFile();
+            Rol1TextField.setText(selectedFile.getAbsolutePath());
+//            System.out.println(selectedFile.getAbsolutePath());
+        }
     }
 
     private void Rol2TextFieldKeyPressed(KeyEvent e) {
         Rol2TextField.setBackground(Color.YELLOW);
         _rol2_update = true;
         okAllButton.setEnabled(true);
+        int returnValue = jfc.showOpenDialog(null);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = jfc.getSelectedFile();
+            Rol2TextField.setText(selectedFile.getAbsolutePath());
+//            System.out.println(selectedFile.getAbsolutePath());
+        }
     }
 
     private void Rol1UserStrTextFieldKeyPressed(KeyEvent e) {
