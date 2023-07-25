@@ -1111,7 +1111,12 @@ public class LLConfigWriter {
                     }
                 }
 
-            } else if (cmp.getType().equals(ACodaType.USR.name()))
+            } else if (cmp.getType().equals(ACodaType.USR.name())) {
+
+                out.write("name                  = " + cmp.getName() + "\n");
+                out.write("type                  = " + cmp.getType() + "\n");
+                out.write("priority              = " + cmp.getPriority() + "\n");
+
                 for (ExternalConfig ec : _compDat.values()) {
                     if (ec.getName().equals(cmp.getName())) {
                         ArrayList<String> tpNames = new ArrayList<>();
@@ -1170,6 +1175,7 @@ public class LLConfigWriter {
                         }
                     }
                 }
+            }
 
             out.close();
 
