@@ -113,7 +113,7 @@ public class SComponentForm extends JFrame {
         descriptionTextArea.setText(comp.getDescription());
 
         if(comp.getType().equals(ACodaType.USR.name())){
-            priorityModel = new SpinnerNumberModel(ACodaType.USR.priority(), ACodaType.USR.priority(), ACodaType.USR.priority()+100, 1);
+            priorityModel = new SpinnerNumberModel(ACodaType.USR.priority(), ACodaType.USR.priority(), ACodaType.USR.priority()+1000, 1);
         } else if(comp.getType().equals(ACodaType.SLC.name())){
             priorityModel = new SpinnerNumberModel(ACodaType.SLC.priority(), ACodaType.SLC.priority(), ACodaType.SLC.priority()+100, 1);
         } else if(comp.getType().equals(ACodaType.WNC.name())){
