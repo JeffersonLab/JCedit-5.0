@@ -394,8 +394,12 @@ public class SComponentForm extends JFrame {
 
             component.setId(Integer.parseInt(idTextField.getText().trim()));
 
-            if((Integer)prioritySpinner.getValue()<ACodaType.getEnum(component.getType()).priority() ||
-                    (Integer)prioritySpinner.getValue()>ACodaType.getEnum(component.getType()).priority()+100){
+            int priorityRange = 100;
+            if(component.getType().equals(ACodaType.USR.name())) {
+                priorityRange = 1000;
+            }
+            if((Integer)prioritySpinner.getValue() < ACodaType.getEnum(component.getType()).priority() ||
+                    (Integer)prioritySpinner.getValue() > ACodaType.getEnum(component.getType()).priority()+priorityRange){
                 component.setPriority(ACodaType.getEnum(component.getType()).priority());
             } else {
                 component.setPriority((Integer)prioritySpinner.getValue());
