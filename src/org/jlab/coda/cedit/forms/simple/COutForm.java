@@ -53,7 +53,7 @@ public class COutForm extends JFrame {
         typeTextField.setText(comp.getSubType());
 
         descriptionTextArea.setText(comp.getDescription());
-        if(!comp.getDescription().equals("")){
+        if (!comp.getDescription().equals("")) {
             descriptionTextArea.setEditable(false);
             descriptionTextArea.setEnabled(false);
         }
@@ -63,7 +63,6 @@ public class COutForm extends JFrame {
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-        // Generated using JFormDesigner non-commercial license
         dialogPane = new JPanel();
         contentPanel = new JPanel();
         label1 = new JLabel();
@@ -84,7 +83,7 @@ public class COutForm extends JFrame {
 
         //======== this ========
         setTitle("Output");
-        Container contentPane = getContentPane();
+        var contentPane = getContentPane();
 
         //======== dialogPane ========
         {
@@ -221,7 +220,6 @@ public class COutForm extends JFrame {
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
-    // Generated using JFormDesigner non-commercial license
     private JPanel dialogPane;
     private JPanel contentPanel;
     private JLabel label1;
@@ -244,7 +242,6 @@ public class COutForm extends JFrame {
     private class ProcessAction extends AbstractAction {
         private ProcessAction() {
             // JFormDesigner - Action initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-            // Generated using JFormDesigner non-commercial license
             // JFormDesigner - End of action initialization  //GEN-END:initComponents
         }
 
@@ -256,7 +253,6 @@ public class COutForm extends JFrame {
     private class CancelAction extends AbstractAction {
         private CancelAction() {
             // JFormDesigner - Action initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-            // Generated using JFormDesigner non-commercial license
             putValue(NAME, "Cancel");
             // JFormDesigner - End of action initialization  //GEN-END:initComponents
         }
@@ -269,7 +265,6 @@ public class COutForm extends JFrame {
     private class ClearAction extends AbstractAction {
         private ClearAction() {
             // JFormDesigner - Action initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-            // Generated using JFormDesigner non-commercial license
             putValue(NAME, "Clear");
             // JFormDesigner - End of action initialization  //GEN-END:initComponents
         }
@@ -283,7 +278,6 @@ public class COutForm extends JFrame {
     private class OkAction extends AbstractAction {
         private OkAction() {
             // JFormDesigner - Action initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-            // Generated using JFormDesigner non-commercial license
             putValue(NAME, "Ok");
             // JFormDesigner - End of action initialization  //GEN-END:initComponents
         }

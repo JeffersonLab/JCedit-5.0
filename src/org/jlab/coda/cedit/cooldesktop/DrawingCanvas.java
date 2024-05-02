@@ -1176,6 +1176,7 @@ public class DrawingCanvas extends JPanel {
 //                            new FCSForm(me,gc,isEditable);
 //                        }
                         } else {
+                            System.out.println(" DDDDD editable = "+ isEditable);
                             new SComponentForm(me, gc, isEditable);
                         }
                     } else {
