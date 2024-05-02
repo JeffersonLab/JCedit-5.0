@@ -262,7 +262,6 @@ public class SComponentForm extends JFrame {
             descriptionTextArea.setEnabled(false);
         }
         setVisible(true);
-        System.out.println("DDDDD editable 2 = "+editable);
         if(!editable){
             nameTextField.setEnabled(false);
             prioritySpinner.setEnabled(false);
@@ -298,7 +297,6 @@ public class SComponentForm extends JFrame {
             descriptionTextArea.setEnabled(false);
             descriptionTextArea.setText(predefinedDescription);
         }
-        System.out.println("DDDDD readoutList editable = "+Rol2TextField.isEnabled());
     }
 
     public String getComponentName(){
