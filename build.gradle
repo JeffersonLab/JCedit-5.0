@@ -69,6 +69,10 @@ repositories {
 }
 
 dependencies {
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'
+    implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.1'
+    implementation 'org.apache.jena:jena-core:4.6.0'
+    implementation 'org.apache.jena:jena-arq:4.6.0'
     implementation 'org.yaml:snakeyaml:1.18'
     api 'org.json:json:20160810'
     api 'org.jline:jline:3.1.3'
@@ -88,12 +92,12 @@ java {
     withSourcesJar()
     withJavadocJar()
 
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 compileJava {
-    options.release = 21
+    options.release = 17
 }
 
 javadoc {
