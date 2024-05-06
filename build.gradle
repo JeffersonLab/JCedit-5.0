@@ -1,0 +1,397 @@
+/*
+ * Copyright (c) 2017.  Jefferson Lab (JLab). All rights reserved. Permission
+ * to use, copy, modify, and distribute  this software and its documentation for
+ * educational, research, and not-for-profit purposes, without fee and without a
+ * signed licensing agreement.
+ *
+ * IN NO EVENT SHALL JLAB BE LIABLE TO ANY PARTY FOR DIRECT, INDIRECT, SPECIAL
+ * INCIDENTAL, OR CONSEQUENTIAL DAMAGES, INCLUDING LOST PROFITS, ARISING
+ * OUT OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION, EVEN IF JLAB HAS
+ * BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * JLAB SPECIFICALLY DISCLAIMS ANY WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+ * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE. THE CLARA SOFTWARE AND ACCOMPANYING DOCUMENTATION, IF ANY,
+ * PROVIDED HEREUNDER IS PROVIDED "AS IS". JLAB HAS NO OBLIGATION TO PROVIDE
+ * MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
+ *
+ * This software was developed under the United States Government license.
+ * For more information contact author at gurjyan@jlab.org
+ * Department of Experimental Nuclear Physics, Jefferson Lab.
+ */
+
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+
+    id 'checkstyle'
+    id 'com.github.spotbugs' version '5.2.5'
+
+    id 'eclipse'
+    id 'idea'
+}
+
+group = 'org.jlab.coda'
+version = '5.0-SNAPSHOT'
+
+base {
+    archivesName = 'jcedit'
+}
+
+defaultTasks 'build'
+
+configurations {
+    all {
+        resolutionStrategy.cacheChangingModulesFor 30, 'minutes'
+    }
+    deployerJars
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src'
+        }
+    }
+    test {
+        java {
+            srcDir 'test'
+            exclude "resources/**"
+        }
+        resources {
+            srcDir 'test/resources'
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.yaml:snakeyaml:1.18'
+    api 'org.json:json:20160810'
+    api 'org.jline:jline:3.1.3'
+    implementation 'org.apache.commons:commons-exec:1.3'
+    implementation 'org.freemarker:freemarker:2.3.26-incubating'
+    implementation 'net.sf.jopt-simple:jopt-simple:4.9'
+    implementation 'com.google.code.findbugs:jsr305:3.0.1'
+    implementation 'junit:junit:4.12'
+    deployerJars 'org.apache.maven.wagon:wagon-ssh-external:2.12'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.4.2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.4.2'
+    testImplementation 'org.hamcrest:hamcrest-library:1.3'
+    testImplementation 'org.mockito:mockito-junit-jupiter:2.28.2'
+}
+
+java {
+    withSourcesJar()
+    withJavadocJar()
+
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+compileJava {
+    options.release = 21
+}
+
+javadoc {
+    options.charSet = 'utf8'
+    options.encoding = 'utf8'
+    options.docEncoding = 'utf8'
+    options.addStringOption('Xdoclint:none', '-quiet')
+
+    include "org/jlab/coda/cedit/**"
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'org.jalb.coda.cedit'
+            artifactId = 'library'
+            version = '5.0'
+            from components.java
+        }
+    }
+}
+
+test {
+    useJUnitPlatform {
+        excludeTags 'integration'
+    }
+    testLogging {
+        exceptionFormat = 'full'
+    }
+}
+
+tasks.register('integrationTest', Test) {
+    useJUnitPlatform {
+        includeTags 'integration'
+    }
+    testLogging {
+        exceptionFormat = 'full'
+    }
+    testClassesDirs = testing.suites.test.sources.output.classesDirs
+    classpath = testing.suites.test.sources.runtimeClasspath
+    outputs.upToDateWhen { false }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs << "-Xlint:deprecation"
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// version information
+//////////////////////////////////////////////////////////////////////////////
+
+def runGit(cmd) {
+    rootProject.file('.git').exists() ? cmd.execute().text.trim() : ''
+}
+
+ext {
+    gitBranch = properties['gitBranch'] ?: runGit('git rev-parse --abbrev-ref HEAD')
+    gitRev = properties['gitRev'] ?: runGit('git rev-parse --short=10 HEAD')
+    gitDescribe = properties['gitDescribe'] ?: runGit('git describe --match=v[0-9]* --abbrev=10 HEAD')
+}
+
+tasks.register('generateVersionProperties') {
+    def propertiesFile = file("${buildDir}/resources/main/META-INF/version.properties")
+
+    inputs.property 'version', project.version
+    inputs.property 'groupId', project.group
+    inputs.property 'artifactId', project.base.archivesName
+    inputs.property 'gitBranch', gitBranch
+    inputs.property 'gitRev', gitRev
+    inputs.property 'gitDescribe', gitDescribe
+    outputs.file propertiesFile
+
+    doLast {
+        propertiesFile.write "version=${project.version}\n"
+        propertiesFile.append "groupId=${project.group}\n"
+        propertiesFile.append "artifactId=${project.base.archivesName}\n"
+        propertiesFile.append "builtBy=${System.getProperty('user.name')}\n"
+        propertiesFile.append "builtJDK=${System.getProperty('java.version')}\n"
+
+        if (gitBranch) {
+            propertiesFile.append "git.branch=${gitBranch}\n"
+        }
+        if (gitRev) {
+            propertiesFile.append "git.revision=${gitRev}\n"
+        }
+        if (gitDescribe) {
+            propertiesFile.append "git.describe=${gitDescribe}\n"
+        }
+    }
+}
+
+classes.dependsOn generateVersionProperties
+
+//////////////////////////////////////////////////////////////////////////////
+// deployment
+//////////////////////////////////////////////////////////////////////////////
+
+def deploySpec = copySpec {
+//    into ('lib') {
+//        from configurations.runtimeClasspath
+//        from jar
+//    }
+//
+//    from ('scripts/unix') {
+//        into 'bin'
+//        fileMode 0755
+//    }
+//
+//    from ('scripts/lib') {
+//        into 'lib/clara'
+//        fileMode 0755
+//    }
+//
+//    // trick Gradle to "create" empty directories
+//    def tempDir = "${buildDir}/distributions/clara_home"
+//
+//    file("${tempDir}/log").mkdirs()
+//    file("${tempDir}/plugins").mkdirs()
+//
+//    from tempDir
+}
+
+tasks.register('distSources', Tar) {
+    archiveExtension = 'tar.gz'
+    archiveClassifier = 'src'
+    compression = Compression.GZIP
+
+    into "${archiveBaseName.get()}-${archiveVersion.get()}-${archiveClassifier.get()}"
+
+    from 'README.md'
+    from 'build.gradle'
+    from 'settings.gradle'
+    from 'gradlew'
+    from 'gradlew.bat'
+
+    def sourceDirs = [
+            'config',
+            'gradle',
+            'scripts',
+            'src',
+            'test',
+    ]
+
+    sourceDirs.each { dir ->
+        from ("${dir}") { into "${dir}" }
+    }
+
+    dependsOn build
+}
+
+tasks.register('distBinaries', Tar) {
+    archiveExtension = 'tar.gz'
+    compression = Compression.GZIP
+
+    into "${archiveBaseName.get()}-${archiveVersion.get()}"
+    with deploySpec
+
+    dependsOn build
+}
+
+tasks.register('deploy', Copy) {
+    def dest = "$System.env.CLARA_HOME"
+
+    into dest
+    with deploySpec
+
+    doFirst {
+        if (dest == 'null') {
+            throw new GradleException('CLARA_HOME not set')
+        }
+    }
+
+    dependsOn jar
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// development scripts
+//////////////////////////////////////////////////////////////////////////////
+
+ext {
+    // used by scripts in `scripts/dev/*` through `scripts/exec-class`
+    classPathCache = file("${buildDir}/tmp/classpath")
+    testClassPathCache = file("${buildDir}/tmp/test_classpath")
+}
+
+tasks.register('cacheClasspath') {
+    inputs.files sourceSets.main.runtimeClasspath
+    inputs.files sourceSets.test.runtimeClasspath
+    outputs.files classPathCache
+    outputs.files testClassPathCache
+    doLast {
+        classPathCache.write sourceSets.main.runtimeClasspath.asPath
+        testClassPathCache.write sourceSets.test.runtimeClasspath.asPath
+    }
+}
+
+tasks.register('printClasspath') {
+    doLast {
+        println classPathCache.text.replace(':', '\n')
+    }
+    dependsOn cacheClasspath
+}
+
+assemble.dependsOn cacheClasspath
+
+//////////////////////////////////////////////////////////////////////////////
+// quality check
+//////////////////////////////////////////////////////////////////////////////
+
+ext {
+    ciMode = properties['ciMode'] ?: 'false'
+}
+
+checkstyle {
+    toolVersion = '10.15.0'
+    configFile = file('config/quality/checkstyle.xml')
+    configProperties['samedir'] = file('config/quality')
+}
+
+spotbugs {
+    toolVersion = '4.8.3'
+    ignoreFailures = true
+    effort = 'max'
+    reportLevel = 'medium'
+    excludeFilter = file('config/quality/findbugs-exclude.xml')
+}
+
+tasks.withType(com.github.spotbugs.snom.SpotBugsTask) {
+    def useXml = ciMode.toBoolean()
+    reports {
+        xml.enabled = useXml
+        html.enabled = !useXml
+    }
+}
+
+tasks.register('checkSpotBugsResults') {
+    doLast {
+        def bugsFound = 0
+        [spotbugsMain, spotbugsTest].each {
+            try {
+                bugsFound += printSpotBugs it.reports.getByName('xml').destination
+            } catch (FileNotFoundException e) {
+                logger.info e.message
+            }
+        }
+        if (bugsFound > 0) {
+            throw new GradleException("$bugsFound SpotBugs rule violations were found.")
+        }
+    }
+}
+
+def printSpotBugs(File xml) {
+    def slurped = new XmlSlurper().parse(xml)
+    def bugs = slurped.BugInstance
+    bugs.each { bug ->
+        def line = bug.SourceLine
+        logger.error "[SpotBugs] ${line.@sourcepath}:${line.@start}:${line.@end} [${bug.@type}]"
+    }
+    bugs.size()
+}
+
+tasks.register('spotbugs') {
+    group = 'Verification'
+    description = 'Marker task to enable SpotBugs.'
+
+    mustRunAfter spotbugsMain, spotbugsTest
+    if (ciMode.toBoolean()) {
+        finalizedBy checkSpotBugsResults
+    }
+}
+
+gradle.taskGraph.whenReady { taskGraph ->
+    tasks.spotbugsMain.onlyIf {
+        taskGraph.hasTask(tasks.spotbugs)
+    }
+    tasks.spotbugsTest.onlyIf {
+        taskGraph.hasTask(tasks.spotbugs)
+    }
+    tasks.checkSpotBugsResults.onlyIf {
+        taskGraph.hasTask(tasks.spotbugs)
+    }
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// IDE configuration
+//////////////////////////////////////////////////////////////////////////////
+
+eclipse {
+    classpath {
+        file {
+            defaultOutputDir = file("${buildDir}/eclipse")
+            whenMerged { classpath ->
+                classpath.entries.each { source ->
+                    if (source.kind == 'src' && source.hasProperty('output')) {
+                        source.output = "${buildDir.getName()}/eclipse"
+                    }
+                }
+            }
+        }
+    }
+}
