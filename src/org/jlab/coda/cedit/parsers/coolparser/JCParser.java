@@ -25,7 +25,6 @@ package org.jlab.coda.cedit.parsers.coolparser;
 
 import org.apache.jena.query.*;
 import org.apache.jena.rdf.model.*;
-import org.apache.jena.riot.rowset.QueryResults;
 import org.apache.jena.sparql.core.ResultBinding;
 import org.jlab.coda.cedit.system.*;
 import org.jlab.coda.cedit.system.JCGComponent;
@@ -252,8 +251,7 @@ public class JCParser {
      */
     private String getValue(Object subject, String predicate) {
         Object x = null;
-        String sq = "SELECT ?x " + "WHERE(<" + subject.toString() +
-                "> <" + JCGSetup.COOL_CORE + "" + predicate + ">,?x )";
+        String sq = "SELECT ?x WHERE { <" + subject.toString() + "> <" + JCGSetup.COOL_CORE + predicate + "> ?x }";
         try {
             Query query = QueryFactory.create(sq);
 
@@ -290,8 +288,7 @@ public class JCParser {
             Object x;
             ArrayList<String> l = new ArrayList<String>();
 
-            String sq = "SELECT ?x " + "WHERE(<" + subject.toString() +
-                    "> <" + JCGSetup.COOL_CORE + "" + predicate + ">,?x )";
+            String sq = "SELECT ?x WHERE { <" + subject.toString() + "> <" + JCGSetup.COOL_CORE + predicate + "> ?x }";
             try {
                 Query query = QueryFactory.create(sq);
                 // Create a QueryExecution that will access a model
@@ -325,8 +322,7 @@ public class JCParser {
             String tmps;
 
             Map<String, JCGComponent> cl = new HashMap<>();
-            String tq = "SELECT ?x " + "WHERE(<" + subject.toString() +
-                    ">, <" + JCGSetup.COOL_CORE + "" + predicate + ">,?x )";
+            String tq = "SELECT ?x WHERE { <" + subject.toString() + "> <" + JCGSetup.COOL_CORE + predicate + "> ?x }";
             Query query = QueryFactory.create(tq);
             // Create a QueryExecution that will access a model
             QueryExecution qexec = QueryExecutionFactory.create(query, GModel);
@@ -467,8 +463,7 @@ public class JCParser {
             JCGOption option = null;
             String name, configFile, configString, tmps;
 
-            String tq = "SELECT ?x " + "WHERE(<" + subject.toString() +
-                    ">, <" + JCGSetup.COOL_CORE + "" + predicate + ">,?x )";
+            String tq = "SELECT ?x WHERE { <" + subject.toString() + "> <" + JCGSetup.COOL_CORE + predicate + "> ?x }";
             Query query = QueryFactory.create(tq);
             // Create a QueryExecution that will access a model
             QueryExecution qexec = QueryExecutionFactory.create(query, GModel);
@@ -530,8 +525,7 @@ public class JCParser {
         private Set<JCGLink> parseLink (Object subject, String predicate){
             JCGLink link;
             String tmps;
-            String tq = "SELECT ?x " + "WHERE(<" + subject.toString() +
-                    ">, <" + JCGSetup.COOL_CORE + "" + predicate + ">,?x )";
+            String tq = "SELECT ?x WHERE { <" + subject.toString() + "> <" + JCGSetup.COOL_CORE + predicate + "> ?x }";
             Query query = QueryFactory.create(tq);
             // Create a QueryExecution that will access a model
             QueryExecution qexec = QueryExecutionFactory.create(query, GModel);
@@ -619,9 +613,9 @@ public class JCParser {
             String tmpS;
             Set<JCGProcess> pl = Collections.synchronizedSet(new HashSet<JCGProcess>());
 
-            String tq = "SELECT ?x " + "WHERE(<" + subject.toString() +
-                    "> <" + JCGSetup.COOL_CORE + "" + predicate + ">,?x )";
+            String tq = "SELECT ?x WHERE { <" + subject.toString() + "> <" + JCGSetup.COOL_CORE + predicate + "> ?x }";
             Query query = QueryFactory.create(tq);
+
             // Create a QueryExecution that will access a model
             QueryExecution qexec = QueryExecutionFactory.create(query, GModel);
             // Execute the query and do something with the results
@@ -736,8 +730,7 @@ public class JCParser {
             String name;
             String tmp;
 
-            String tq = "SELECT ?x " + "WHERE(<" + subject.toString() +
-                    ">, <" + JCGSetup.COOL_CORE + "" + predicate + ">,?x )";
+            String tq = "SELECT ?x WHERE { <" + subject.toString() + "> <" + JCGSetup.COOL_CORE + predicate + "> ?x }";
             Query query = QueryFactory.create(tq);
             // Create a QueryExecution that will access a model
             QueryExecution qexec = QueryExecutionFactory.create(query, GModel);
@@ -803,8 +796,7 @@ public class JCParser {
             JCGScript sc = null;
             String tmp;
 
-            String tq = "SELECT ?x " + "WHERE(<" + subject.toString() +
-                    ">, <" + JCGSetup.COOL_CORE + "" + predicate + ">,?x )";
+            String tq = "SELECT ?x WHERE { <" + subject.toString() + "> <" + JCGSetup.COOL_CORE + predicate + "> ?x }";
             Query query = QueryFactory.create(tq);
             // Create a QueryExecution that will access a model
             QueryExecution qexec = QueryExecutionFactory.create(query, GModel);

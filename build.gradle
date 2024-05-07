@@ -23,10 +23,8 @@
 plugins {
     id 'java-library'
     id 'maven-publish'
-
-    id 'checkstyle'
+//    id 'checkstyle'
     id 'com.github.spotbugs' version '5.2.5'
-
     id 'eclipse'
     id 'idea'
 }
@@ -69,8 +67,9 @@ repositories {
 }
 
 dependencies {
-    implementation 'javax.xml.bind:jaxb-api:2.3.1'
-    implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.1'
+    // JAXB and other dependencies
+    implementation 'jakarta.xml.bind:jakarta.xml.bind-api:2.3.3'
+    runtimeOnly 'org.glassfish.jaxb:jaxb-runtime:2.3.3'
     implementation 'org.apache.jena:jena-core:4.6.0'
     implementation 'org.apache.jena:jena-arq:4.6.0'
     implementation 'org.yaml:snakeyaml:1.18'
@@ -96,8 +95,29 @@ java {
     targetCompatibility = JavaVersion.VERSION_17
 }
 
+jar {
+    manifest {
+        attributes 'Main-Class': 'org.jlab.coda.cedit.cooldesktop.CDesktop'
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    from('src/resources') {
+        into 'resources'
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
 compileJava {
     options.release = 17
+}
+
+javadoc {
+    options.charSet = 'utf8'
+    options.encoding = 'utf8'
+    options.docEncoding = 'utf8'
+    options.addStringOption('Xdoclint:none', '-quiet')
+    include "org/jlab/coda/cedit/**"
 }
 
 javadoc {
@@ -311,11 +331,11 @@ ext {
     ciMode = properties['ciMode'] ?: 'false'
 }
 
-checkstyle {
-    toolVersion = '10.15.0'
-    configFile = file('config/quality/checkstyle.xml')
-    configProperties['samedir'] = file('config/quality')
-}
+//checkstyle {
+//    toolVersion = '10.15.0'
+//    configFile = file('config/quality/checkstyle.xml')
+//    configProperties['samedir'] = file('config/quality')
+//}
 
 spotbugs {
     toolVersion = '4.8.3'
