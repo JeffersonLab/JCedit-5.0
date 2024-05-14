@@ -51,11 +51,11 @@ import org.jlab.coda.cedit.util.*;
 /**
  * @author gurjyan
  */
-public class CDesktop extends JFrame {
+public class CDesktopNew extends JFrame {
     private static DrawingCanvas drawingCanvas;
     private double w = 80, h = 80;
 
-    private CDesktop me;
+    private CDesktopNew me;
     private static String runType = "undefined";
 
     private CCanvas cnvs;
@@ -100,7 +100,7 @@ public class CDesktop extends JFrame {
 
     private Map<String, JCGComponent> serCompMap = new HashMap<>();
 
-    public CDesktop() {
+    public CDesktopNew() {
         if (stp.getExpid().equals("undefined")) {
             System.out.println("Error: EXPID env variable is undefined.");
             System.exit(1);
@@ -115,7 +115,7 @@ public class CDesktop extends JFrame {
             }
         });
         me = this;
-        setTitle("COOL Database Editor v5.0   db = "+stp.getCoolHome()+"                                                                                                      ");
+        setTitle("RCE v1.0   db = "+stp.getCoolHome()+"                                                                                                      ");
         setSize(1100, 930);
         setLocationByPlatform(true);
         rdfParser = new JCParser();
@@ -154,11 +154,11 @@ public class CDesktop extends JFrame {
 
             //check to see if component is TS and there is already TS defined in the configuration
             if(type.equals(ACodaType.TS.name())){
-                if(CDesktop.containsTs(drawingCanvas)!=null) {
+                if(CDesktopNew.containsTs(drawingCanvas)!=null) {
                     return false;
                 } else {
                     // reset all already defined components isMaster
-                    CDesktop.resetMaster(drawingCanvas);
+                    CDesktopNew.resetMaster(drawingCanvas);
 
                     // set the TS as a master
                     gc.setMaster(true);
@@ -166,32 +166,32 @@ public class CDesktop extends JFrame {
 
                 // check to see if the component is GT and there is already GT or TS defined
             } else if(type.equals(ACodaType.GT.name())){
-                if(CDesktop.containsGt(drawingCanvas)!=null){
+                if(CDesktopNew.containsGt(drawingCanvas)!=null){
                     return false;
                 } else {
-                    if(CDesktop.containsTs(drawingCanvas)!=null){
+                    if(CDesktopNew.containsTs(drawingCanvas)!=null){
                         // ts should be master
                         gc.setMaster(false);
                     } else {
                         // reset all already defined components isMaster
-                        CDesktop.resetMaster(drawingCanvas);
+                        CDesktopNew.resetMaster(drawingCanvas);
 
                         // if we do not have a ts gt should be master
                         gc.setMaster(true);
                     }
                 }
             } else if(type.equals(ACodaType.ROC.name())){
-                if(CDesktop.containsTs(drawingCanvas)!=null || CDesktop.containsGt(drawingCanvas)!=null){
+                if(CDesktopNew.containsTs(drawingCanvas)!=null || CDesktopNew.containsGt(drawingCanvas)!=null){
                     gc.setMaster(false);
-                } else if(CDesktop.getNumberOfRocs(drawingCanvas)==0){
+                } else if(CDesktopNew.getNumberOfRocs(drawingCanvas)==0){
                     gc.setMaster(true);
                 } else {
                     gc.setMaster(false);
                 }
             } else if(type.equals(ACodaType.FPGA.name())){
-                if(CDesktop.containsTs(drawingCanvas)!=null || CDesktop.containsGt(drawingCanvas)!=null){
+                if(CDesktopNew.containsTs(drawingCanvas)!=null || CDesktopNew.containsGt(drawingCanvas)!=null){
                     gc.setMaster(false);
-                } else if(CDesktop.getNumberOfRocs(drawingCanvas)==0){
+                } else if(CDesktopNew.getNumberOfRocs(drawingCanvas)==0){
                     gc.setMaster(true);
                 } else {
                     gc.setMaster(false);
@@ -202,15 +202,15 @@ public class CDesktop extends JFrame {
     }
 
     private static boolean checkReassignMastership(){
-        JCGComponent com = CDesktop.containsTs(drawingCanvas);
+        JCGComponent com = CDesktopNew.containsTs(drawingCanvas);
         if(com !=null ) {
-            CDesktop.resetMaster(drawingCanvas);
+            CDesktopNew.resetMaster(drawingCanvas);
             com.setMaster(true);
             return true;
         } else {
-            com = CDesktop.containsGt(drawingCanvas);
+            com = CDesktopNew.containsGt(drawingCanvas);
             if(com !=null) {
-                CDesktop.resetMaster(drawingCanvas);
+                CDesktopNew.resetMaster(drawingCanvas);
                 com.setMaster(true);
                 return true;
             }
@@ -349,7 +349,7 @@ public class CDesktop extends JFrame {
                         s = (String)o;
                         n = s.substring(0,s.lastIndexOf(":")).trim();
 
-                        new RefactorForm(me,n,selectedType).setVisible(true);
+//                        new RefactorForm(me,n,selectedType).setVisible(true);
                     }
                 } else if(mouseEvent.isMetaDown()){
                     int index = theList.locationToIndex(mouseEvent.getPoint());
@@ -373,104 +373,104 @@ public class CDesktop extends JFrame {
 
     }
 
-    private void customCreateComponentLabelList(){
-        // component label list
-        //Load the pet images and create an array of indexes.
-        images = new ImageIcon[componentStrings.length];
-        Integer[] intArray = new Integer[componentStrings.length];
-        for (int i = 0; i < componentStrings.length; i++) {
-            intArray[i] = i;
-            images[i] = new ImageIcon(getClass().getResource(File.separator+"resources"+File.separator+componentStrings[i]+".png"));
-            if (images[i] != null) {
-                images[i].setDescription(componentStrings[i]);
-            }
-        }
-        //Create the list.
-        componentLabelList = new JList(intArray);
-        CListRenderer renderer= new CListRenderer(images, componentStrings);
-        renderer.setPreferredSize(new Dimension(100, 60));
-        componentLabelList.setCellRenderer(renderer);
-        // add mouse listener
-        MouseListener mouseListener = new MouseAdapter() {
-            public void mouseClicked(MouseEvent mouseEvent) {
-                JList theList = (JList) mouseEvent.getSource();
-                if (mouseEvent.getClickCount() == 1) {
-                    int index = theList.locationToIndex(mouseEvent.getPoint());
-                    if (index >= 0) {
-                        Object o = theList.getModel().getElementAt(index);
-                        if(o instanceof Integer){
-                            Integer selectedTypeIndex = (Integer)o;
-                            switch(selectedTypeIndex) {
-                                case 0:
-                                    cbt(ACodaType.FPGA.name());
-                                    selectedType = ACodaType.FPGA.name();
-                                    break;
-                                case 1:
-                                    cbt(ACodaType.TS.name());
-                                    selectedType = ACodaType.TS.name();
-                                    break;
-                                case 2:
-                                    cbt(ACodaType.GT.name());
-                                    selectedType = ACodaType.GT.name();
-                                    break;
-                                case 3:
-                                    cbt(ACodaType.ROC.name());
-                                    selectedType = ACodaType.ROC.name();
-                                    break;
-                                case 4:
-                                    cbt(ACodaType.DC.name());
-                                    selectedType = ACodaType.DC.name();
-                                    break;
-                                case 5:
-                                    cbt(ACodaType.PEB.name());
-                                    selectedType = ACodaType.PEB.name();
-                                    break;
-                                case 6:
-                                    cbt(ACodaType.PAGG.name());
-                                    selectedType = ACodaType.PAGG.name();
-                                    break;
-                                case 7:
-                                    cbt(ACodaType.SEB.name());
-                                    selectedType = ACodaType.SEB.name();
-                                    break;
-                                case 8:
-                                    cbt(ACodaType.SAGG.name());
-                                    selectedType = ACodaType.SAGG.name();
-                                    break;
-                                case 9:
-                                    cbt(ACodaType.EBER.name());
-                                    selectedType = ACodaType.EBER.name();
-                                    break;
-                                case 10:
-                                    cbt(ACodaType.ER.name());
-                                    selectedType = ACodaType.ER.name();
-                                    break;
-                                case 11:
-                                    cbt(ACodaType.SLC.name());
-                                    selectedType = ACodaType.SLC.name();
-                                    break;
-                                case 12:
-                                    cbt(ACodaType.USR.name());
-                                    selectedType = ACodaType.USR.name();
-                                    break;
-                                case 13:
-                                    cbt(ACodaType.FILE.name());
-                                    selectedType = ACodaType.FILE.name();
-                                    break;
-                            }
-                        }
-                    }
-                }
-            }
-        };
-        componentLabelList.addMouseListener(mouseListener);
-
-        // make  component label list draggable
-        new CListDragSource(componentLabelList, DnDConstants.ACTION_COPY_OR_MOVE);
-    }
+//    private void customCreateComponentLabelList(){
+//        // component label list
+//        //Load the pet images and create an array of indexes.
+//        images = new ImageIcon[componentStrings.length];
+//        Integer[] intArray = new Integer[componentStrings.length];
+//        for (int i = 0; i < componentStrings.length; i++) {
+//            intArray[i] = i;
+//            images[i] = new ImageIcon(getClass().getResource(File.separator+"resources"+File.separator+componentStrings[i]+".png"));
+//            if (images[i] != null) {
+//                images[i].setDescription(componentStrings[i]);
+//            }
+//        }
+//        //Create the list.
+//        componentLabelList = new JList(intArray);
+//        CListRenderer renderer= new CListRenderer(images, componentStrings);
+//        renderer.setPreferredSize(new Dimension(100, 60));
+//        componentLabelList.setCellRenderer(renderer);
+//        // add mouse listener
+//        MouseListener mouseListener = new MouseAdapter() {
+//            public void mouseClicked(MouseEvent mouseEvent) {
+//                JList theList = (JList) mouseEvent.getSource();
+//                if (mouseEvent.getClickCount() == 1) {
+//                    int index = theList.locationToIndex(mouseEvent.getPoint());
+//                    if (index >= 0) {
+//                        Object o = theList.getModel().getElementAt(index);
+//                        if(o instanceof Integer){
+//                            Integer selectedTypeIndex = (Integer)o;
+//                            switch(selectedTypeIndex) {
+//                                case 0:
+//                                    cbt(ACodaType.FPGA.name());
+//                                    selectedType = ACodaType.FPGA.name();
+//                                    break;
+//                                case 1:
+//                                    cbt(ACodaType.TS.name());
+//                                    selectedType = ACodaType.TS.name();
+//                                    break;
+//                                case 2:
+//                                    cbt(ACodaType.GT.name());
+//                                    selectedType = ACodaType.GT.name();
+//                                    break;
+//                                case 3:
+//                                    cbt(ACodaType.ROC.name());
+//                                    selectedType = ACodaType.ROC.name();
+//                                    break;
+//                                case 4:
+//                                    cbt(ACodaType.DC.name());
+//                                    selectedType = ACodaType.DC.name();
+//                                    break;
+//                                case 5:
+//                                    cbt(ACodaType.PEB.name());
+//                                    selectedType = ACodaType.PEB.name();
+//                                    break;
+//                                case 6:
+//                                    cbt(ACodaType.PAGG.name());
+//                                    selectedType = ACodaType.PAGG.name();
+//                                    break;
+//                                case 7:
+//                                    cbt(ACodaType.SEB.name());
+//                                    selectedType = ACodaType.SEB.name();
+//                                    break;
+//                                case 8:
+//                                    cbt(ACodaType.SAGG.name());
+//                                    selectedType = ACodaType.SAGG.name();
+//                                    break;
+//                                case 9:
+//                                    cbt(ACodaType.EBER.name());
+//                                    selectedType = ACodaType.EBER.name();
+//                                    break;
+//                                case 10:
+//                                    cbt(ACodaType.ER.name());
+//                                    selectedType = ACodaType.ER.name();
+//                                    break;
+//                                case 11:
+//                                    cbt(ACodaType.SLC.name());
+//                                    selectedType = ACodaType.SLC.name();
+//                                    break;
+//                                case 12:
+//                                    cbt(ACodaType.USR.name());
+//                                    selectedType = ACodaType.USR.name();
+//                                    break;
+//                                case 13:
+//                                    cbt(ACodaType.FILE.name());
+//                                    selectedType = ACodaType.FILE.name();
+//                                    break;
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        };
+//        componentLabelList.addMouseListener(mouseListener);
+//
+//        // make  component label list draggable
+//        new CListDragSource(componentLabelList, DnDConstants.ACTION_COPY_OR_MOVE);
+//    }
     private void createUIComponents() {
         customCreateRegisteredComponentList();
-        customCreateComponentLabelList();
+//        customCreateComponentLabelList();
     }
 
     private void configNameLabelMouseClicked(MouseEvent e) {
@@ -535,12 +535,41 @@ public class CDesktop extends JFrame {
         expidLabel = new JLabel();
         panel3 = new JPanel();
         configNameLabel = new JLabel();
-        componentlabelPanel = new JScrollPane();
         scrollPane1 = new JScrollPane();
         toolBar1 = new JToolBar();
         linkModeCheckBox = new JCheckBox();
         afecsHomeLabel = new JLabel();
         groupModeCheckBox = new JCheckBox();
+        CompPanel = new JPanel();
+        menuBar2 = new JMenuBar();
+        DaqMenu = new JMenu();
+        TrMenu = new JMenu();
+        Rocmi = new JMenuItem();
+        Tsmi = new JMenuItem();
+        Gtmi = new JMenuItem();
+        Dcmi = new JMenuItem();
+        Pebmi = new JMenuItem();
+        Sebmi = new JMenuItem();
+        Ermi = new JMenuItem();
+        Ebermi = new JMenuItem();
+        Outmi = new JMenuItem();
+        StrMenu = new JMenu();
+        Vtpmi = new JMenuItem();
+        Paggmi = new JMenuItem();
+        Saggmi = new JMenuItem();
+        ErsapMenu = new JMenu();
+        FileSourcemi = new JMenuItem();
+        etSourceMi = new JMenuItem();
+        actorMi = new JMenuItem();
+        histoActorMI = new JMenuItem();
+        EjfatMenu = new JMenu();
+        menuItem30 = new JMenuItem();
+        menuItem33 = new JMenuItem();
+        menuItem34 = new JMenuItem();
+        ProcMenu = new JMenu();
+        Scmi = new JMenuItem();
+        menuItem35 = new JMenuItem();
+        menuItem36 = new JMenuItem();
         action1 = new ExitAction();
         action2 = new GridOnAction();
         action3 = new GridOffAction();
@@ -852,7 +881,7 @@ public class CDesktop extends JFrame {
                 panel2Layout.createParallelGroup()
                     .addGroup(panel2Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(expidLabel, GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+                        .addComponent(expidLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())
             );
             panel2Layout.setVerticalGroup(
@@ -884,27 +913,15 @@ public class CDesktop extends JFrame {
                 panel3Layout.createParallelGroup()
                     .addGroup(panel3Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(configNameLabel, GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+                        .addComponent(configNameLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())
             );
             panel3Layout.setVerticalGroup(
                 panel3Layout.createParallelGroup()
                     .addGroup(GroupLayout.Alignment.TRAILING, panel3Layout.createSequentialGroup()
-                        .addComponent(configNameLabel, GroupLayout.DEFAULT_SIZE, 15, Short.MAX_VALUE)
-                        .addContainerGap())
+                        .addComponent(configNameLabel, GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+                        .addGap(106, 106, 106))
             );
-        }
-
-        //======== componentlabelPanel ========
-        {
-            componentlabelPanel.setBorder(new TitledBorder(null, "Components", TitledBorder.LEADING, TitledBorder.DEFAULT_POSITION,
-                new Font("Bitstream Charter", Font.PLAIN, 11), new Color(0x006666)));
-            componentlabelPanel.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-
-            //---- componentLabelList ----
-            componentLabelList.setFont(new Font("Bitstream Charter", Font.PLAIN, 10));
-            componentLabelList.setForeground(new Color(0x006666));
-            componentlabelPanel.setViewportView(componentLabelList);
         }
 
         //======== scrollPane1 ========
@@ -933,23 +950,212 @@ public class CDesktop extends JFrame {
             toolBar1.add(groupModeCheckBox);
         }
 
+        //======== CompPanel ========
+        {
+            CompPanel.setBorder(new TitledBorder("Components"));
+
+            //======== menuBar2 ========
+            {
+
+                //======== DaqMenu ========
+                {
+                    DaqMenu.setText("CODA");
+
+                    //======== TrMenu ========
+                    {
+                        TrMenu.setText("Triggered");
+
+                        //---- Rocmi ----
+                        Rocmi.setText("Roc");
+                        Rocmi.setIcon(new ImageIcon(getClass().getResource("/resources/ROC_new.png")));
+                        TrMenu.add(Rocmi);
+                        TrMenu.addSeparator();
+
+                        //---- Tsmi ----
+                        Tsmi.setText("TS");
+                        Tsmi.setIcon(new ImageIcon(getClass().getResource("/resources/TS_new.png")));
+                        TrMenu.add(Tsmi);
+                        TrMenu.addSeparator();
+
+                        //---- Gtmi ----
+                        Gtmi.setText("GT");
+                        Gtmi.setIcon(new ImageIcon(getClass().getResource("/resources/GT_new.png")));
+                        TrMenu.add(Gtmi);
+                        TrMenu.addSeparator();
+
+                        //---- Dcmi ----
+                        Dcmi.setText("DC");
+                        Dcmi.setIcon(new ImageIcon(getClass().getResource("/resources/DC_new.png")));
+                        TrMenu.add(Dcmi);
+                        TrMenu.addSeparator();
+
+                        //---- Pebmi ----
+                        Pebmi.setText("PEB");
+                        Pebmi.setIcon(new ImageIcon(getClass().getResource("/resources/PEB_new.png")));
+                        TrMenu.add(Pebmi);
+                        TrMenu.addSeparator();
+
+                        //---- Sebmi ----
+                        Sebmi.setText("SEB");
+                        Sebmi.setIcon(new ImageIcon(getClass().getResource("/resources/SEB_new.png")));
+                        TrMenu.add(Sebmi);
+                        TrMenu.addSeparator();
+
+                        //---- Ermi ----
+                        Ermi.setText("ER");
+                        Ermi.setIcon(new ImageIcon(getClass().getResource("/resources/ER_new.png")));
+                        TrMenu.add(Ermi);
+                        TrMenu.addSeparator();
+
+                        //---- Ebermi ----
+                        Ebermi.setText("EBER");
+                        Ebermi.setIcon(new ImageIcon(getClass().getResource("/resources/EBER_new.png")));
+                        TrMenu.add(Ebermi);
+                        TrMenu.addSeparator();
+
+                        //---- Outmi ----
+                        Outmi.setText("Sink");
+                        Outmi.setIcon(new ImageIcon(getClass().getResource("/resources/SINK_new.png")));
+                        TrMenu.add(Outmi);
+                    }
+                    DaqMenu.add(TrMenu);
+                    DaqMenu.addSeparator();
+
+                    //======== StrMenu ========
+                    {
+                        StrMenu.setText("Streaming");
+
+                        //---- Vtpmi ----
+                        Vtpmi.setText("VTP");
+                        Vtpmi.setIcon(new ImageIcon(getClass().getResource("/resources/VTP_new.png")));
+                        StrMenu.add(Vtpmi);
+                        StrMenu.addSeparator();
+
+                        //---- Paggmi ----
+                        Paggmi.setText("PAGG");
+                        Paggmi.setIcon(new ImageIcon(getClass().getResource("/resources/PAGG_new.png")));
+                        StrMenu.add(Paggmi);
+                        StrMenu.addSeparator();
+
+                        //---- Saggmi ----
+                        Saggmi.setText("SAGG");
+                        Saggmi.setIcon(new ImageIcon(getClass().getResource("/resources/SAGG_new.png")));
+                        StrMenu.add(Saggmi);
+                    }
+                    DaqMenu.add(StrMenu);
+                }
+                menuBar2.add(DaqMenu);
+
+                //======== ErsapMenu ========
+                {
+                    ErsapMenu.setText("ERSAP");
+
+                    //---- FileSourcemi ----
+                    FileSourcemi.setText("File Source");
+                    FileSourcemi.setIcon(new ImageIcon(getClass().getResource("/resources/SINK_source.png")));
+                    ErsapMenu.add(FileSourcemi);
+                    ErsapMenu.addSeparator();
+
+                    //---- etSourceMi ----
+                    etSourceMi.setText("ET Source");
+                    etSourceMi.setIcon(new ImageIcon(getClass().getResource("/resources/ET_source.png")));
+                    ErsapMenu.add(etSourceMi);
+                    ErsapMenu.addSeparator();
+
+                    //---- actorMi ----
+                    actorMi.setText("Actor");
+                    actorMi.setIcon(new ImageIcon(getClass().getResource("/resources/ACTOR_new.png")));
+                    ErsapMenu.add(actorMi);
+                    ErsapMenu.addSeparator();
+
+                    //---- histoActorMI ----
+                    histoActorMI.setText("Histogram Actor");
+                    histoActorMI.setIcon(new ImageIcon(getClass().getResource("/resources/SINK_histogram.png")));
+                    ErsapMenu.add(histoActorMI);
+                }
+                menuBar2.add(ErsapMenu);
+
+                //======== EjfatMenu ========
+                {
+                    EjfatMenu.setText("EJFAT");
+
+                    //---- menuItem30 ----
+                    menuItem30.setText("Packetizer");
+                    menuItem30.setIcon(new ImageIcon(getClass().getResource("/resources/PACKETIZE.png")));
+                    EjfatMenu.add(menuItem30);
+                    EjfatMenu.addSeparator();
+
+                    //---- menuItem33 ----
+                    menuItem33.setText("Load Balancer");
+                    menuItem33.setIcon(new ImageIcon(getClass().getResource("/resources/LB_new.png")));
+                    EjfatMenu.add(menuItem33);
+                    EjfatMenu.addSeparator();
+
+                    //---- menuItem34 ----
+                    menuItem34.setText("Reassembly");
+                    menuItem34.setIcon(new ImageIcon(getClass().getResource("/resources/REASSEMBLE.png")));
+                    EjfatMenu.add(menuItem34);
+                }
+                menuBar2.add(EjfatMenu);
+
+                //======== ProcMenu ========
+                {
+                    ProcMenu.setText("Process");
+
+                    //---- Scmi ----
+                    Scmi.setText("Application");
+                    Scmi.setIcon(new ImageIcon(getClass().getResource("/resources/Application.png")));
+                    ProcMenu.add(Scmi);
+                    ProcMenu.addSeparator();
+
+                    //---- menuItem35 ----
+                    menuItem35.setText("Shell Process");
+                    menuItem35.setIcon(new ImageIcon(getClass().getResource("/resources/ShellProcess.png")));
+                    ProcMenu.add(menuItem35);
+                    ProcMenu.addSeparator();
+
+                    //---- menuItem36 ----
+                    menuItem36.setText("Docker Container");
+                    menuItem36.setIcon(new ImageIcon(getClass().getResource("/resources/DockerContainer.png")));
+                    ProcMenu.add(menuItem36);
+                }
+                menuBar2.add(ProcMenu);
+            }
+
+            GroupLayout CompPanelLayout = new GroupLayout(CompPanel);
+            CompPanel.setLayout(CompPanelLayout);
+            CompPanelLayout.setHorizontalGroup(
+                CompPanelLayout.createParallelGroup()
+                    .addComponent(menuBar2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            );
+            CompPanelLayout.setVerticalGroup(
+                CompPanelLayout.createParallelGroup()
+                    .addGroup(CompPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(menuBar2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+            );
+        }
+
         GroupLayout contentPaneLayout = new GroupLayout(contentPane);
         contentPane.setLayout(contentPaneLayout);
         contentPaneLayout.setHorizontalGroup(
             contentPaneLayout.createParallelGroup()
                 .addGroup(contentPaneLayout.createSequentialGroup()
-                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                        .addGroup(contentPaneLayout.createSequentialGroup()
-                            .addGap(5, 5, 5)
-                            .addComponent(componentlabelPanel, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 108, GroupLayout.PREFERRED_SIZE))
+                    .addGroup(contentPaneLayout.createParallelGroup()
                         .addComponent(panel2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(panel3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(panel3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(contentPaneLayout.createSequentialGroup()
+                            .addContainerGap()
+                            .addGroup(contentPaneLayout.createParallelGroup()
+                                .addGroup(contentPaneLayout.createSequentialGroup()
+                                    .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 296, GroupLayout.PREFERRED_SIZE)
+                                    .addGap(0, 0, Short.MAX_VALUE))
+                                .addComponent(CompPanel, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                     .addGroup(contentPaneLayout.createParallelGroup()
-                        .addComponent(toolBar1, GroupLayout.DEFAULT_SIZE, 903, Short.MAX_VALUE)
-                        .addComponent(scrollPane2, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 903, Short.MAX_VALUE))
+                        .addComponent(toolBar1, GroupLayout.DEFAULT_SIZE, 849, Short.MAX_VALUE)
+                        .addComponent(scrollPane2, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 849, Short.MAX_VALUE))
                     .addContainerGap())
         );
         contentPaneLayout.setVerticalGroup(
@@ -958,19 +1164,19 @@ public class CDesktop extends JFrame {
                     .addGap(6, 6, 6)
                     .addGroup(contentPaneLayout.createParallelGroup()
                         .addGroup(contentPaneLayout.createSequentialGroup()
-                            .addComponent(panel2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(panel3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(contentPaneLayout.createParallelGroup()
-                                .addComponent(scrollPane1, GroupLayout.DEFAULT_SIZE, 749, Short.MAX_VALUE)
-                                .addComponent(componentlabelPanel)))
-                        .addGroup(contentPaneLayout.createSequentialGroup()
                             .addComponent(toolBar1, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(scrollPane2, GroupLayout.DEFAULT_SIZE, 813, Short.MAX_VALUE)
-                            .addGap(6, 6, 6)))
-                    .addContainerGap())
+                            .addComponent(scrollPane2))
+                        .addGroup(contentPaneLayout.createSequentialGroup()
+                            .addComponent(panel2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(panel3, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(CompPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 671, GroupLayout.PREFERRED_SIZE)
+                            .addGap(0, 0, Short.MAX_VALUE)))
+                    .addGap(12, 12, 12))
         );
         pack();
         setLocationRelativeTo(getOwner());
@@ -1028,14 +1234,42 @@ public class CDesktop extends JFrame {
     private JLabel expidLabel;
     private JPanel panel3;
     private JLabel configNameLabel;
-    private JScrollPane componentlabelPanel;
-    private JList componentLabelList;
     private JScrollPane scrollPane1;
     private JList componentNameList;
     private JToolBar toolBar1;
     private JCheckBox linkModeCheckBox;
     private JLabel afecsHomeLabel;
     private JCheckBox groupModeCheckBox;
+    private JPanel CompPanel;
+    private JMenuBar menuBar2;
+    private JMenu DaqMenu;
+    private JMenu TrMenu;
+    private JMenuItem Rocmi;
+    private JMenuItem Tsmi;
+    private JMenuItem Gtmi;
+    private JMenuItem Dcmi;
+    private JMenuItem Pebmi;
+    private JMenuItem Sebmi;
+    private JMenuItem Ermi;
+    private JMenuItem Ebermi;
+    private JMenuItem Outmi;
+    private JMenu StrMenu;
+    private JMenuItem Vtpmi;
+    private JMenuItem Paggmi;
+    private JMenuItem Saggmi;
+    private JMenu ErsapMenu;
+    private JMenuItem FileSourcemi;
+    private JMenuItem etSourceMi;
+    private JMenuItem actorMi;
+    private JMenuItem histoActorMI;
+    private JMenu EjfatMenu;
+    private JMenuItem menuItem30;
+    private JMenuItem menuItem33;
+    private JMenuItem menuItem34;
+    private JMenu ProcMenu;
+    private JMenuItem Scmi;
+    private JMenuItem menuItem35;
+    private JMenuItem menuItem36;
     private ExitAction action1;
     private GridOnAction action2;
     private GridOffAction action3;
@@ -1073,7 +1307,7 @@ public class CDesktop extends JFrame {
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 
     public static void main(String[] args){
-        CDesktop cd = new CDesktop();
+        CDesktopNew cd = new CDesktopNew();
         cd.setVisible(true);
     }
 

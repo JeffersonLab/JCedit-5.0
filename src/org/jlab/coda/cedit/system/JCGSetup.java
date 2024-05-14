@@ -54,7 +54,7 @@ public class JCGSetup  implements Serializable {
 
         coolHome = System.getenv("COOL_HOME");
         if(coolHome == null) {
-            System.out.println("Severe Error: Afecs database directory ($COOL_HOME) is not defined.");
+            System.out.println("Error: COOL database directory ($COOL_HOME) is not defined.");
             System.exit(1);
         }
 
