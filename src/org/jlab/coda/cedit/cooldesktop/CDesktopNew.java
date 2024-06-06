@@ -40,7 +40,6 @@ import java.util.regex.Pattern;
 import javax.swing.*;
 import javax.swing.border.*;
 
-import org.jlab.coda.cedit.forms.simple.RefactorForm;
 import org.jlab.coda.cedit.forms.simple.SupervisorForm;
 import org.jlab.coda.cedit.forms.util.JCListDialog;
 import org.jlab.coda.cedit.parsers.coolparser.JCParser;
@@ -480,6 +479,16 @@ public class CDesktopNew extends JFrame {
             }
             new SupervisorForm(drawingCanvas, drawingCanvas.getSupervisor()).setVisible(true);
         }
+    }
+
+    private void RocmiMouseClicked(MouseEvent e) {
+        JLabel label = new JLabel(Rocmi.getText(), Rocmi.getIcon(), JLabel.CENTER);
+
+        // Specify the location and size of the label
+        int x = 100; // X-coordinate
+        int y = 100; // Y-coordinate
+        label.setBounds(x, y, 200, 50);
+        cnvs.addComponent(label);
     }
 
     private void initComponents() {
@@ -967,7 +976,14 @@ public class CDesktopNew extends JFrame {
 
                         //---- Rocmi ----
                         Rocmi.setText("Roc");
-                        Rocmi.setIcon(new ImageIcon(getClass().getResource("/resources/ROC_new.png")));
+                        System.out.println(getClass().getResource("/resources/ROC.png"));
+                        Rocmi.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/ROC.png"))));
+                        Rocmi.addMouseListener(new MouseAdapter() {
+                            @Override
+                            public void mouseClicked(MouseEvent e) {
+                                RocmiMouseClicked(e);
+                            }
+                        });
                         TrMenu.add(Rocmi);
                         TrMenu.addSeparator();
 

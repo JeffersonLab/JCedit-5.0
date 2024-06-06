@@ -24,6 +24,7 @@ package org.jlab.coda.cedit.cooldesktop;
 
 import org.jlab.coda.cedit.system.*;
 
+import javax.swing.*;
 import java.awt.*;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -35,18 +36,77 @@ public class CCanvas extends CanvasDropTarget {
     private String gCmpName;
     private String gCmpImageFile;
 
-    private int yPage       = 0;
-    private int currentX    = -120;
+    private int yPage = 0;
+    private int currentX = -120;
     HashMap<String, Point> typePositions = new HashMap<String, Point>();
 
     public DrawingCanvas drawingCanvas;
 
 
-
-    public CCanvas(DrawingCanvas cv){
+    public CCanvas(DrawingCanvas cv) {
         super(cv);
         drawingCanvas = cv;
     }
+
+
+    public void addComponent(JLabel label) {
+        JCGComponent gc = new JCGComponent();
+        gCmpName = label.getName();
+        String type = label.getName();
+
+        gCmpImageFile = File.separator + "resources" + File.separator + type + ".png";
+        gc.setType(type);
+        gc.setPreDefined(true);
+        gc.setPriority(ACodaType.getEnum(type).priority());
+
+        // assigning a unique ID to a new component. Note this is not a predefined component.
+        gc.setId(CDesktopNew.assignUniqueId(type));
+
+        if (!CDesktopNew.defineRocMastership(gCmpName, type, gc)) {
+            return;
+        }
+
+        gc.setName(gCmpName);
+        gc.setW(drawingCanvas.getW());
+        gc.setH(drawingCanvas.getH());
+        gc.setImage(drawingCanvas.createBufferedImage(gCmpImageFile));
+
+        if (!typePositions.keySet().contains(type)) {
+            int gridSize2 = 120;
+            Point p = new Point(currentX += gridSize2, 0);
+            typePositions.put(type, p);
+        } else {
+            double x = typePositions.get(type).getX();
+            double y = typePositions.get(type).getY();
+            int yIncrement = 80;
+            int xIncrement = 240;
+            if (y >= yPage + (yIncrement * 9)) {
+                y = yPage - yIncrement;
+                x = x + xIncrement;
+
+            }
+            if (x >= (xIncrement) * 10) {
+                yPage = yPage + (yIncrement * 11);
+                y = yPage - yIncrement;
+                x = currentX;
+
+            }
+            typePositions.get(type).setLocation(x, y + yIncrement);
+
+        }
+        gc.setX(typePositions.get(type).getX());
+        gc.setY(typePositions.get(type).getY());
+
+        // adding the default module to all components
+        drawingCanvas.addgCmp(gc);
+        drawingCanvas.setSelectedGCmpName(gc.getName());
+        drawingCanvas.repaint();
+
+
+        // persisting a type and id 04.24.17
+        JCGSetup stp = JCGSetup.getInstance();
+    }
+
 
 
 
@@ -69,7 +129,7 @@ public class CCanvas extends CanvasDropTarget {
                 System.out.println(e.getMessage());
             }
 
-            if(!CDesktop.defineRocMastership(gCmpName,type, gc)) return;
+            if(!CDesktopNew.defineRocMastership(gCmpName,type, gc)) return;
 
             gCmpImageFile = File.separator+"resources"+File.separator+type+".png";
             gc.setPreDefined(true);
@@ -98,7 +158,7 @@ public class CCanvas extends CanvasDropTarget {
 //            gCmpName = type+index;
 
             // check to see if that id is taken already by stored components
-            int index = CDesktop.assignUniqueId(type);
+            int index = CDesktopNew.assignUniqueId(type);
 
             // create the final name.
             gCmpName = type+index;
@@ -107,7 +167,7 @@ public class CCanvas extends CanvasDropTarget {
             gc.setType(type);
 
             // assigning a unique ID to a new component. Note this is not a predefined component.
-            gc.setId(CDesktop.assignUniqueId(type));
+            gc.setId(CDesktopNew.assignUniqueId(type));
 
             gc.setPriority(ACodaType.getEnum(type).priority());
 
@@ -115,7 +175,7 @@ public class CCanvas extends CanvasDropTarget {
 //            // store current index for the type.
 //            drawingCanvas.setCurrentIndex(type, index+1);
 
-            if(!CDesktop.defineRocMastership(gCmpName,type, gc)) {
+            if(!CDesktopNew.defineRocMastership(gCmpName,type, gc)) {
                 return;
             }
 

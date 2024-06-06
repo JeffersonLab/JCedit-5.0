@@ -24,7 +24,7 @@
 package org.jlab.coda.cedit.forms.simple;
 
 import javax.swing.event.*;
-import org.jlab.coda.cedit.cooldesktop.CDesktop;
+import org.jlab.coda.cedit.cooldesktop.CDesktopNew;
 import org.jlab.coda.cedit.cooldesktop.DrawingCanvas;
 import org.jlab.coda.cedit.system.*;
 import org.jlab.coda.cedit.system.JCGComponent;
@@ -810,7 +810,7 @@ public class SOutputForm extends JFrame {
             int i = 0;
             if(!nameTextField.getText().equals("")){
 
-                String predefinedDescription = CDesktop.isComponentPredefined(nameTextField.getText().trim(),
+                String predefinedDescription = CDesktopNew.isComponentPredefined(nameTextField.getText().trim(),
                         ACodaType.FILE.name(),
                         component.getSubType(),
                         descriptionTextArea.getText().replace("\\n","\n"));

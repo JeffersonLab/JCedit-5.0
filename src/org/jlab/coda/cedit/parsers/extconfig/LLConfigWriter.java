@@ -22,7 +22,7 @@
 
 package org.jlab.coda.cedit.parsers.extconfig;
 
-import org.jlab.coda.cedit.cooldesktop.CDesktop;
+import org.jlab.coda.cedit.cooldesktop.CDesktopNew;
 import org.jlab.coda.cedit.system.*;
 import org.jlab.coda.cedit.util.JCUtil;
 
@@ -268,7 +268,7 @@ public class LLConfigWriter {
                 if (etEvtMin1 >= etEvtMin2) {
                     if (tr.getEtEventNum() < etEvtMin1) {
                         tr.setEtEventNum(etEvtMin1);
-                        JCGComponent c = CDesktop.getDrawingCvanvas().getGCMPs().get(cName);
+                        JCGComponent c = CDesktopNew.getDrawingCvanvas().getGCMPs().get(cName);
                         for (JCGTransport t : c.getTrnsports()) {
                             if (t.getName().equals(tr.getName())) {
                                 t.setEtEventNum(tr.getEtEventNum());
@@ -279,7 +279,7 @@ public class LLConfigWriter {
                 } else {
                     if (tr.getEtEventNum() < etEvtMin2) {
                         tr.setEtEventNum(etEvtMin2);
-                        JCGComponent c = CDesktop.getDrawingCvanvas().getGCMPs().get(cName);
+                        JCGComponent c = CDesktopNew.getDrawingCvanvas().getGCMPs().get(cName);
                         for (JCGTransport t : c.getTrnsports()) {
                             if (t.getName().equals(tr.getName())) {
                                 t.setEtEventNum(tr.getEtEventNum());
@@ -353,7 +353,7 @@ public class LLConfigWriter {
                     if (etEvtMin1 >= etEvtMin2) {
                         if (tr.getEtEventNum() < etEvtMin1) {
                             tr.setEtEventNum(etEvtMin1);
-                            JCGComponent c = CDesktop.getDrawingCvanvas().getGCMPs().get(cName);
+                            JCGComponent c = CDesktopNew.getDrawingCvanvas().getGCMPs().get(cName);
                             for (JCGTransport t : c.getTrnsports()) {
                                 if (t.getName().equals(tr.getName())) {
                                     t.setEtEventNum(tr.getEtEventNum());
@@ -364,7 +364,7 @@ public class LLConfigWriter {
                     } else {
                         if (tr.getEtEventNum() < etEvtMin2) {
                             tr.setEtEventNum(etEvtMin2);
-                            JCGComponent c = CDesktop.getDrawingCvanvas().getGCMPs().get(cName);
+                            JCGComponent c = CDesktopNew.getDrawingCvanvas().getGCMPs().get(cName);
                             for (JCGTransport t : c.getTrnsports()) {
                                 if (t.getName().equals(tr.getName())) {
                                     t.setEtEventNum(tr.getEtEventNum());

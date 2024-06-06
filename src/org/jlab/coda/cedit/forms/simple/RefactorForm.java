@@ -35,7 +35,8 @@ import java.util.StringTokenizer;
 import java.util.regex.Pattern;
 import javax.swing.*;
 import javax.swing.border.*;
-import org.jlab.coda.cedit.cooldesktop.CDesktop;
+
+import org.jlab.coda.cedit.cooldesktop.CDesktopNew;
 import org.jlab.coda.cedit.cooldesktop.DrawingCanvas;
 import org.jlab.coda.cedit.parsers.coolparser.JCParser;
 import org.jlab.coda.cedit.parsers.extconfig.CoolDatabaseBrowser;
@@ -52,11 +53,11 @@ public class RefactorForm extends JFrame {
     private String name;
 //    private HashMap<String, CDefinedComponent> cmt ;
     private CoolDatabaseBrowser coolDbBrowser;
-    public CDesktop GOwner;
+    public CDesktopNew GOwner;
     private JCGSetup stp = JCGSetup.getInstance();
     private String type ;
 
-    public RefactorForm(CDesktop owner, String Name, String Type) {
+    public RefactorForm(CDesktopNew owner, String Name, String Type) {
         String s = "undefined";
         String n = "undefined";
         String t = "undefined";

@@ -31,7 +31,7 @@ import javax.swing.border.*;
 import javax.swing.event.*;
 import javax.swing.filechooser.FileSystemView;
 
-import org.jlab.coda.cedit.cooldesktop.CDesktop;
+import org.jlab.coda.cedit.cooldesktop.CDesktopNew;
 import org.jlab.coda.cedit.cooldesktop.DrawingCanvas;
 import org.jlab.coda.cedit.system.*;
 
@@ -287,7 +287,7 @@ public class SComponentForm extends JFrame {
         }
 
         cForm = this;
-        String predefinedDescription = CDesktop.isComponentPredefined(getNameFromTextField(),
+        String predefinedDescription = CDesktopNew.isComponentPredefined(getNameFromTextField(),
                 typeTextField.getText().trim(),
                 component.getSubType(),
                 descriptionTextArea.getText().replace("\\n","\n"));
@@ -460,7 +460,7 @@ public class SComponentForm extends JFrame {
 
                 if(masterRocCheckBox.isSelected()){
                     // reset all already defined components isMaster
-                    CDesktop.resetMaster(parentCanvas);
+                    CDesktopNew.resetMaster(parentCanvas);
                     component.setMaster(true);
                     component.setPriority(ACodaType.TS.priority());
                 }
@@ -1246,12 +1246,12 @@ public class SComponentForm extends JFrame {
 
             String tp = typeTextField.getText().trim();
             if(!pName.equals(_name)) {
-                if(CDesktop.isComponentPredefined(tp,_name)) {
+                if(CDesktopNew.isComponentPredefined(tp,_name)) {
                     JOptionPane.showMessageDialog(cForm,"Component with the name = "+_name+
                             " is predefined","Error",JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-                idTextField.setText(Integer.toString(CDesktop.assignUniqueId(tp)));
+                idTextField.setText(Integer.toString(CDesktopNew.assignUniqueId(tp)));
             }
 
             if(nameTextField.getText().trim().contains("_")){
@@ -1281,12 +1281,12 @@ public class SComponentForm extends JFrame {
             }
             String tp = typeTextField.getText().trim();
             if(!pName.equals(getNameFromTextField())) {
-                if(CDesktop.isComponentPredefined(tp,getNameFromTextField())) {
+                if(CDesktopNew.isComponentPredefined(tp,getNameFromTextField())) {
                     JOptionPane.showMessageDialog(cForm,"Component with the name = "+getNameFromTextField()+
                             " is predefined","Error",JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-                idTextField.setText(Integer.toString(CDesktop.assignUniqueId(tp)));
+                idTextField.setText(Integer.toString(CDesktopNew.assignUniqueId(tp)));
             }
 
 

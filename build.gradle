@@ -97,7 +97,7 @@ java {
 
 jar {
     manifest {
-        attributes 'Main-Class': 'org.jlab.coda.cedit.cooldesktop.CDesktop'
+        attributes 'Main-Class': 'org.jlab.coda.cedit.cooldesktop.CDesktopNew'
     }
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }

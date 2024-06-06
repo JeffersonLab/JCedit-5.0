@@ -347,11 +347,19 @@ scrollPane2.setViewportView(drawingCanvas);
                  <string>icon</string>
                  <object class="com.jformdesigner.model.SwingIcon">
                   <int>0</int>
-                  <string>/resources/ROC_new.png</string>
+                  <string>/resources/ROC.png</string>
                  </object>
                 </void>
                 <void property="name">
                  <string>Rocmi</string>
+                </void>
+                <void method="addEvent">
+                 <object class="com.jformdesigner.model.FormEvent">
+                  <string>java.awt.event.MouseListener</string>
+                  <string>mouseClicked</string>
+                  <string>RocmiMouseClicked</string>
+                  <boolean>true</boolean>
+                 </object>
                 </void>
                </object>
               </void>

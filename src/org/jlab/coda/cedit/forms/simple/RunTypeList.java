@@ -26,7 +26,7 @@
 
 package org.jlab.coda.cedit.forms.simple;
 
-import org.jlab.coda.cedit.cooldesktop.CDesktop;
+import org.jlab.coda.cedit.cooldesktop.CDesktopNew;
 import org.jlab.coda.cedit.forms.util.SortedListModel;
 import org.jlab.coda.cedit.util.CDirList;
 
@@ -50,8 +50,8 @@ public class RunTypeList extends JFrame {
 
         model = new SortedListModel();
 
-        CDirList fc = new CDirList(CDesktop.stp.getCoolHome() +
-                File.separator+ CDesktop.stp.getExpid()+
+        CDirList fc = new CDirList(CDesktopNew.stp.getCoolHome() +
+                File.separator+ CDesktopNew.stp.getExpid()+
                 File.separator+"config"+
                 File.separator+"Control", null);
 
@@ -166,8 +166,8 @@ public class RunTypeList extends JFrame {
         }
 
         public void actionPerformed(ActionEvent e) {
-            CDesktop.supervisorList = list1.getSelectedValuesList();
-            CDesktop.updateManySupervisors = true;
+            CDesktopNew.supervisorList = list1.getSelectedValuesList();
+            CDesktopNew.updateManySupervisors = true;
             parent.dispose();
             dispose();
         }

@@ -46,7 +46,7 @@ public class CustomListTest extends JPanel {
         images = new ImageIcon[componentStrings.length];
         Integer[] intArray = new Integer[componentStrings.length];
         for (int i = 0; i < componentStrings.length; i++) {
-            intArray[i] = new Integer(i);
+            intArray[i] = Integer.valueOf(i);
             images[i] = new ImageIcon(getClass().getResource("/resources/"+componentStrings[i]+".png"));
             if (images[i] != null) {
                 images[i].setDescription(componentStrings[i]);
