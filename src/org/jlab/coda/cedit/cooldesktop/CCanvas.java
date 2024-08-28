@@ -131,7 +131,7 @@ public class CCanvas extends CanvasDropTarget {
 
             if(!CDesktopNew.defineRocMastership(gCmpName,type, gc)) return;
 
-            gCmpImageFile = File.separator+"resources"+File.separator+type+".png";
+            gCmpImageFile = File.separator+ "resources" +File.separator+type+".png";
             gc.setPreDefined(true);
             gc.setType(type);
             gc.setId(id);
@@ -163,7 +163,7 @@ public class CCanvas extends CanvasDropTarget {
             // create the final name.
             gCmpName = type+index;
 
-            gCmpImageFile = File.separator+"resources"+File.separator+type+".png";
+            gCmpImageFile = File.separator+ "resources" +File.separator+type+".png";
             gc.setType(type);
 
             // assigning a unique ID to a new component. Note this is not a predefined component.

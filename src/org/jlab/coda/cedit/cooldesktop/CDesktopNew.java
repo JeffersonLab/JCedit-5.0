@@ -309,7 +309,7 @@ public class CDesktopNew extends JFrame {
             if(!c.getName().equals(runType)){
                 String type = c.getType();
                 if(type!=null && !type.equals(""))
-                    c.setImage(drawingCanvas.createBufferedImage(File.separator+"resources"+File.separator+type+".png"));
+                    c.setImage(drawingCanvas.createBufferedImage(File.separator+ "resources" +File.separator+type+".png"));
 
                 includeUserConfigFileEdits(c);
 
