@@ -349,12 +349,12 @@ public class CoolDatabaseBrowser {
                         // send package includes
                         if (!prc.getSendSubject().equals("") && !prc.getSendType().equals("")) {
                             opout.write("\n");
-                            opout.write("   <cool:sends> drf:resource = \"#" + prc.getName() + "_sendPackage\"/>\n");
+                            opout.write("   <cool:sends rdf:resource = \"#" + prc.getName() + "_sendPackage\"/ >\n");
                         }
                         // received package includes
                         if (!prc.getReceiveSubject().equals("") && !prc.getReceiveType().equals("")) {
                             opout.write("\n");
-                            opout.write("   <cool:receives> drf:resource = \"#" + prc.getName() + "_receivePackage\"/>\n");
+                            opout.write("   <cool:receives rdf:resource = \"#" + prc.getName() + "_receivePackage\"/ >\n");
 
                             // initiator
                             if (prc.isInitiator()) {
@@ -626,12 +626,12 @@ public class CoolDatabaseBrowser {
                             // send package includes
                             if (!prc.getSendSubject().equals("") && !prc.getSendType().equals("")) {
                                 opout.write("\n");
-                                opout.write("   <cool:sends> drf:resource = \"#" + prc.getName() + "_sendPackage\"/>\n");
+                                opout.write("   <cool:sends rdf:resource = \"#" + prc.getName() + "_sendPackage\"/ >\n");
                             }
                             // received package includes
                             if (!prc.getReceiveSubject().equals("") && !prc.getReceiveType().equals("")) {
                                 opout.write("\n");
-                                opout.write("   <cool:receives> drf:resource = \"#" + prc.getName() + "_receivePackage\"/>\n");
+                                opout.write("   <cool:receives rdf:resource = \"#" + prc.getName() + "_receivePackage\"/ >\n");
 
                                 // initiator
                                 if (prc.isInitiator()) {
