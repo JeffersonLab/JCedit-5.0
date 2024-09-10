@@ -537,24 +537,22 @@ public class SComponentForm extends JFrame {
         okAllButton.setEnabled(true);
         Rol1TextField.setBackground(Color.YELLOW);
         _rol1_update = true;
-        int returnValue = jfc.showOpenDialog(null);
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = jfc.getSelectedFile();
-            Rol1TextField.setText(selectedFile.getAbsolutePath());
-//            System.out.println(selectedFile.getAbsolutePath());
-        }
+//        int returnValue = jfc.showOpenDialog(null);
+//        if (returnValue == JFileChooser.APPROVE_OPTION) {
+//            File selectedFile = jfc.getSelectedFile();
+//            Rol1TextField.setText(selectedFile.getAbsolutePath());
+//        }
     }
 
     private void Rol2TextFieldKeyPressed(KeyEvent e) {
         Rol2TextField.setBackground(Color.YELLOW);
         _rol2_update = true;
         okAllButton.setEnabled(true);
-        int returnValue = jfc.showOpenDialog(null);
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = jfc.getSelectedFile();
-            Rol2TextField.setText(selectedFile.getAbsolutePath());
-//            System.out.println(selectedFile.getAbsolutePath());
-        }
+//        int returnValue = jfc.showOpenDialog(null);
+//        if (returnValue == JFileChooser.APPROVE_OPTION) {
+//            File selectedFile = jfc.getSelectedFile();
+//            Rol2TextField.setText(selectedFile.getAbsolutePath());
+//        }
     }
 
 
@@ -602,6 +600,29 @@ public class SComponentForm extends JFrame {
 
     }
 
+    private void Rol1ButtonMouseClicked(MouseEvent e) {
+        _rol1_update = true;
+        okAllButton.setEnabled(true);
+        int returnValue = jfc.showOpenDialog(null);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = jfc.getSelectedFile();
+            Rol1TextField.setText(selectedFile.getAbsolutePath());
+//            System.out.println(selectedFile.getAbsolutePath());
+        }
+    }
+
+    private void Rol2ButtonMouseClicked(MouseEvent e) {
+        _rol2_update = true;
+        okAllButton.setEnabled(true);
+        int returnValue = jfc.showOpenDialog(null);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = jfc.getSelectedFile();
+            Rol2TextField.setText(selectedFile.getAbsolutePath());
+//            System.out.println(selectedFile.getAbsolutePath());
+        }
+
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         dialogPane = new JPanel();
@@ -641,6 +662,8 @@ public class SComponentForm extends JFrame {
         buildTreadsSpinner = new JSpinner();
         label6 = new JLabel();
         endianCheckBox = new JCheckBox();
+        Rol1Button = new JButton();
+        Rol2Button = new JButton();
         okButton = new JButton();
         clearButton = new JButton();
         cancelButton = new JButton();
@@ -851,6 +874,24 @@ public class SComponentForm extends JFrame {
                     }
                 });
 
+                //---- Rol1Button ----
+                Rol1Button.setText("FC");
+                Rol1Button.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        Rol1ButtonMouseClicked(e);
+                    }
+                });
+
+                //---- Rol2Button ----
+                Rol2Button.setText("FC");
+                Rol2Button.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        Rol2ButtonMouseClicked(e);
+                    }
+                });
+
                 GroupLayout contentPanelLayout = new GroupLayout(contentPanel);
                 contentPanel.setLayout(contentPanelLayout);
                 contentPanelLayout.setHorizontalGroup(
@@ -863,10 +904,6 @@ public class SComponentForm extends JFrame {
                                         .addGroup(GroupLayout.Alignment.LEADING, contentPanelLayout.createSequentialGroup()
                                             .addGroup(contentPanelLayout.createParallelGroup()
                                                 .addGroup(contentPanelLayout.createSequentialGroup()
-                                                    .addComponent(Rol1Label)
-                                                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                                    .addComponent(Rol1TextField))
-                                                .addGroup(contentPanelLayout.createSequentialGroup()
                                                     .addGroup(contentPanelLayout.createParallelGroup()
                                                         .addComponent(label1)
                                                         .addComponent(label5))
@@ -877,31 +914,44 @@ public class SComponentForm extends JFrame {
                                                             .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                                             .addComponent(masterRocCheckBox)
                                                             .addGap(0, 0, Short.MAX_VALUE))
-                                                        .addComponent(nameTextField)))
-                                                .addGroup(contentPanelLayout.createSequentialGroup()
-                                                    .addComponent(Rol2Label)
-                                                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                                    .addComponent(Rol2TextField)))
-                                            .addGap(28, 28, 28)
-                                            .addGroup(contentPanelLayout.createParallelGroup()
+                                                        .addComponent(nameTextField))
+                                                    .addGap(52, 52, 52))
                                                 .addGroup(contentPanelLayout.createSequentialGroup()
                                                     .addGroup(contentPanelLayout.createParallelGroup()
-                                                        .addComponent(Rol1usrStringLabel)
-                                                        .addComponent(Rol2UsrStringLabel))
-                                                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                                    .addGroup(contentPanelLayout.createParallelGroup()
-                                                        .addComponent(Rol1UserStrTextField)
-                                                        .addComponent(Rol2UserStrTextField)))
-                                                .addGroup(contentPanelLayout.createSequentialGroup()
-                                                    .addGap(24, 24, 24)
-                                                    .addComponent(label11)
-                                                    .addGap(63, 63, 63)
-                                                    .addGroup(contentPanelLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                                                        .addComponent(typeTextField, GroupLayout.PREFERRED_SIZE, 159, GroupLayout.PREFERRED_SIZE)
                                                         .addGroup(contentPanelLayout.createSequentialGroup()
-                                                            .addComponent(label13)
-                                                            .addGap(1, 1, 1)
-                                                            .addComponent(idTextField, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE))))))
+                                                            .addComponent(Rol2Label)
+                                                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                                            .addComponent(Rol2TextField, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE))
+                                                        .addGroup(contentPanelLayout.createSequentialGroup()
+                                                            .addComponent(Rol1Label)
+                                                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                                            .addComponent(Rol1TextField, GroupLayout.PREFERRED_SIZE, 251, GroupLayout.PREFERRED_SIZE)))
+                                                    .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                                    .addGroup(contentPanelLayout.createParallelGroup()
+                                                        .addComponent(Rol1Button, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(Rol2Button, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE))
+                                                    .addGap(13, 13, 13)))
+                                            .addGroup(contentPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                                .addGroup(contentPanelLayout.createSequentialGroup()
+                                                    .addComponent(Rol1usrStringLabel)
+                                                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(Rol1UserStrTextField, GroupLayout.PREFERRED_SIZE, 275, GroupLayout.PREFERRED_SIZE))
+                                                .addGroup(contentPanelLayout.createSequentialGroup()
+                                                    .addComponent(Rol2UsrStringLabel)
+                                                    .addGroup(contentPanelLayout.createParallelGroup()
+                                                        .addGroup(contentPanelLayout.createSequentialGroup()
+                                                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                                            .addComponent(label11)
+                                                            .addGap(63, 63, 63)
+                                                            .addGroup(contentPanelLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                                                                .addComponent(typeTextField, GroupLayout.PREFERRED_SIZE, 159, GroupLayout.PREFERRED_SIZE)
+                                                                .addGroup(contentPanelLayout.createSequentialGroup()
+                                                                    .addComponent(label13)
+                                                                    .addGap(1, 1, 1)
+                                                                    .addComponent(idTextField, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE))))
+                                                        .addGroup(contentPanelLayout.createSequentialGroup()
+                                                            .addGap(6, 6, 6)
+                                                            .addComponent(Rol2UserStrTextField))))))
                                         .addGroup(GroupLayout.Alignment.LEADING, contentPanelLayout.createSequentialGroup()
                                             .addComponent(configFileLabel)
                                             .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
@@ -960,17 +1010,17 @@ public class SComponentForm extends JFrame {
                             .addGap(18, 18, 18)
                             .addGroup(contentPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                 .addComponent(Rol1Label)
+                                .addComponent(Rol1TextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(Rol1Button)
                                 .addComponent(Rol1usrStringLabel)
-                                .addComponent(Rol1UserStrTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                .addComponent(Rol1TextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                .addComponent(Rol1UserStrTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                             .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(contentPanelLayout.createParallelGroup()
-                                .addGroup(contentPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                    .addComponent(Rol2TextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(Rol2Label))
-                                .addGroup(contentPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                    .addComponent(Rol2UsrStringLabel)
-                                    .addComponent(Rol2UserStrTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(contentPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(Rol2Label)
+                                .addComponent(Rol2Button)
+                                .addComponent(Rol2TextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(Rol2UsrStringLabel)
+                                .addComponent(Rol2UserStrTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                             .addGap(18, 18, 18)
                             .addGroup(contentPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                 .addComponent(configFileLabel)
@@ -982,7 +1032,7 @@ public class SComponentForm extends JFrame {
                                     .addComponent(configFileLabel2)
                                     .addGap(1, 1, 1)
                                     .addComponent(label3))
-                                .addComponent(scrollPane1))
+                                .addComponent(scrollPane1, GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE))
                             .addGap(18, 18, 18)
                             .addGroup(contentPanelLayout.createParallelGroup()
                                 .addGroup(contentPanelLayout.createSequentialGroup()
@@ -1021,18 +1071,21 @@ public class SComponentForm extends JFrame {
             dialogPane.setLayout(dialogPaneLayout);
             dialogPaneLayout.setHorizontalGroup(
                 dialogPaneLayout.createParallelGroup()
-                    .addGroup(GroupLayout.Alignment.TRAILING, dialogPaneLayout.createSequentialGroup()
-                        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(okButton)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(okAllButton)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(clearButton, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)
-                        .addGap(4, 4, 4)
-                        .addComponent(cancelButton)
-                        .addContainerGap())
-                    .addComponent(contentPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(separator1, GroupLayout.Alignment.TRAILING)
+                    .addGroup(GroupLayout.Alignment.TRAILING, dialogPaneLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(dialogPaneLayout.createParallelGroup()
+                            .addGroup(GroupLayout.Alignment.TRAILING, dialogPaneLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(okButton)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(okAllButton)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(clearButton, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)
+                                .addGap(4, 4, 4)
+                                .addComponent(cancelButton))
+                            .addComponent(contentPanel, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())
             );
             dialogPaneLayout.setVerticalGroup(
                 dialogPaneLayout.createParallelGroup()
@@ -1107,6 +1160,8 @@ public class SComponentForm extends JFrame {
     private JSpinner buildTreadsSpinner;
     private JLabel label6;
     private JCheckBox endianCheckBox;
+    private JButton Rol1Button;
+    private JButton Rol2Button;
     private JButton okButton;
     private JButton clearButton;
     private JButton cancelButton;

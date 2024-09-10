@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<java version="11.0.13" class="java.beans.XMLDecoder">
+<java version="17.0.9" class="java.beans.XMLDecoder">
  <object class="com.jformdesigner.model.FormModel">
   <void property="contentType">
    <string>form/swing</string>
@@ -31,7 +31,7 @@
          <class>org.jdesktop.layout.GroupLayout</class>
          <void method="setProperty">
           <string>$horizontalGroup</string>
-          <string>par l {seq t {space :::x, comp okButton:::p::p, space :::p, comp okAllButton:::p::p, space :::p, comp clearButton:::p:76:p, space :p:4:p, comp cancelButton:::p::p, space :::p}, comp contentPanel::l:::x, comp separator1::t:::x}</string>
+          <string>par l {comp separator1::t:::x, seq t {space :::p, par l {seq t {space :0:0:x, comp okButton:::p::p, space :::p, comp okAllButton:::p::p, space :::p, comp clearButton:::p:76:p, space :p:4:p, comp cancelButton:::p::p}, comp contentPanel::t:::x}, space :::p}}</string>
          </void>
          <void method="setProperty">
           <string>$verticalGroup</string>
@@ -57,11 +57,11 @@
            <class>org.jdesktop.layout.GroupLayout</class>
            <void method="setProperty">
             <string>$horizontalGroup</string>
-            <string>par l {seq {space :::p, par l {seq {par t {seq l {par l {seq l {comp Rol1Label:::p::p, space :::p, comp Rol1TextField:::::x}, seq l {par l {comp label1:::p::p, comp label5::l:p::p}, space :p::p, par l {seq {comp prioritySpinner:::p:83:p, space :::p, comp masterRocCheckBox:::p::p, space :0:0:x}, comp nameTextField::l:::x:2}}, seq l {comp Rol2Label:::p::p, space :::p, comp Rol2TextField:::::x}}, space :p:28:p, par l {seq {par l {comp Rol1usrStringLabel:::p::p, comp Rol2UsrStringLabel:::p::p}, space :::p, par l {comp Rol1UserStrTextField:::::x, comp Rol2UserStrTextField::l:::x}}, seq {space :p:24:p, comp label11:::p::p, space :p:63:p, par t {comp typeTextField:::p:159:p, seq {comp label13:::p::p, space :p:1:p, comp idTextField:::p:87:p:3}}}}}, seq l {comp configFileLabel:::p::p, space :::p, comp configFileTextField:::::x, space :::p, comp label2:::p:62:p}}, space :p:12:p}, seq l {comp panel2:::p::p:2, space :p:36:p, par t {comp runDataCheckBox:::p::p, comp sparsifyCheckBox:::p::p}, space s:::p, par l {seq {comp tsSlopSpinner:::p:45:p:1, space :::p, comp label4:::p::p, space u:::p, comp endianCheckBox:::p::p, space :::x}, seq {comp tsCheckBox:::::x:1, space :p:18:p, comp buildTreadsSpinner:::p:45:p, space :::p, comp label6:::p::p, space :p:24:p}}}, seq l {par l {comp configFileLabel2::l:p::p, comp label3::l:p:62:p}, space :::p, comp scrollPane1:::::x, space :::p}}}}</string>
+            <string>par l {seq {space :::p, par l {seq {par t {seq l {par l {seq l {par l {comp label1:::p::p, comp label5::l:p::p}, space :p::p, par l {seq {comp prioritySpinner:::p:83:p, space :::p, comp masterRocCheckBox:::p::p, space :0:0:x}, comp nameTextField::l:::x:2}, space :p:52:p}, seq l {par l {seq {comp Rol2Label:::p::p, space :::p, comp Rol2TextField:::p:250:p}, seq l {comp Rol1Label:::p::p, space :::p, comp Rol1TextField:::p:251:p}}, space u:p::p, par l {comp Rol1Button:::p:33:p, comp Rol2Button:::p:33:p}, space :p:13:p}}, par l:::p {seq l {comp Rol1usrStringLabel:::p::p, space :::p, comp Rol1UserStrTextField:::p:275:p}, seq l {comp Rol2UsrStringLabel:::p::p, par l {seq {space :::p, comp label11:::p::p, space :p:63:p, par t {comp typeTextField:::p:159:p, seq {comp label13:::p::p, space :p:1:p, comp idTextField:::p:87:p:3}}}, seq {space :p:6:p, comp Rol2UserStrTextField:::::x}}}}}, seq l {comp configFileLabel:::p::p, space :::p, comp configFileTextField:::::x, space :::p, comp label2:::p:62:p}}, space :p:12:p}, seq l {comp panel2:::p::p:2, space :p:36:p, par t {comp runDataCheckBox:::p::p, comp sparsifyCheckBox:::p::p}, space s:::p, par l {seq {comp tsSlopSpinner:::p:45:p:1, space :::p, comp label4:::p::p, space u:::p, comp endianCheckBox:::p::p, space :::x}, seq {comp tsCheckBox:::::x:1, space :p:18:p, comp buildTreadsSpinner:::p:45:p, space :::p, comp label6:::p::p, space :p:24:p}}}, seq l {par l {comp configFileLabel2::l:p::p, comp label3::l:p:62:p}, space :::p, comp scrollPane1:::::x, space :::p}}}}</string>
            </void>
            <void method="setProperty">
             <string>$verticalGroup</string>
-            <string>par l {seq l {space :p:11:p, par b {comp nameTextField::b:p::p, comp label1::b:p::p, comp label11::b:p::p, comp typeTextField::b:p::p}, space :p::p, par l {par b {comp label5::b:p::p, comp idTextField::b:p::p, comp label13::b:p::p}, par b:l {comp prioritySpinner::b:p::p, comp masterRocCheckBox::b:p::p}}, space s:p::p, par b {comp Rol1Label::b:p::p, comp Rol1usrStringLabel::b:p::p, comp Rol1UserStrTextField::b:p::p, comp Rol1TextField::b:p::p}, space :p::p, par l {par b {comp Rol2TextField::b:p::p, comp Rol2Label::b:p::p}, par b:l {comp Rol2UsrStringLabel::b:p::p, comp Rol2UserStrTextField::b:p::p}}, space s:p::p, par b {comp configFileLabel::b:p::p, comp configFileTextField::b:p::p, comp label2::b:p::p}, space u:p::p, par b {seq b {comp configFileLabel2:::p::p, space :p:1:p, comp label3:::p::p}, comp scrollPane1::b:::x}, space s:::p, par l {seq {par b {comp runDataCheckBox::b:p::p, comp tsCheckBox::b:p::p, comp label6::b:p::p, comp buildTreadsSpinner::b:p::p}, space :p:9:p, par b {comp sparsifyCheckBox::b:p::p, comp tsSlopSpinner::b:p::p, comp label4::b:p::p, comp endianCheckBox::b:p::p}}, comp panel2::l:p::p:1}}}</string>
+            <string>par l {seq l {space :p:11:p, par b {comp nameTextField::b:p::p, comp label1::b:p::p, comp label11::b:p::p, comp typeTextField::b:p::p}, space :p::p, par l {par b {comp label5::b:p::p, comp idTextField::b:p::p, comp label13::b:p::p}, par b:l {comp prioritySpinner::b:p::p, comp masterRocCheckBox::b:p::p}}, space s:p::p, par b {comp Rol1Label::b:p::p, comp Rol1TextField::b:p::p, comp Rol1Button::b:p::p, comp Rol1usrStringLabel::b:p::p, comp Rol1UserStrTextField::b:p::p}, space :p::p, par b {comp Rol2Label::b:p::p, comp Rol2Button::b:p::p, comp Rol2TextField::b:p::p, comp Rol2UsrStringLabel::b:p::p, comp Rol2UserStrTextField::b:p::p}, space s:p::p, par b {comp configFileLabel::b:p::p, comp configFileTextField::b:p::p, comp label2::b:p::p}, space u:p::p, par b {seq b {comp configFileLabel2:::p::p, space :p:1:p, comp label3:::p::p}, comp scrollPane1::b::46:x}, space s:::p, par l {seq {par b {comp runDataCheckBox::b:p::p, comp tsCheckBox::b:p::p, comp label6::b:p::p, comp buildTreadsSpinner::b:p::p}, space :p:9:p, par b {comp sparsifyCheckBox::b:p::p, comp tsSlopSpinner::b:p::p, comp label4::b:p::p, comp endianCheckBox::b:p::p}}, comp panel2::l:p::p:1}}}</string>
            </void>
           </object>
           <void property="name">
@@ -629,6 +629,46 @@
             </void>
            </object>
           </void>
+          <void method="add">
+           <object class="com.jformdesigner.model.FormComponent">
+            <string>javax.swing.JButton</string>
+            <void method="setProperty">
+             <string>text</string>
+             <string>FC</string>
+            </void>
+            <void property="name">
+             <string>Rol1Button</string>
+            </void>
+            <void method="addEvent">
+             <object class="com.jformdesigner.model.FormEvent">
+              <string>java.awt.event.MouseListener</string>
+              <string>mouseClicked</string>
+              <string>Rol1ButtonMouseClicked</string>
+              <boolean>true</boolean>
+             </object>
+            </void>
+           </object>
+          </void>
+          <void method="add">
+           <object class="com.jformdesigner.model.FormComponent">
+            <string>javax.swing.JButton</string>
+            <void method="setProperty">
+             <string>text</string>
+             <string>FC</string>
+            </void>
+            <void property="name">
+             <string>Rol2Button</string>
+            </void>
+            <void method="addEvent">
+             <object class="com.jformdesigner.model.FormEvent">
+              <string>java.awt.event.MouseListener</string>
+              <string>mouseClicked</string>
+              <string>Rol2ButtonMouseClicked</string>
+              <boolean>true</boolean>
+             </object>
+            </void>
+           </object>
+          </void>
          </object>
         </void>
         <void method="add">
@@ -729,8 +769,8 @@
       <void method="setProperty">
        <string>size</string>
        <object class="java.awt.Dimension">
-        <int>680</int>
-        <int>445</int>
+        <int>765</int>
+        <int>470</int>
        </object>
       </void>
      </object>
