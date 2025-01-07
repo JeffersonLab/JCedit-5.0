@@ -607,6 +607,8 @@ public class DrawingCanvas extends JPanel {
                         endType.equals(ACodaType.DC.name()) ||
                         endType.equals(ACodaType.EB.name()) ||
                         endType.equals(ACodaType.EBER.name()) ||
+                        endType.equals(ACodaType.PAGG.name()) ||
+                        endType.equals(ACodaType.SAGG.name()) ||
                         endType.equals(ACodaType.FILE.name());
                 break;
             case FPGA:
