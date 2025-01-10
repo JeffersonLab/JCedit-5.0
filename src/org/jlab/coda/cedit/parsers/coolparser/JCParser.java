@@ -606,7 +606,7 @@ public class JCParser {
         JCGPackage sendPackage;
         JCGPackage receivePackage;
         String     tmpS;
-        Set<JCGProcess> pl = Collections.synchronizedSet(new HashSet<JCGProcess>());
+        Set<JCGProcess> pl = Collections.synchronizedSet(new LinkedHashSet<>());
 
         String tq = "SELECT ?x "+ "WHERE(<"+subject.toString()+
                 "> <"+ JCGSetup.COOL_CORE+""+predicate+">,?x )";
