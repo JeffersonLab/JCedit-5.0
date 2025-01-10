@@ -606,10 +606,15 @@ public class JCParser {
         JCGPackage sendPackage;
         JCGPackage receivePackage;
         String     tmpS;
+
         Set<JCGProcess> pl = Collections.synchronizedSet(new LinkedHashSet<>());
 
-        String tq = "SELECT ?x "+ "WHERE(<"+subject.toString()+
-                "> <"+ JCGSetup.COOL_CORE+""+predicate+">,?x )";
+//        String tq = "SELECT ?x "+ "WHERE(<"+subject.toString()+
+//                "> <"+ JCGSetup.COOL_CORE+""+predicate+">,?x )";
+
+        String tq = "SELECT ?x WHERE { <" + subject.toString() + "> <" +
+                JCGSetup.COOL_CORE + predicate + "> ?x } ORDER BY ?x";
+
         Query query = new Query(tq) ;
         query.setSource(GModel);
         QueryExecution qe = new QueryEngine(query) ;
@@ -719,6 +724,7 @@ public class JCParser {
         results.close() ;
         return pl;
     }
+
 
     private JCGPackage parsePackage(Object subject, String predicate){
         JCGPackage pk = null;
