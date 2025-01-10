@@ -70,27 +70,28 @@ public class JCParser {
     /**
      * @param name of the control
      */
-    public void parseControl(String name){
-        JCGComponent duper = new JCGComponent();
-        duper.setName(name);
-        // parse and add described processes for the control to the supervisor agent
-        Set<JCGProcess> processlist = parseProcesses(JCGSetup.COOL_HTTP_BASE+"Control"+
-                File.separator+name+
-                File.separator+name+"#"+name,"hasProcess");
-
-        if(processlist!=null && !processlist.isEmpty()) {
-            duper.setPrcesses(processlist);
-        }
-        componentMap = parseComponent(JCGSetup.COOL_HTTP_BASE+"Control"+
-                  File.separator+name+File.separator+name+"#"+name,"hasComponent");
-        componentMap.put(duper.getName(), duper);
-
-    }
+//    public void parseControl(String name){
+//        JCGComponent duper = new JCGComponent();
+//        duper.setName(name);
+//        // parse and add described processes for the control to the supervisor agent
+//        Set<JCGProcess> processlist = parseProcesses(JCGSetup.COOL_HTTP_BASE+"Control"+
+//                File.separator+name+
+//                File.separator+name+"#"+name,"hasProcess");
+//
+//        if(processlist!=null && !processlist.isEmpty()) {
+//            duper.setPrcesses(processlist);
+//        }
+//        componentMap = parseComponent(JCGSetup.COOL_HTTP_BASE+"Control"+
+//                  File.separator+name+File.separator+name+"#"+name,"hasComponent");
+//        componentMap.put(duper.getName(), duper);
+//
+//    }
 
     /**
      * @param name of the control supervisor
      */
     public JCGComponent parseControlSupervisor(String name){
+        System.out.println("HEY-1");
         JCGComponent duper = new JCGComponent();
         duper.setName(name);
         // parse and add described processes for the control to the supervisor agent
@@ -413,6 +414,8 @@ public class JCParser {
             // parse processes
             Set<JCGProcess> processes = parseProcesses(x,"hasProcess");
             if(processes!=null && !processes.isEmpty()){
+                System.out.println("HEY-2");
+
                 cmp.setPrcesses(processes);
             }
 

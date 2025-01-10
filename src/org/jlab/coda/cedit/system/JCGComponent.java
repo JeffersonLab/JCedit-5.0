@@ -71,7 +71,7 @@ public class JCGComponent {
     @XmlElementWrapper(name = "processes")
     @XmlElement(name="process")
     private Set<JCGProcess> processes
-            = Collections.synchronizedSet(new HashSet<>());
+            = Collections.synchronizedSet(new LinkedHashSet<>());
     private BufferedImage                          image;
 
     public JCGComponent(){
