@@ -722,6 +722,9 @@ public class JCParser {
             pl.add(process);
         }
         results.close() ;
+        for(JCGProcess p:pl){
+            System.out.println("DDD: "+p.getName());
+        }
         return pl;
     }
 
