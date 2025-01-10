@@ -226,7 +226,8 @@
         <mkdir dir = "${bin64_dir}"/>
     </target>
 
-    <target name="check_config" depends="jar_dir.create, jena_jar_dir.create, common_bin_dir.create,bin_dir.create,bin64_dir.create, istack.install, jena_jar.install" description="Check configuration"/>
+    <target name="check_config" depends="jar_dir.create, jena_jar_dir.create, common_bin_dir.create,bin_dir.create,bin64_dir.create, istack.install" description="Check configuration"/>
+<!--    <target name="check_config" depends="jar_dir.create, jena_jar_dir.create, common_bin_dir.create,bin_dir.create,bin64_dir.create, istack.install, jena_jar.install" description="Check configuration"/>-->
 
     <property name="module.jdk.home.JCedit" value="${project.jdk.home}"/>
     <property name="module.jdk.bin.JCedit" value="${project.jdk.bin}"/>
