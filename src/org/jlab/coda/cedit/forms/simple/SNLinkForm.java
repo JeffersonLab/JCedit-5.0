@@ -121,13 +121,13 @@ public class SNLinkForm extends JFrame {
             inputEtChunkSize.setEnabled(true);
             etWait.setEnabled(true);
             checkBoxEtCreate.setEnabled(true);
-            if ((DrawingCanvas.getComp(link.getDestinationComponentName()).getType().equals(ACodaType.PEB.name())) ||
-                    (DrawingCanvas.getComp(link.getDestinationComponentName()).getType().equals(ACodaType.SEB.name())) ||
-                    (DrawingCanvas.getComp(link.getDestinationComponentName()).getType().equals(ACodaType.EBER.name())) ||
-                    (DrawingCanvas.getComp(link.getDestinationComponentName()).getType().equals(ACodaType.ER.name()))
-            ) {
+//            if ((DrawingCanvas.getComp(link.getDestinationComponentName()).getType().equals(ACodaType.PEB.name())) ||
+//                    (DrawingCanvas.getComp(link.getDestinationComponentName()).getType().equals(ACodaType.SEB.name())) ||
+//                    (DrawingCanvas.getComp(link.getDestinationComponentName()).getType().equals(ACodaType.EBER.name())) ||
+//                    (DrawingCanvas.getComp(link.getDestinationComponentName()).getType().equals(ACodaType.ER.name()))
+//            ) {
                 singleEventOutCheckBox.setEnabled(true);
-            }
+//            }
             etDefaultsMenuItem.setEnabled(true);
         } else {
             etNumberEvents.setEnabled(false);
@@ -605,7 +605,7 @@ public class SNLinkForm extends JFrame {
         //======== this ========
         setTitle("Link");
         setAutoRequestFocus(false);
-        Container contentPane = getContentPane();
+        var contentPane = getContentPane();
 
         //======== menuBar2 ========
         {
