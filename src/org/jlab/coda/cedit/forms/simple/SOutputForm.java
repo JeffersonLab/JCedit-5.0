@@ -240,6 +240,9 @@ public class SOutputForm extends JFrame {
             compressionCheckBox.setEnabled(false);
             compressionModeComboBox.setEnabled(false);
             compressionThreadsSpinner.setEnabled(false);
+            FileTypeLabel2.setEnabled(false);
+            label4.setEnabled(false);
+            label5.setEnabled(false);
 
         } else if (transportClassComboBox.getSelectedItem().equals("File")){
             etNameTextField.setEnabled(false);
@@ -267,7 +270,9 @@ public class SOutputForm extends JFrame {
             compressionCheckBox.setEnabled(true);
             compressionModeComboBox.setEnabled(true);
             compressionThreadsSpinner.setEnabled(true);
-
+            FileTypeLabel2.setEnabled(true);
+            label4.setEnabled(true);
+            label5.setEnabled(true);
 
         } else if (transportClassComboBox.getSelectedItem().equals("None") ||
                 transportClassComboBox.getSelectedItem().equals("Debug")){
@@ -296,6 +301,9 @@ public class SOutputForm extends JFrame {
             compressionCheckBox.setEnabled(true);
             compressionModeComboBox.setEnabled(true);
             compressionThreadsSpinner.setEnabled(true);
+            FileTypeLabel2.setEnabled(false);
+            label4.setEnabled(false);
+            label5.setEnabled(false);
 
         }
     }
@@ -312,7 +320,6 @@ public class SOutputForm extends JFrame {
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-        // Generated using JFormDesigner non-commercial license
         panel1 = new JPanel();
         label2 = new JLabel();
         transportClassComboBox = new JComboBox<>();
@@ -361,7 +368,7 @@ public class SOutputForm extends JFrame {
         //======== this ========
         setTitle("Output");
         setResizable(false);
-        Container contentPane = getContentPane();
+        var contentPane = getContentPane();
 
         //======== panel1 ========
         {
@@ -707,7 +714,6 @@ public class SOutputForm extends JFrame {
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
-    // Generated using JFormDesigner non-commercial license
     private JPanel panel1;
     private JLabel label2;
     private JComboBox<String> transportClassComboBox;
@@ -757,7 +763,6 @@ public class SOutputForm extends JFrame {
     private class DirectMcastAction extends AbstractAction {
         private DirectMcastAction() {
             // JFormDesigner - Action initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-            // Generated using JFormDesigner non-commercial license
             putValue(NAME, "dm");
             // JFormDesigner - End of action initialization  //GEN-END:initComponents
         }
@@ -788,7 +793,6 @@ public class SOutputForm extends JFrame {
     private class TransportClassChanged extends AbstractAction {
         private TransportClassChanged() {
             // JFormDesigner - Action initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-            // Generated using JFormDesigner non-commercial license
             putValue(NAME, "transport");
             // JFormDesigner - End of action initialization  //GEN-END:initComponents
         }
@@ -801,7 +805,6 @@ public class SOutputForm extends JFrame {
     private class OkAction extends AbstractAction {
         private OkAction() {
             // JFormDesigner - Action initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-            // Generated using JFormDesigner non-commercial license
             putValue(NAME, "Ok");
             // JFormDesigner - End of action initialization  //GEN-END:initComponents
         }
@@ -905,7 +908,6 @@ public class SOutputForm extends JFrame {
     private class ClearAction extends AbstractAction {
         private ClearAction() {
             // JFormDesigner - Action initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-            // Generated using JFormDesigner non-commercial license
             putValue(NAME, "Clear");
             // JFormDesigner - End of action initialization  //GEN-END:initComponents
         }
@@ -941,7 +943,6 @@ public class SOutputForm extends JFrame {
     private class CancelAction extends AbstractAction {
         private CancelAction() {
             // JFormDesigner - Action initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-            // Generated using JFormDesigner non-commercial license
             putValue(NAME, "Cancel");
             // JFormDesigner - End of action initialization  //GEN-END:initComponents
         }
