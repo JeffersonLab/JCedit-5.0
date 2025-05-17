@@ -742,12 +742,6 @@ public class SComponentForm extends JFrame {
 
                 //---- Rol1TextField ----
                 Rol1TextField.setText("undefined");
-                Rol1TextField.addKeyListener(new KeyAdapter() {
-                    @Override
-                    public void keyPressed(KeyEvent e) {
-                        Rol1TextFieldKeyPressed(e);
-                    }
-                });
 
                 //---- Rol1usrStringLabel ----
                 Rol1usrStringLabel.setText("User String");
