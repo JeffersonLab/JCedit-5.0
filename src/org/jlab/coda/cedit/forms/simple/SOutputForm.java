@@ -239,6 +239,8 @@ public class SOutputForm extends JFrame {
 
             compressionCheckBox.setEnabled(false);
             compressionModeComboBox.setEnabled(false);
+            compressionModeComboBox.setEnabled(false);
+            compressionThreadsSpinner.setEnabled(false);
             compressionThreadsSpinner.setEnabled(false);
             FileTypeLabel2.setEnabled(false);
             label4.setEnabled(false);
