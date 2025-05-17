@@ -536,12 +536,16 @@ public class SComponentForm extends JFrame {
     private void Rol1TextFieldKeyPressed(KeyEvent e) {
         okAllButton.setEnabled(true);
         Rol1TextField.setBackground(Color.YELLOW);
+        if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
+            System.out.println("Shift key was pressed.");
+            int returnValue = jfc.showOpenDialog(null);
+            if (returnValue == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = jfc.getSelectedFile();
+                Rol1TextField.setText(selectedFile.getAbsolutePath());
+//            System.out.println(selectedFile.getAbsolutePath());
+            }
+        }
         _rol1_update = true;
-//        int returnValue = jfc.showOpenDialog(null);
-//        if (returnValue == JFileChooser.APPROVE_OPTION) {
-//            File selectedFile = jfc.getSelectedFile();
-//            Rol1TextField.setText(selectedFile.getAbsolutePath());
-//        }
     }
 
     private void Rol2TextFieldKeyPressed(KeyEvent e) {
