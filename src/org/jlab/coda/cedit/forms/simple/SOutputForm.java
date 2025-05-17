@@ -930,10 +930,10 @@ public class SOutputForm extends JFrame {
             fileInternalBuffer.setSelectedItem("100");
             fileTypeComboBox.setSelectedItem("coda");
 
-//            compressionCheckBox.setEnabled(true);
-//            compressionModeComboBox.setEnabled(true);
-//            compressionThreadsSpinner.setEnabled(true);
-//            compressionCheckBox.setSelected(true);
+            compressionCheckBox.setEnabled(false);
+            compressionModeComboBox.setEnabled(false);
+            compressionThreadsSpinner.setEnabled(false);
+            compressionCheckBox.setSelected(false);
             compressionModeComboBox.setSelectedIndex(1);
             compressionThreadsSpinner.setValue(2);
 
