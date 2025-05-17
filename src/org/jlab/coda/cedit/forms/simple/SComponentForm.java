@@ -536,15 +536,15 @@ public class SComponentForm extends JFrame {
     private void Rol1TextFieldKeyPressed(KeyEvent e) {
         okAllButton.setEnabled(true);
         Rol1TextField.setBackground(Color.YELLOW);
-        if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
-            System.out.println("Shift key was pressed.");
-            int returnValue = jfc.showOpenDialog(null);
-            if (returnValue == JFileChooser.APPROVE_OPTION) {
-                File selectedFile = jfc.getSelectedFile();
-                Rol1TextField.setText(selectedFile.getAbsolutePath());
-//            System.out.println(selectedFile.getAbsolutePath());
-            }
-        }
+//        if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
+//            System.out.println("Shift key was pressed.");
+//            int returnValue = jfc.showOpenDialog(null);
+//            if (returnValue == JFileChooser.APPROVE_OPTION) {
+//                File selectedFile = jfc.getSelectedFile();
+//                Rol1TextField.setText(selectedFile.getAbsolutePath());
+////            System.out.println(selectedFile.getAbsolutePath());
+//            }
+//        }
         _rol1_update = true;
     }
 
@@ -742,6 +742,12 @@ public class SComponentForm extends JFrame {
 
                 //---- Rol1TextField ----
                 Rol1TextField.setText("undefined");
+                Rol1TextField.addKeyListener(new KeyAdapter() {
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                        Rol1TextFieldKeyPressed(e);
+                    }
+                });
 
                 //---- Rol1usrStringLabel ----
                 Rol1usrStringLabel.setText("User String");
