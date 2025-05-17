@@ -239,8 +239,6 @@ public class SOutputForm extends JFrame {
 
             compressionCheckBox.setEnabled(false);
             compressionModeComboBox.setEnabled(false);
-            compressionModeComboBox.setEnabled(false);
-            compressionThreadsSpinner.setEnabled(false);
             compressionThreadsSpinner.setEnabled(false);
             FileTypeLabel2.setEnabled(false);
             label4.setEnabled(false);
@@ -932,10 +930,10 @@ public class SOutputForm extends JFrame {
             fileInternalBuffer.setSelectedItem("100");
             fileTypeComboBox.setSelectedItem("coda");
 
-            compressionCheckBox.setEnabled(true);
-            compressionModeComboBox.setEnabled(true);
-            compressionThreadsSpinner.setEnabled(true);
-            compressionCheckBox.setSelected(true);
+//            compressionCheckBox.setEnabled(true);
+//            compressionModeComboBox.setEnabled(true);
+//            compressionThreadsSpinner.setEnabled(true);
+//            compressionCheckBox.setSelected(true);
             compressionModeComboBox.setSelectedIndex(1);
             compressionThreadsSpinner.setValue(2);
 
