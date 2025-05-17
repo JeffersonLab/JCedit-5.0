@@ -155,6 +155,11 @@
     <!--<property name="bin_dir" value="${build_dir}/Linux/bin"/>-->
 
     <!-- check existence of directories -->
+
+    <target name="jena.status" depends="jena_jar.check">
+        <echo message="Jena jar exists? ${jena_jar.exists}"/>
+    </target>
+
     <target name="jar_dir.check">
         <condition property="jar_dir.exists">
             <available file="${jar_dir}" type="dir"/>
