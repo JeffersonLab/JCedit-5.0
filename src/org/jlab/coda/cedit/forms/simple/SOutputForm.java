@@ -580,10 +580,14 @@ public class SOutputForm extends JFrame {
                 "LZ4+",
                 "GZIP"
             }));
+            compressionModeComboBox.setEnabled(false);
             compressionModeComboBox.setSelectedIndex(1);
 
             //---- label4 ----
             label4.setText("Mode");
+
+            //---- compressionThreadsSpinner ----
+            compressionThreadsSpinner.setEnabled(false);
 
             //---- label5 ----
             label5.setText("Threads");
@@ -930,10 +934,10 @@ public class SOutputForm extends JFrame {
             fileInternalBuffer.setSelectedItem("100");
             fileTypeComboBox.setSelectedItem("coda");
 
-            compressionCheckBox.setEnabled(false);
-            compressionModeComboBox.setEnabled(false);
-            compressionThreadsSpinner.setEnabled(false);
-            compressionCheckBox.setSelected(false);
+            compressionCheckBox.setEnabled(true);
+            compressionModeComboBox.setEnabled(true);
+            compressionThreadsSpinner.setEnabled(true);
+            compressionCheckBox.setSelected(true);
             compressionModeComboBox.setSelectedIndex(1);
             compressionThreadsSpinner.setValue(2);
 

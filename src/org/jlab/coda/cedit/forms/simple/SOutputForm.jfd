@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<java version="1.8.0_152-release" class="java.beans.XMLDecoder">
+<java version="17.0.9" class="java.beans.XMLDecoder">
  <object class="com.jformdesigner.model.FormModel">
   <void property="contentType">
    <string>form/swing</string>
@@ -540,6 +540,10 @@
             </void>
            </object>
           </void>
+          <void method="setProperty">
+           <string>enabled</string>
+           <boolean>false</boolean>
+          </void>
           <void property="name">
            <string>compressionModeComboBox</string>
           </void>
@@ -566,6 +570,10 @@
         <void method="add">
          <object class="com.jformdesigner.model.FormComponent">
           <string>javax.swing.JSpinner</string>
+          <void method="setProperty">
+           <string>enabled</string>
+           <boolean>false</boolean>
+          </void>
           <void property="name">
            <string>compressionThreadsSpinner</string>
           </void>
