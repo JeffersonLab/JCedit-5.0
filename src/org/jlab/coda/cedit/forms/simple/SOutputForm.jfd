@@ -540,10 +540,6 @@
             </void>
            </object>
           </void>
-          <void method="setProperty">
-           <string>enabled</string>
-           <boolean>false</boolean>
-          </void>
           <void property="name">
            <string>compressionModeComboBox</string>
           </void>
@@ -570,10 +566,6 @@
         <void method="add">
          <object class="com.jformdesigner.model.FormComponent">
           <string>javax.swing.JSpinner</string>
-          <void method="setProperty">
-           <string>enabled</string>
-           <boolean>false</boolean>
-          </void>
           <void property="name">
            <string>compressionThreadsSpinner</string>
           </void>

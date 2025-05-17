@@ -185,15 +185,15 @@ public class SOutputForm extends JFrame {
         // Compression
         compressionModeComboBox.setSelectedIndex(gt.getCompression());
         compressionThreadsSpinner.setValue(gt.getCompressionThreads());
-        if(gt.getCompression() > 0) {
-          compressionCheckBox.setSelected(true);
-            compressionModeComboBox.setEnabled(true);
-            compressionThreadsSpinner.setEnabled(true);
-        } else {
-            compressionCheckBox.setSelected(false);
-            compressionModeComboBox.setEnabled(false);
-            compressionThreadsSpinner.setEnabled(false);
-        }
+//        if(gt.getCompression() > 0) {
+//          compressionCheckBox.setSelected(true);
+//            compressionModeComboBox.setEnabled(true);
+//            compressionThreadsSpinner.setEnabled(true);
+//        } else {
+//            compressionCheckBox.setSelected(false);
+//            compressionModeComboBox.setEnabled(false);
+//            compressionThreadsSpinner.setEnabled(false);
+//        }
 
     }
 
@@ -580,14 +580,10 @@ public class SOutputForm extends JFrame {
                 "LZ4+",
                 "GZIP"
             }));
-            compressionModeComboBox.setEnabled(false);
             compressionModeComboBox.setSelectedIndex(1);
 
             //---- label4 ----
             label4.setText("Mode");
-
-            //---- compressionThreadsSpinner ----
-            compressionThreadsSpinner.setEnabled(false);
 
             //---- label5 ----
             label5.setText("Threads");
