@@ -1615,8 +1615,6 @@ public class SNLinkForm extends JFrame {
 //                canvas.getGCMPs().get(link.getSourceComponentName()).setStreaming(false);
                 canvas.getGCMPs().get(link.getDestinationComponentName()).setStreaming(false);
             }
-            System.out.println("VVV ========> " + link.getSourceComponentName()+" "+canvas.getGCMPs().get(link.getSourceComponentName()).isStreaming());
-            System.out.println("VVV ========> " + link.getDestinationComponentName()+" "+canvas.getGCMPs().get(link.getDestinationComponentName()).isStreaming());
 
             canvas.repaint();
             dispose();

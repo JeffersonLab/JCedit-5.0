@@ -761,7 +761,6 @@ public class LLConfigWriter {
 
                 // -------- All the rest of types (DC, PEB, SEB, EB) -----
             } else {
-                System.out.println("VVV =======> "+cmp.getName()+" "+cmp.isStreaming());
                 if (cmp.isStreaming()) {
                     out.append("     <EbModule class=\"" + "Aggregator" + "\" " +
                             "streaming=\"" + "on" + "\" " +
