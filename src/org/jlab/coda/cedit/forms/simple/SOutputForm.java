@@ -838,7 +838,7 @@ public class SOutputForm extends JFrame {
                 JCGTransport gt = new JCGTransport();
                 // fill and add/update the transport
                 gt.setTransClass(transportClassComboBox.getSelectedItem().toString());
-                gt.setEtName("/tmp/et_" + stp.getExpid() + "_" + etNameTextField.getText().trim());
+                gt.setEtName(etNameTextField.getText().trim());
                 gt.setEtHostName(etHostTextField.getText().trim());
                 gt.setEtTcpPort((Integer) etTcpPortSpinner.getValue());
                 gt.setEtUdpPort((Integer) etUdpPortSpinner.getValue());
