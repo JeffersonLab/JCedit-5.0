@@ -1607,18 +1607,17 @@ public class SNLinkForm extends JFrame {
             canvas.getGCMPs().get(link.getSourceComponentName()).addLnk(link);
             canvas.getGCMPs().get(link.getDestinationComponentName()).addLnk(link);
 
-            canvas.getGCMPs().get(link.getSourceComponentName()).setStreaming(false);
-            canvas.getGCMPs().get(link.getDestinationComponentName()).setStreaming(false);
-
+            System.out.println("DDDDD ================> "+transportClassComboBox.getSelectedItem());
                 if (transportClassComboBox.getSelectedItem().equals("UdpStream") ||
                         transportClassComboBox.getSelectedItem().equals("TcpStream")) {
                     canvas.getGCMPs().get(link.getSourceComponentName()).setStreaming(true);
                     canvas.getGCMPs().get(link.getDestinationComponentName()).setStreaming(true);
-                } else {
-                    canvas.getGCMPs().get(link.getSourceComponentName()).setStreaming(false);
-                    canvas.getGCMPs().get(link.getDestinationComponentName()).setStreaming(false);
                 }
-            if(transportClassComboBox.getSelectedItem().equals("File") ||
+//                else {
+//                    canvas.getGCMPs().get(link.getSourceComponentName()).setStreaming(false);
+//                    canvas.getGCMPs().get(link.getDestinationComponentName()).setStreaming(false);
+//                }
+                if(transportClassComboBox.getSelectedItem().equals("File") ||
                     transportClassComboBox.getSelectedItem().equals("ET")) {
                 canvas.getGCMPs().get(link.getDestinationComponentName()).setStreaming(false);
             }
