@@ -1532,7 +1532,7 @@ public class SNLinkForm extends JFrame {
                     return;
                 }
             }
-
+            System.out.println("DDDDDDDDDDDDDDDDDDDDD ============== DDDDDDDDDDDDDDDD");
             // fill and add/update the transport
             destinationTransport.setTransClass(transportClassComboBox.getSelectedItem().toString());
             destinationTransport.setEtName(etNameTextField.getText().trim());
