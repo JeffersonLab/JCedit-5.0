@@ -661,6 +661,7 @@ public class DrawingCanvas extends JPanel {
                     break;
                 }
             }
+            System.out.println("DDDDDDDDDDD =======");
             if (gle != null) {
                 gle.setStartX((int) lineStartX);
                 gle.setStartY((int) lineStartY);
