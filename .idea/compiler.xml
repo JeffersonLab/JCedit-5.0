@@ -3,4 +3,11 @@
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="17" />
   </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="JCedit-5.0" options="-Xlint:deprecation" />
+      <module name="JCedit-5.0.main" options="-Xlint:deprecation" />
+      <module name="JCedit-5.0.test" options="-Xlint:deprecation" />
+    </option>
+  </component>
 </project>
