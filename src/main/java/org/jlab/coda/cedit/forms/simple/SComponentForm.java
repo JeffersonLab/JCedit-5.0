@@ -576,6 +576,13 @@ public class SComponentForm extends JFrame {
      * @param type the ACodaType enum value
      * @return the priority range (maximum offset from base priority)
      */
+    /**
+     * Determines the priority range for a given component type.
+     * Different component types have different priority ranges to prevent conflicts.
+     *
+     * @param type the component type
+     * @return the priority range (number of possible priority values)
+     */
     private int getPriorityRangeForType(ACodaType type) {
         switch (type) {
             case USR:

@@ -180,6 +180,17 @@ public class SNLinkForm extends JFrame {
     /**
      * Loads existing transports from source and destination components.
      */
+    /**
+     * Loads existing transport configurations from source and destination components.
+     * Searches the component's transport list for matching transport names and
+     * assigns them to sourceTransport and destinationTransport fields.
+     * Also handles special case for FILE type destinations.
+     *
+     * @param sourceComponent the source component containing transports
+     * @param destinationComponent the destination component containing transports
+     * @param sourceTransportName the name of the source transport to find
+     * @param destTransportName the name of the destination transport to find
+     */
     private void loadTransportsFromComponents(JCGComponent sourceComponent,
                                                JCGComponent destinationComponent,
                                                String sourceTransportName,

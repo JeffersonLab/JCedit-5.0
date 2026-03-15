@@ -457,249 +457,77 @@ public class JCTools {
         return res;
     }
 
-    public static HashMap<String, Integer> getPredefinedIds(String t) {
-        String s;
-        StringTokenizer st1, st2;
-        StringBuilder sb = new StringBuilder();
+    /**
+     * Helper method to read predefined component IDs from a file and add them to the result map.
+     * Parses a file with format: name$type$sType$id$desc@@ for each component.
+     *
+     * @param filePath the path to the file containing predefined component definitions
+     * @param resultMap the map to populate with component name -> ID mappings
+     */
+    private static void readPredefinedIdsFromFile(String filePath, HashMap<String, Integer> resultMap) {
+        if (!new File(filePath).exists()) {
+            return;
+        }
 
-        String name = "undefined";
-        String type = "undefined";
-        String desc = "undefined";
-        String sType = "undefined";
-        int id;
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            StringBuilder sb = new StringBuilder();
+            String s;
+
+            // Read entire file
+            while ((s = br.readLine()) != null) {
+                sb.append(s);
+                if (!s.endsWith("@@")) {
+                    sb.append("\n");
+                }
+            }
+
+            // Parse component records (format: name$type$sType$id$desc@@)
+            StringTokenizer st1 = new StringTokenizer(sb.toString(), "@@");
+            while (st1.hasMoreTokens()) {
+                StringTokenizer st2 = new StringTokenizer(st1.nextToken(), "$");
+
+                String name = st2.hasMoreTokens() ? st2.nextToken() : "undefined";
+                String type = st2.hasMoreTokens() ? st2.nextToken() : "undefined";
+                String sType = st2.hasMoreTokens() ? st2.nextToken() : "undefined";
+
+                try {
+                    if (st2.hasMoreTokens()) {
+                        int id = Integer.parseInt(st2.nextToken());
+                        resultMap.put(name, id);
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println(e.getMessage());
+                }
+
+                // Consume description field if present
+                if (st2.hasMoreTokens()) {
+                    String desc = st2.nextToken();
+                }
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static HashMap<String, Integer> getPredefinedIds(String t) {
         JCGSetup stp = JCGSetup.getInstance();
         HashMap<String, Integer> res = new HashMap<>();
+        String baseDir = stp.getCoolHome() + File.separator + stp.getExpid() + File.separator + "jcedit" + File.separator;
+        // For ROC, GT, FPGA, TS types - read from all relevant files
         if (t.equals(ACodaType.ROC.name()) ||
                 t.equals(ACodaType.GT.name()) ||
                 t.equals(ACodaType.FPGA.name()) ||
                 t.equals(ACodaType.TS.name())
         ) {
-            if (new File(stp.getCoolHome() +
-                    File.separator + stp.getExpid() + File.separator + "jcedit" + File.separator + ACodaType.ROC.name() + ".txt").exists()) {
-                try {
-
-                    // roc
-                    BufferedReader br = new BufferedReader(new FileReader(stp.getCoolHome() +
-                            File.separator + stp.getExpid() + File.separator + "jcedit" + File.separator + ACodaType.ROC.name() + ".txt"));
-
-                    // read entire file
-                    while ((s = br.readLine()) != null) {
-                        sb.append(s);
-                        if (!s.endsWith("@@")) {
-                            sb.append("\n");
-                        }
-                    }
-                    // get single component record
-                    st1 = new StringTokenizer(sb.toString(), "@@");
-                    while (st1.hasMoreTokens()) {
-                        // get data
-                        st2 = new StringTokenizer(st1.nextToken(), "$");
-                        if (st2.hasMoreTokens()) name = st2.nextToken();
-                        if (st2.hasMoreTokens()) type = st2.nextToken();
-                        if (st2.hasMoreTokens()) sType = st2.nextToken();
-
-                        try {
-                            if (st2.hasMoreTokens()) {
-                                id = Integer.parseInt(st2.nextToken());
-                                res.put(name, id);
-                            }
-                        } catch (NumberFormatException e) {
-                            System.out.println(e.getMessage());
-                        }
-
-                        if (st2.hasMoreTokens()) desc = st2.nextToken();
-
-                    }
-                    br.close();
-                } catch (FileNotFoundException e) {
-
-                    System.out.println(e.getMessage());
-                } catch (IOException e) {
-                    System.out.println(e.getMessage());
-                }
-            }
-
-            if (new File(stp.getCoolHome() +
-                    File.separator + stp.getExpid() + File.separator + "jcedit" + File.separator + ACodaType.GT.name() + ".txt").exists()) {
-                try {
-
-                    //gt
-                    BufferedReader br = new BufferedReader(new FileReader(stp.getCoolHome() +
-                            File.separator + stp.getExpid() + File.separator + "jcedit" + File.separator + ACodaType.GT.name() + ".txt"));
-
-                    // read entire file
-                    while ((s = br.readLine()) != null) {
-                        sb.append(s);
-                        if (!s.endsWith("@@")) {
-                            sb.append("\n");
-                        }
-                    }
-                    // get single component record
-                    st1 = new StringTokenizer(sb.toString(), "@@");
-                    while (st1.hasMoreTokens()) {
-                        // get data
-                        st2 = new StringTokenizer(st1.nextToken(), "$");
-                        if (st2.hasMoreTokens()) name = st2.nextToken();
-                        if (st2.hasMoreTokens()) type = st2.nextToken();
-                        if (st2.hasMoreTokens()) sType = st2.nextToken();
-
-                        try {
-                            if (st2.hasMoreTokens()) {
-                                id = Integer.parseInt(st2.nextToken());
-                                res.put(name, id);
-                            }
-                        } catch (NumberFormatException e) {
-                            System.out.println(e.getMessage());
-                        }
-
-                        if (st2.hasMoreTokens()) desc = st2.nextToken();
-
-                    }
-                    br.close();
-                } catch (FileNotFoundException e) {
-
-                    System.out.println(e.getMessage());
-                } catch (IOException e) {
-                    System.out.println(e.getMessage());
-                }
-            }
-
-            if (new File(stp.getCoolHome() +
-                    File.separator + stp.getExpid() + File.separator + "jcedit" + File.separator + ACodaType.FPGA.name() + ".txt").exists()) {
-                try {
-
-                    //fpga
-                    BufferedReader br = new BufferedReader(new FileReader(stp.getCoolHome() +
-                            File.separator + stp.getExpid() + File.separator + "jcedit" + File.separator + ACodaType.FPGA.name() + ".txt"));
-
-                    // read entire file
-                    while ((s = br.readLine()) != null) {
-                        sb.append(s);
-                        if (!s.endsWith("@@")) {
-                            sb.append("\n");
-                        }
-                    }
-                    // get single component record
-                    st1 = new StringTokenizer(sb.toString(), "@@");
-                    while (st1.hasMoreTokens()) {
-                        // get data
-                        st2 = new StringTokenizer(st1.nextToken(), "$");
-                        if (st2.hasMoreTokens()) name = st2.nextToken();
-                        if (st2.hasMoreTokens()) type = st2.nextToken();
-                        if (st2.hasMoreTokens()) sType = st2.nextToken();
-
-                        try {
-                            if (st2.hasMoreTokens()) {
-                                id = Integer.parseInt(st2.nextToken());
-                                res.put(name, id);
-                            }
-                        } catch (NumberFormatException e) {
-                            System.out.println(e.getMessage());
-                        }
-
-                        if (st2.hasMoreTokens()) desc = st2.nextToken();
-
-                    }
-                    br.close();
-                } catch (FileNotFoundException e) {
-
-                    System.out.println(e.getMessage());
-                } catch (IOException e) {
-                    System.out.println(e.getMessage());
-                }
-            }
-
-            if (new File(stp.getCoolHome() +
-                    File.separator + stp.getExpid() + File.separator + "jcedit" + File.separator + ACodaType.TS.name() + ".txt").exists()) {
-                try {
-
-                    //ts
-                    BufferedReader br = new BufferedReader(new FileReader(stp.getCoolHome() +
-                            File.separator + stp.getExpid() + File.separator + "jcedit" + File.separator + ACodaType.TS.name() + ".txt"));
-
-                    // read entire file
-                    while ((s = br.readLine()) != null) {
-                        sb.append(s);
-                        if (!s.endsWith("@@")) {
-                            sb.append("\n");
-                        }
-                    }
-                    // get single component record
-                    st1 = new StringTokenizer(sb.toString(), "@@");
-                    while (st1.hasMoreTokens()) {
-                        // get data
-                        st2 = new StringTokenizer(st1.nextToken(), "$");
-                        if (st2.hasMoreTokens()) name = st2.nextToken();
-                        if (st2.hasMoreTokens()) type = st2.nextToken();
-                        if (st2.hasMoreTokens()) sType = st2.nextToken();
-
-                        try {
-                            if (st2.hasMoreTokens()) {
-                                id = Integer.parseInt(st2.nextToken());
-                                res.put(name, id);
-                            }
-                        } catch (NumberFormatException e) {
-                            System.out.println(e.getMessage());
-                        }
-
-                        if (st2.hasMoreTokens()) desc = st2.nextToken();
-
-                    }
-                    br.close();
-                    br.close();
-                } catch (FileNotFoundException e) {
-
-                    System.out.println(e.getMessage());
-                } catch (IOException e) {
-                    System.out.println(e.getMessage());
-                }
-            }
-
-
+            readPredefinedIdsFromFile(baseDir + ACodaType.ROC.name() + ".txt", res);
+            readPredefinedIdsFromFile(baseDir + ACodaType.GT.name() + ".txt", res);
+            readPredefinedIdsFromFile(baseDir + ACodaType.FPGA.name() + ".txt", res);
+            readPredefinedIdsFromFile(baseDir + ACodaType.TS.name() + ".txt", res);
         } else {
-            if (new File(stp.getCoolHome() +
-                    File.separator + stp.getExpid() + File.separator + "jcedit" + File.separator + t + ".txt").exists()) {
-                // non roc components
-                try {
-                    BufferedReader br = new BufferedReader(new FileReader(stp.getCoolHome() +
-                            File.separator + stp.getExpid() + File.separator + "jcedit" + File.separator + t + ".txt"));
-
-                    // read entire file
-                    while ((s = br.readLine()) != null) {
-                        sb.append(s);
-                        if (!s.endsWith("@@")) {
-                            sb.append("\n");
-                        }
-                    }
-                    // get single component record
-                    st1 = new StringTokenizer(sb.toString(), "@@");
-                    while (st1.hasMoreTokens()) {
-                        // get data
-                        st2 = new StringTokenizer(st1.nextToken(), "$");
-                        if (st2.hasMoreTokens()) name = st2.nextToken();
-                        if (st2.hasMoreTokens()) type = st2.nextToken();
-                        if (st2.hasMoreTokens()) sType = st2.nextToken();
-
-                        try {
-                            if (st2.hasMoreTokens()) {
-                                id = Integer.parseInt(st2.nextToken());
-                                res.put(name, id);
-                            }
-                        } catch (NumberFormatException e) {
-                            System.out.println(e.getMessage());
-                        }
-
-                        if (st2.hasMoreTokens()) desc = st2.nextToken();
-
-                    }
-                    br.close();
-                } catch (FileNotFoundException e) {
-
-                    System.out.println(e.getMessage());
-                } catch (IOException e) {
-                    System.out.println(e.getMessage());
-                }
-            }
+            // For other component types - read from type-specific file
+            readPredefinedIdsFromFile(baseDir + t + ".txt", res);
         }
         return res;
     }

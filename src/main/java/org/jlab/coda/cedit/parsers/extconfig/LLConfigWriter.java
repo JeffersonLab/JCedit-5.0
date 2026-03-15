@@ -307,6 +307,16 @@ public class LLConfigWriter {
     /**
      * Writes ET (Event Transfer) transport configuration XML.
      */
+    /**
+     * Writes Event Transfer (ET) transport configuration to XML.
+     * Determines whether to create a new ET system or connect to existing one,
+     * calculates the appropriate event numbers, and generates corresponding XML.
+     *
+     * @param componentName the name of the component using this transport
+     * @param tr the transport configuration
+     * @param nl the number of links/connections
+     * @return XML string for ET transport configuration
+     */
     private String writeEtTransport(String componentName, JCGTransport tr, int nl) {
         tr.setEtCreate((tr.getName().equals((componentName + "_transport"))) &&
                       (tr.getDestinationEtCreate().equals("true")));
@@ -364,6 +374,14 @@ public class LLConfigWriter {
     /**
      * Writes EmuSocket transport configuration XML.
      */
+    /**
+     * Writes EmuSocket transport configuration to XML.
+     * Configures direct socket connection parameters for FPGA-based components.
+     *
+     * @param componentName the name of the component using this transport
+     * @param tr the transport configuration
+     * @return XML string for EmuSocket transport configuration
+     */
     private String writeEmuSocketTransport(String componentName, JCGTransport tr) {
         if (tr.getName().equals((componentName + "_transport"))) {
             return "     <client name=\"" + tr.getName() + "\" " +
@@ -379,6 +397,17 @@ public class LLConfigWriter {
 
     /**
      * Writes combined EmuSocket+Et transport configuration XML (for ER/EBER components).
+     */
+    /**
+     * Writes combined EmuSocket+ET transport configuration to XML.
+     * Configures both EmuSocket direct connection and ET system parameters
+     * for hybrid transport scenarios.
+     *
+     * @param ec the external configuration
+     * @param componentName the name of the component using this transport
+     * @param tr the transport configuration
+     * @param nl the number of links/connections
+     * @return XML string for combined EmuSocket+ET transport configuration
      */
     private String writeEmuSocketPlusEtTransport(ExternalConfig ec, String componentName,
                                                   JCGTransport tr, int nl) {
@@ -403,6 +432,14 @@ public class LLConfigWriter {
     /**
      * Writes TcpStream transport configuration XML.
      */
+    /**
+     * Writes TCP Stream transport configuration to XML.
+     * Configures TCP socket parameters for streaming data transport.
+     *
+     * @param componentName the name of the component using this transport
+     * @param tr the transport configuration
+     * @return XML string for TCP Stream transport configuration
+     */
     private String writeTcpStreamTransport(String componentName, JCGTransport tr) {
         if (tr.getName().equals((componentName + "_transport"))) {
             return "     <client name=\"" + tr.getName() + "\" " +
@@ -422,6 +459,16 @@ public class LLConfigWriter {
      * Writes UdpStream transport configuration XML.
      * Note: Original logic has unreachable code - isOutChannel can never be true
      * due to duplicate condition check.
+     */
+    /**
+     * Writes UDP Stream transport configuration to XML.
+     * Configures UDP socket parameters for streaming data transport,
+     * with optional load balancing and ERSAP integration.
+     *
+     * @param ec the external configuration
+     * @param componentName the name of the component using this transport
+     * @param tr the transport configuration
+     * @return XML string for UDP Stream transport configuration
      */
     private String writeUdpStreamTransport(ExternalConfig ec, String componentName, JCGTransport tr) {
         boolean isInChannel = false;
@@ -481,6 +528,14 @@ public class LLConfigWriter {
 
     /**
      * Writes File transport configuration XML.
+     */
+    /**
+     * Writes File transport configuration to XML.
+     * Configures file-based data output parameters including file name,
+     * type, and split size.
+     *
+     * @param tr the transport configuration
+     * @return XML string for File transport configuration
      */
     private String writeFileTransport(JCGTransport tr) {
         return "     <server name=\"" + tr.getName() + "\" " +
