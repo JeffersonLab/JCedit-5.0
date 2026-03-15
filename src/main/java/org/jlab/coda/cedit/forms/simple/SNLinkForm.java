@@ -39,6 +39,13 @@ import org.jlab.coda.cedit.util.JCUtil;
  * @author Vardan Gyurjyan
  */
 public class SNLinkForm extends JFrame {
+    // Constants for transport configuration
+    private static final int BYTES_TO_KILOBYTES = 1000;
+    private static final long FILE_SPLIT_MULTIPLIER = 10000000L;
+    private static final int DEFAULT_ET_TCP_PORT = 23911;
+    private static final int DEFAULT_ET_UDP_PORT = 23912;
+    private static final int DEFAULT_EMU_PORT = 46000;
+
     private final JCGLink link;
     private final DrawingCanvas canvas;
     private JCGTransport destinationTransport = null;
@@ -244,7 +251,7 @@ public class SNLinkForm extends JFrame {
         transport.setTransClass("Et");
         transport.setEtName("/tmp/et_" + stp.getExpid() + "_" + componentName);
         transport.setEtEventNum((Integer) etNumberEvents.getValue());
-        transport.setEtEventSize((Integer) etEventSize.getValue() * 1000);
+        transport.setEtEventSize((Integer) etEventSize.getValue() * BYTES_TO_KILOBYTES);
         transport.setEtChunkSize((Integer) etChunkSize.getValue());
         transport.setInputEtChunkSize((Integer) inputEtChunkSize.getValue());
         transport.setEtWait((Integer) etWait.getValue());
@@ -298,7 +305,7 @@ public class SNLinkForm extends JFrame {
         connectionMethodComboBox.setSelectedItem(destinationTransport.getEtMethodCon());
 
         etNumberEvents.setValue(destinationTransport.getEtEventNum());
-        etEventSize.setValue(destinationTransport.getEtEventSize() / 1000);
+        etEventSize.setValue(destinationTransport.getEtEventSize() / BYTES_TO_KILOBYTES);
         etChunkSize.setValue(destinationTransport.getEtChunkSize());
         inputEtChunkSize.setValue(destinationTransport.getInputEtChunkSize());
         etWait.setValue(destinationTransport.getEtWait());
@@ -316,7 +323,7 @@ public class SNLinkForm extends JFrame {
         if (destinationTransport.getFileSplit() < 0) {
             fileSplitSpinner.setValue(2000);
         } else {
-            fileSplitSpinner.setValue((int) (destinationTransport.getFileSplit() / 10000000));
+            fileSplitSpinner.setValue((int) (destinationTransport.getFileSplit() / FILE_SPLIT_MULTIPLIER));
         }
 
         fileTypeComboBox.setSelectedItem(destinationTransport.getFileType());
@@ -328,7 +335,7 @@ public class SNLinkForm extends JFrame {
     private void populateEmuSocketFields() {
         emuPortSpinner.setValue(destinationTransport.getEmuDirectPort());
         emuSocketWaitSpinner.setValue(destinationTransport.getEmuWait());
-        emuMaxBufferSpinner.setValue(destinationTransport.getEmuMaxBuffer() / 1000);
+        emuMaxBufferSpinner.setValue(destinationTransport.getEmuMaxBuffer() / BYTES_TO_KILOBYTES);
         emuSubnetTextField.setText(destinationTransport.getEmuSubNet());
         fpgaLinkIpTextField.setText(destinationTransport.getFpgaLinkIp());
         emuFatPipeCheckBox.setSelected(sourceTransport.isEmuFatPipe());
@@ -340,7 +347,7 @@ public class SNLinkForm extends JFrame {
     private void populateUdpStreamFields() {
         UdpHostTextField.setText(destinationTransport.getUdpHost());
         UdpPortSpinner.setValue(destinationTransport.getUdpPort());
-        UdpBufferSizeSpinner.setValue(destinationTransport.getUdpBufferSize() / 1000);
+        UdpBufferSizeSpinner.setValue(destinationTransport.getUdpBufferSize() / BYTES_TO_KILOBYTES);
         UdpFpgaLinkIp.setText(destinationTransport.getUdpFpgaLinkIp());
         UdpStreamsSpinner.setValue(destinationTransport.getUdpStreams());
         UdpUseLoadBalancer.setSelected(destinationTransport.isLB());
@@ -354,7 +361,7 @@ public class SNLinkForm extends JFrame {
         tcpStreamsSpinner.setValue(destinationTransport.getEmuTcpStreams());
         tcpStreamPortSpinner.setValue(destinationTransport.getTcpStreamDirectPort());
         tcpStreamSocketWaitSpinner.setValue(destinationTransport.getTcpStreamWait());
-        tcpStreamMaxBufferSpinner.setValue(destinationTransport.getTcpStreamMaxBuffer() / 1000);
+        tcpStreamMaxBufferSpinner.setValue(destinationTransport.getTcpStreamMaxBuffer() / BYTES_TO_KILOBYTES);
         tcpStreamSubnetTextField.setText(destinationTransport.getTcpStreamSubNet());
         tcpStreamFpgaLinkIpTextField.setText(destinationTransport.getTcpStreamFpgaLinkIp());
     }
@@ -807,10 +814,10 @@ public class SNLinkForm extends JFrame {
             mAddressTextField.setText("239.200.0.0");
 
             //---- etTcpPortSpinner ----
-            etTcpPortSpinner.setModel(new SpinnerNumberModel(23911, 1, 99999, 1));
+            etTcpPortSpinner.setModel(new SpinnerNumberModel(DEFAULT_ET_TCP_PORT, 1, 99999, 1));
 
             //---- etUdpPortSpinner ----
-            etUdpPortSpinner.setModel(new SpinnerNumberModel(23912, 1, 99999, 1));
+            etUdpPortSpinner.setModel(new SpinnerNumberModel(DEFAULT_ET_UDP_PORT, 1, 99999, 1));
 
             //---- label4 ----
             label4.setText("( IP address )");
@@ -1080,7 +1087,7 @@ public class SNLinkForm extends JFrame {
             emuSocketWaitSpinner.setModel(new SpinnerNumberModel(5, 0, 30, 1));
 
             //---- emuPortSpinner ----
-            emuPortSpinner.setModel(new SpinnerNumberModel(46000, 1, 99999, 1));
+            emuPortSpinner.setModel(new SpinnerNumberModel(DEFAULT_EMU_PORT, 1, 99999, 1));
 
             //---- label17 ----
             label17.setText("Subnet");
@@ -1598,7 +1605,6 @@ public class SNLinkForm extends JFrame {
                     return;
                 }
             }
-            System.out.println("DDDDDDDDDDDDDDDDDDDDD ============== DDDDDDDDDDDDDDDD");
             // fill and add/update the transport
             destinationTransport.setTransClass(transportClassComboBox.getSelectedItem().toString());
             destinationTransport.setEtName(etNameTextField.getText().trim());
@@ -1610,7 +1616,7 @@ public class SNLinkForm extends JFrame {
             destinationTransport.setmAddress(mAddressTextField.getText().trim());
             destinationTransport.setEtMethodCon(connectionMethodComboBox.getSelectedItem().toString());
             destinationTransport.setEtEventNum((Integer) etNumberEvents.getValue());
-            destinationTransport.setEtEventSize((Integer) etEventSize.getValue() * 1000);
+            destinationTransport.setEtEventSize((Integer) etEventSize.getValue() * BYTES_TO_KILOBYTES);
             destinationTransport.setEtChunkSize((Integer) etChunkSize.getValue());
             destinationTransport.setInputEtChunkSize((Integer) inputEtChunkSize.getValue());
             destinationTransport.setEtWait((Integer) etWait.getValue());
@@ -1630,12 +1636,12 @@ public class SNLinkForm extends JFrame {
             destinationTransport.setFileName(fileNameTextField.getText().trim());
 
             int d = (Integer) fileSplitSpinner.getValue();
-            destinationTransport.setFileSplit(d * 10000000L);
+            destinationTransport.setFileSplit(d * FILE_SPLIT_MULTIPLIER);
             destinationTransport.setFileType((String) fileTypeComboBox.getSelectedItem());
 
             //emu
             destinationTransport.setEmuDirectPort((int) emuPortSpinner.getValue());
-            destinationTransport.setEmuMaxBuffer((int) emuMaxBufferSpinner.getValue() * 1000);
+            destinationTransport.setEmuMaxBuffer((int) emuMaxBufferSpinner.getValue() * BYTES_TO_KILOBYTES);
             destinationTransport.setEmuWait((int) emuSocketWaitSpinner.getValue());
             destinationTransport.setEmuSubNet(emuSubnetTextField.getText());
             destinationTransport.setFpgaLinkIp(fpgaLinkIpTextField.getText());
@@ -1644,7 +1650,7 @@ public class SNLinkForm extends JFrame {
 
             //TcpStream
             destinationTransport.setTcpStreamDirectPort((int) tcpStreamPortSpinner.getValue());
-            destinationTransport.setTcpStreamMaxBuffer((int) tcpStreamMaxBufferSpinner.getValue() * 1000);
+            destinationTransport.setTcpStreamMaxBuffer((int) tcpStreamMaxBufferSpinner.getValue() * BYTES_TO_KILOBYTES);
             destinationTransport.setTcpStreamWait((int) tcpStreamSocketWaitSpinner.getValue());
             destinationTransport.setTcpStreamSubNet(tcpStreamSubnetTextField.getText());
             destinationTransport.setTcpStreamFpgaLinkIp(tcpStreamFpgaLinkIpTextField.getText());
@@ -1654,7 +1660,7 @@ public class SNLinkForm extends JFrame {
             //Udp
             destinationTransport.setUdpHost(UdpHostTextField.getText());
             destinationTransport.setUdpPort((int) UdpPortSpinner.getValue());
-            destinationTransport.setUdpBufferSize((int)UdpBufferSizeSpinner.getValue() * 1000);
+            destinationTransport.setUdpBufferSize((int)UdpBufferSizeSpinner.getValue() * BYTES_TO_KILOBYTES);
             destinationTransport.setUdpStreams((int)UdpStreamsSpinner.getValue());
             destinationTransport.setLB(UdpUseLoadBalancer.isSelected());
             destinationTransport.setErsap(UdpUseErsap.isSelected());
@@ -1673,7 +1679,6 @@ public class SNLinkForm extends JFrame {
             canvas.getGCMPs().get(link.getSourceComponentName()).addLnk(link);
             canvas.getGCMPs().get(link.getDestinationComponentName()).addLnk(link);
 
-            System.out.println("DDDDD ================> "+transportClassComboBox.getSelectedItem());
                 if (transportClassComboBox.getSelectedItem().equals("UdpStream") ||
                         transportClassComboBox.getSelectedItem().equals("TcpStream")) {
                     canvas.getGCMPs().get(link.getSourceComponentName()).setStreaming(true);
@@ -1710,8 +1715,8 @@ public class SNLinkForm extends JFrame {
             }
             etHostTextField.setText("anywhere");
             etSubnetTextField.setText("undefined");
-            etTcpPortSpinner.setValue(23911);
-            etUdpPortSpinner.setValue(23912);
+            etTcpPortSpinner.setValue(DEFAULT_ET_TCP_PORT);
+            etUdpPortSpinner.setValue(DEFAULT_ET_UDP_PORT);
             etNumberEvents.setValue(1);
             etEventSize.setValue(2100);
             etChunkSize.setValue(2);
@@ -1728,7 +1733,7 @@ public class SNLinkForm extends JFrame {
             enableEtCustomization(false);
 
             // emuSocket
-            emuPortSpinner.setValue(46000);
+            emuPortSpinner.setValue(DEFAULT_EMU_PORT);
             emuSocketWaitSpinner.setValue(0);
             emuMaxBufferSpinner.setValue(2100);
             emuSubnetTextField.setText("");

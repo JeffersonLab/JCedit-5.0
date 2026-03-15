@@ -34,11 +34,15 @@ import javax.swing.filechooser.FileSystemView;
 import org.jlab.coda.cedit.cooldesktop.CDesktopNew;
 import org.jlab.coda.cedit.cooldesktop.DrawingCanvas;
 import org.jlab.coda.cedit.system.*;
+import org.jlab.coda.cedit.util.FormValidator;
+import org.jlab.coda.cedit.util.ValidationResult;
 
 /**
  * @author Vardan Gyurjyan
  */
 public class SComponentForm extends JFrame {
+    // Constants
+    private static final String UNDEFINED_VALUE = "undefined";
 
     private DrawingCanvas parentCanvas;
     private JCGComponent component;
@@ -256,7 +260,7 @@ public class SComponentForm extends JFrame {
                 typeTextField.getText().trim(),
                 component.getSubType(),
                 descriptionTextArea.getText().replace("\\n","\n"));
-        if(predefinedDescription.equals("undefined")) {
+        if(predefinedDescription.equals("UNDEFINED_VALUE")) {
             descriptionTextArea.setEnabled(true);
         } else {
             descriptionTextArea.setEnabled(false);
@@ -291,7 +295,7 @@ public class SComponentForm extends JFrame {
             Rol1UserStrTextField.setText(comp.getRol1UsrString());
             p_rol1String = comp.getRol1UsrString();
         }else {
-            Rol1UserStrTextField.setText("undefined");
+            Rol1UserStrTextField.setText("UNDEFINED_VALUE");
         }
         if(comp.getRol2()!=null){
             Rol2TextField.setText(comp.getRol2());
@@ -304,7 +308,7 @@ public class SComponentForm extends JFrame {
             Rol2UserStrTextField.setText(comp.getRol2UsrString());
             p_rol2String = comp.getRol2UsrString();
         }else {
-            Rol2UserStrTextField.setText("undefined");
+            Rol2UserStrTextField.setText("UNDEFINED_VALUE");
         }
 
         masterRocCheckBox.setSelected(comp.isMaster());
@@ -376,7 +380,7 @@ public class SComponentForm extends JFrame {
 
             String t = configFileTextField.getText().trim();
             if(t.equals("")) {
-                component.setUserConfig("undefined");
+                component.setUserConfig("UNDEFINED_VALUE");
             } else {
                 component.setUserConfig(configFileTextField.getText().trim());
             }
@@ -713,7 +717,7 @@ public class SComponentForm extends JFrame {
                 Rol2UsrStringLabel.setText("User String");
 
                 //---- Rol2UserStrTextField ----
-                Rol2UserStrTextField.setText("undefined");
+                Rol2UserStrTextField.setText("UNDEFINED_VALUE");
                 Rol2UserStrTextField.addKeyListener(new KeyAdapter() {
                     @Override
                     public void keyPressed(KeyEvent e) {
@@ -725,7 +729,7 @@ public class SComponentForm extends JFrame {
                 Rol1Label.setText("ROL1");
 
                 //---- Rol1TextField ----
-                Rol1TextField.setText("undefined");
+                Rol1TextField.setText("UNDEFINED_VALUE");
                 Rol1TextField.addKeyListener(new KeyAdapter() {
                     @Override
                     public void keyPressed(KeyEvent e) {
@@ -737,7 +741,7 @@ public class SComponentForm extends JFrame {
                 Rol1usrStringLabel.setText("User String");
 
                 //---- Rol1UserStrTextField ----
-                Rol1UserStrTextField.setText("undefined");
+                Rol1UserStrTextField.setText("UNDEFINED_VALUE");
                 Rol1UserStrTextField.addKeyListener(new KeyAdapter() {
                     @Override
                     public void keyPressed(KeyEvent e) {
@@ -1193,9 +1197,9 @@ public class SComponentForm extends JFrame {
             // Reset priority to default for component type
             resetPriorityForType(component.getType());
             Rol1TextField.setText("");
-            Rol1UserStrTextField.setText("undefined");
+            Rol1UserStrTextField.setText("UNDEFINED_VALUE");
             Rol2TextField.setText("");
-            Rol2UserStrTextField.setText("undefined");
+            Rol2UserStrTextField.setText("UNDEFINED_VALUE");
             configFileTextField.setText("");
             runDataCheckBox.setSelected(false);
             tsCheckBox.setSelected(true);
@@ -1216,9 +1220,10 @@ public class SComponentForm extends JFrame {
         public void actionPerformed(ActionEvent e) {
             String _name = getNameFromTextField();
 
-            if(isComponentDefinedOnCanvas(_name)){
-                JOptionPane.showMessageDialog(cForm,"Component with the name = "+_name+
-                        " exists","Error",JOptionPane.ERROR_MESSAGE);
+            // Validate component name (checks empty, underscore, duplicates)
+            ValidationResult nameValidation = FormValidator.validateComponentName(_name, parentCanvas);
+            if (!nameValidation.isValid()) {
+                nameValidation.showDialogIfInvalid(cForm);
                 return;
             }
 
@@ -1230,13 +1235,6 @@ public class SComponentForm extends JFrame {
                     return;
                 }
                 idTextField.setText(Integer.toString(CDesktopNew.assignUniqueId(tp)));
-            }
-
-            if(nameTextField.getText().trim().contains("_")){
-                JOptionPane.showMessageDialog(cForm,"\"_\" is a control character and can not be used in the name.\n " +
-                        "Please change the name of the component. "
-                        ,"Warning",JOptionPane.WARNING_MESSAGE);
-                return;
             }
 
             updateComponentInfo();
@@ -1252,28 +1250,25 @@ public class SComponentForm extends JFrame {
         }
 
         public void actionPerformed(ActionEvent e) {
-            if(isComponentDefinedOnCanvas(getNameFromTextField())){
-                JOptionPane.showMessageDialog(cForm,"Component with the name = "+getNameFromTextField()+
-                        " exists","Error",JOptionPane.ERROR_MESSAGE);
+            String _name = getNameFromTextField();
+
+            // Validate component name (checks empty, underscore, duplicates)
+            ValidationResult nameValidation = FormValidator.validateComponentName(_name, parentCanvas);
+            if (!nameValidation.isValid()) {
+                nameValidation.showDialogIfInvalid(cForm);
                 return;
             }
+
             String tp = typeTextField.getText().trim();
-            if(!pName.equals(getNameFromTextField())) {
-                if(CDesktopNew.isComponentPredefined(tp,getNameFromTextField())) {
-                    JOptionPane.showMessageDialog(cForm,"Component with the name = "+getNameFromTextField()+
+            if(!pName.equals(_name)) {
+                if(CDesktopNew.isComponentPredefined(tp,_name)) {
+                    JOptionPane.showMessageDialog(cForm,"Component with the name = "+_name+
                             " is predefined","Error",JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 idTextField.setText(Integer.toString(CDesktopNew.assignUniqueId(tp)));
             }
 
-
-            if(nameTextField.getText().trim().contains("_")){
-                JOptionPane.showMessageDialog(cForm,"\"_\" is a control character and can not be used in the name.\n " +
-                        "Please change the name of the component. "
-                        ,"Warning",JOptionPane.WARNING_MESSAGE);
-                return;
-            }
             updateComponentInfo();
             if (parentCanvas.isGroupMode){
                 for(JCGComponent c:parentCanvas.selectedGroup){
