@@ -56,23 +56,6 @@ public class CoolDatabaseBrowser {
     }
 
     /**
-     * Returns serialized components absolute path
-     * @param runType  configuration
-     * @param compName component name
-     * @return File object
-     */
-    private File getSerializedCompPath(String runType, String compName){
-        String fp = getFilePath() + runType + File.separator + "Options" + File.separator;
-        String fileName = fp + "."+compName + "_p.xml";
-        File f = new  File(fileName);
-
-        if (f.exists()){
-            return new File(f.getAbsolutePath());
-        }
-        return null;
-    }
-
-    /**
      * <p>
      *     Returns last modified date of the component configuration file
      * </p>

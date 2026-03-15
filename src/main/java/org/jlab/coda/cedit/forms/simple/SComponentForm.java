@@ -112,43 +112,8 @@ public class SComponentForm extends JFrame {
 
         descriptionTextArea.setText(comp.getDescription());
 
-        if(comp.getType().equals(ACodaType.USR.name())){
-            priorityModel = new SpinnerNumberModel(ACodaType.USR.priority(), ACodaType.USR.priority(), ACodaType.USR.priority()+1000, 1);
-        } else if(comp.getType().equals(ACodaType.SLC.name())){
-            priorityModel = new SpinnerNumberModel(ACodaType.SLC.priority(), ACodaType.SLC.priority(), ACodaType.SLC.priority()+100, 1);
-        } else if(comp.getType().equals(ACodaType.WNC.name())){
-            priorityModel = new SpinnerNumberModel(ACodaType.WNC.priority(), ACodaType.WNC.priority(), ACodaType.WNC.priority()+100, 1);
-        } else if(comp.getType().equals(ACodaType.ER.name())){
-            priorityModel = new SpinnerNumberModel(ACodaType.ER.priority(), ACodaType.ER.priority(), ACodaType.ER.priority()+100, 1);
-        } else if(comp.getType().equals(ACodaType.EBER.name())){
-            priorityModel = new SpinnerNumberModel(ACodaType.EBER.priority(), ACodaType.EBER.priority(), ACodaType.EBER.priority()+100, 1);
-        } else if(comp.getType().equals(ACodaType.PEB.name())){
-            priorityModel = new SpinnerNumberModel(ACodaType.PEB.priority(), ACodaType.PEB.priority(), ACodaType.PEB.priority()+50, 1);
-        } else if(comp.getType().equals(ACodaType.PAGG.name())){
-            priorityModel = new SpinnerNumberModel(ACodaType.PAGG.priority(), ACodaType.PAGG.priority(), ACodaType.PAGG.priority()+50, 1);
-        } else if(comp.getType().equals(ACodaType.SEB.name())){
-            priorityModel = new SpinnerNumberModel(ACodaType.SEB.priority(), ACodaType.SEB.priority(), ACodaType.SEB.priority()+50, 1);
-        } else if(comp.getType().equals(ACodaType.SAGG.name())){
-            priorityModel = new SpinnerNumberModel(ACodaType.SAGG.priority(), ACodaType.SAGG.priority(), ACodaType.SAGG.priority()+50, 1);
-        } else if(comp.getType().equals(ACodaType.DC.name())){
-            priorityModel = new SpinnerNumberModel(ACodaType.DC.priority(), ACodaType.DC.priority(), ACodaType.DC.priority()+100, 1);
-        } else if(comp.getType().equals(ACodaType.EB.name())){
-            priorityModel = new SpinnerNumberModel(ACodaType.EB.priority(), ACodaType.EB.priority(), ACodaType.EB.priority()+100, 1);
-        } else if(comp.getType().equals(ACodaType.ROC.name())){
-            priorityModel = new SpinnerNumberModel(ACodaType.ROC.priority(), ACodaType.ROC.priority(), ACodaType.ROC.priority()+100, 1);
-        } else if(comp.getType().equals(ACodaType.GT.name())){
-            priorityModel = new SpinnerNumberModel(ACodaType.GT.priority(), ACodaType.GT.priority(), ACodaType.GT.priority()+100, 1);
-        } else if(comp.getType().equals(ACodaType.TS.name())){
-            priorityModel = new SpinnerNumberModel(ACodaType.TS.priority(), ACodaType.TS.priority(), ACodaType.TS.priority()+100, 1);
-        } else if(comp.getType().equals(ACodaType.FPGA.name())){
-            priorityModel = new SpinnerNumberModel(ACodaType.FPGA.priority(), ACodaType.FPGA.priority(), ACodaType.FPGA.priority()+50, 1);
-        } else if(comp.getType().equals(ACodaType.SMS.name())){
-            priorityModel = new SpinnerNumberModel(ACodaType.SMS.priority(), ACodaType.SMS.priority(), ACodaType.SMS.priority()+100, 1);
-        } else if(comp.getType().equals(ACodaType.RCS.name())){
-            priorityModel = new SpinnerNumberModel(ACodaType.RCS.priority(), ACodaType.RCS.priority(), ACodaType.RCS.priority()+100, 1);
-        } else if(comp.getType().equals(ACodaType.FILE.name())){
-            priorityModel = new SpinnerNumberModel(ACodaType.FILE.priority(), ACodaType.FILE.priority(), ACodaType.FILE.priority()+100, 1);
-        }
+        // Create priority model based on component type
+        priorityModel = createPriorityModelForType(comp.getType());
         if(priorityModel!=null){
             prioritySpinner.setModel(priorityModel);
             if(comp.getPriority()>0){
@@ -492,8 +457,8 @@ public class SComponentForm extends JFrame {
                     l.setDestinationComponentName(component.getName());
                     l.setDestinationComponentType(component.getType());
                     l.setName(l.getSourceComponentName()+"_"+l.getDestinationComponentName());
-                    if(DrawingCanvas.getComp(l.getDestinationComponentName())!=null){
-                        for(JCGTransport tr: DrawingCanvas.getComp(l.getDestinationComponentName()).getTrnsports()){
+                    if(parentCanvas.getComp(l.getDestinationComponentName())!=null){
+                        for(JCGTransport tr: parentCanvas.getComp(l.getDestinationComponentName()).getTrnsports()){
                             tr.setEtName("/tmp/et_" + stp.getExpid() + "_" +l.getDestinationComponentName());
                         }
                     }
@@ -600,6 +565,52 @@ public class SComponentForm extends JFrame {
         endianCheckBox.setBackground(Color.YELLOW);
         _littleEndian_update = true;
 
+    }
+
+    /**
+     * Helper method to determine priority range for a given component type.
+     * @param type the ACodaType enum value
+     * @return the priority range (maximum offset from base priority)
+     */
+    private int getPriorityRangeForType(ACodaType type) {
+        switch (type) {
+            case USR:
+                return 1000;
+            case PEB:
+            case PAGG:
+            case SEB:
+            case SAGG:
+            case FPGA:
+                return 50;
+            default:
+                return 100;
+        }
+    }
+
+    /**
+     * Creates a SpinnerNumberModel for the priority spinner based on component type.
+     * @param typeName the component type name
+     * @return SpinnerNumberModel configured for the type, or null if type not found
+     */
+    private SpinnerNumberModel createPriorityModelForType(String typeName) {
+        ACodaType type = ACodaType.getEnum(typeName);
+        if (type == null) {
+            return null;
+        }
+        int basePriority = type.priority();
+        int range = getPriorityRangeForType(type);
+        return new SpinnerNumberModel(basePriority, basePriority, basePriority + range, 1);
+    }
+
+    /**
+     * Resets the priority spinner to the default value for the given component type.
+     * @param typeName the component type name
+     */
+    private void resetPriorityForType(String typeName) {
+        ACodaType type = ACodaType.getEnum(typeName);
+        if (type != null) {
+            prioritySpinner.setValue(type.priority());
+        }
     }
 
     private void initComponents() {
@@ -1179,41 +1190,8 @@ public class SComponentForm extends JFrame {
 
         public void actionPerformed(ActionEvent e) {
 //            nameTextField.setText("");
-            if(component.getType().equals(ACodaType.USR.name())){
-                prioritySpinner.setValue(ACodaType.USR.priority());
-            } else if(component.getType().equals(ACodaType.SLC.name())){
-                prioritySpinner.setValue(ACodaType.SLC.priority());
-            } else if(component.getType().equals(ACodaType.WNC.name())){
-                prioritySpinner.setValue(ACodaType.WNC.priority());
-            } else if(component.getType().equals(ACodaType.ER.name())){
-                prioritySpinner.setValue(ACodaType.ER.priority());
-            } else if(component.getType().equals(ACodaType.EBER.name())){
-                prioritySpinner.setValue(ACodaType.EBER.priority());
-            } else if(component.getType().equals(ACodaType.PEB.name())){
-                prioritySpinner.setValue(ACodaType.PEB.priority());
-            } else if(component.getType().equals(ACodaType.PAGG.name())){
-                prioritySpinner.setValue(ACodaType.PAGG.priority());
-            } else if(component.getType().equals(ACodaType.SEB.name())){
-                prioritySpinner.setValue(ACodaType.SEB.priority());
-            } else if(component.getType().equals(ACodaType.SAGG.name())){
-                prioritySpinner.setValue(ACodaType.SAGG.priority());
-            } else if(component.getType().equals(ACodaType.DC.name())){
-                prioritySpinner.setValue(ACodaType.DC.priority());
-            } else if(component.getType().equals(ACodaType.ROC.name())){
-                prioritySpinner.setValue(ACodaType.ROC.priority());
-            } else if(component.getType().equals(ACodaType.GT.name())){
-                prioritySpinner.setValue(ACodaType.GT.priority());
-            } else if(component.getType().equals(ACodaType.FPGA.name())){
-                prioritySpinner.setValue(ACodaType.FPGA.priority());
-            } else if(component.getType().equals(ACodaType.TS.name())){
-                prioritySpinner.setValue(ACodaType.TS.priority());
-            } else if(component.getType().equals(ACodaType.SMS.name())){
-                prioritySpinner.setValue(ACodaType.SMS.priority());
-            } else if(component.getType().equals(ACodaType.RCS.name())){
-                prioritySpinner.setValue(ACodaType.RCS.priority());
-            } else if(component.getType().equals(ACodaType.FILE.name())){
-                prioritySpinner.setValue(ACodaType.FILE.priority());
-            }
+            // Reset priority to default for component type
+            resetPriorityForType(component.getType());
             Rol1TextField.setText("");
             Rol1UserStrTextField.setText("undefined");
             Rol2TextField.setText("");

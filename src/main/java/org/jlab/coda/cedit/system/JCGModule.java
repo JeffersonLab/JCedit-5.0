@@ -44,7 +44,6 @@ public class JCGModule {
     private String rocModuleClass = "RocSimulation";
     private String tsModuleClass = "TsSimulation";
     private String erModuleClass  = "EventRecording";
-    private String fcsModuleClass  = "FarmController";
 
     private String singleEventMode = "off";
 

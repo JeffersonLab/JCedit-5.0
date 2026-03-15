@@ -23,7 +23,6 @@
 package org.jlab.coda.cedit.system;
 
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 @XmlRootElement(name = "link")
 public class JCGLink {

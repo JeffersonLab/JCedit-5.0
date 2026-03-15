@@ -121,10 +121,10 @@ public class SNLinkForm extends JFrame {
             inputEtChunkSize.setEnabled(true);
             etWait.setEnabled(true);
             checkBoxEtCreate.setEnabled(true);
-            if ((DrawingCanvas.getComp(link.getDestinationComponentName()).getType().equals(ACodaType.PEB.name())) ||
-                    (DrawingCanvas.getComp(link.getDestinationComponentName()).getType().equals(ACodaType.SEB.name())) ||
-                    (DrawingCanvas.getComp(link.getDestinationComponentName()).getType().equals(ACodaType.EBER.name())) ||
-                    (DrawingCanvas.getComp(link.getDestinationComponentName()).getType().equals(ACodaType.ER.name()))
+            if ((canvas.getComp(link.getDestinationComponentName()).getType().equals(ACodaType.PEB.name())) ||
+                    (canvas.getComp(link.getDestinationComponentName()).getType().equals(ACodaType.SEB.name())) ||
+                    (canvas.getComp(link.getDestinationComponentName()).getType().equals(ACodaType.EBER.name())) ||
+                    (canvas.getComp(link.getDestinationComponentName()).getType().equals(ACodaType.ER.name()))
             ) {
                 singleEventOutCheckBox.setEnabled(true);
             }
@@ -141,6 +141,9 @@ public class SNLinkForm extends JFrame {
         }
     }
 
+    /**
+     * Main update method - loads transports and populates the form.
+     */
     private void update() {
         String SName = link.getSourceComponentName();
         String DName = link.getDestinationComponentName();
@@ -150,18 +153,42 @@ public class SNLinkForm extends JFrame {
         JCGComponent sourceComponent = canvas.getGCMPs().get(SName);
         JCGComponent destinationComponent = canvas.getGCMPs().get(DName);
 
-        // get destination component transport
+        // Load transports from components
+        loadTransportsFromComponents(sourceComponent, destinationComponent, StName, DtName);
+
+        // Create default transports if needed
+        createDefaultTransportsIfNeeded(sourceComponent, DName, StName, DtName);
+
+        // Set link transport names
+        link.setDestinationTransportName(DtName);
+        link.setSourceTransportName(StName);
+
+        // Populate form fields
+        populateFormFields(SName, DName);
+
+        // Update UI state based on transport class
+        checkTrClass();
+    }
+
+    /**
+     * Loads existing transports from source and destination components.
+     */
+    private void loadTransportsFromComponents(JCGComponent sourceComponent,
+                                               JCGComponent destinationComponent,
+                                               String sourceTransportName,
+                                               String destTransportName) {
         if (destinationComponent.getTrnsports() != null &&
                 !destinationComponent.getTrnsports().isEmpty()) {
 
-            // destination transport
+            // Find destination transport
             for (JCGTransport tr : destinationComponent.getTrnsports()) {
-                if (tr.getName().equals(DtName)) {
+                if (tr.getName().equals(destTransportName)) {
                     destinationTransport = tr;
                     break;
                 }
             }
 
+            // Special handling for FILE type destination
             if (destinationTransport != null) {
                 if (destinationComponent.getType().equals(ACodaType.FILE.name())) {
                     destinationTransport.setEtName("undefined");
@@ -170,91 +197,121 @@ public class SNLinkForm extends JFrame {
                 }
             }
 
-            // source transport
+            // Find source transport
             for (JCGTransport tr : sourceComponent.getTrnsports()) {
-                if (tr.getName().equals(StName)) {
+                if (tr.getName().equals(sourceTransportName)) {
                     sourceTransport = tr;
                     break;
                 }
             }
-
         }
+    }
+
+    /**
+     * Creates default transports for source and/or destination if they don't exist.
+     */
+    private void createDefaultTransportsIfNeeded(JCGComponent sourceComponent,
+                                                  String destComponentName,
+                                                  String sourceTransportName,
+                                                  String destTransportName) {
+        // Create default source transport if needed
         if (sourceTransport == null) {
-            // default is EmuSocket for the rest
             sourceTransport = new JCGTransport();
-            sourceTransport.setName(StName);
+            sourceTransport.setName(sourceTransportName);
             sourceTransport.setNoLink(false);
             sourceComponent.addTrnsport(sourceTransport);
         }
 
-        // define a default transport for the destination component if it is not defined
+        // Create default destination transport if needed
         if (destinationTransport == null) {
             if (link.getDestinationComponentType().equals(ACodaType.ER.name())) {
-                destinationTransport = new JCGTransport();
-                destinationTransport.setName(DtName);
-                destinationTransport.setTransClass("Et");
-                destinationTransport.setEtName("/tmp/et_" + stp.getExpid() + "_" + DName);
-                destinationTransport.setEtEventNum((Integer) etNumberEvents.getValue());
-                destinationTransport.setEtEventSize((Integer) etEventSize.getValue() * 1000);
-                destinationTransport.setEtChunkSize((Integer) etChunkSize.getValue());
-                destinationTransport.setInputEtChunkSize((Integer) inputEtChunkSize.getValue());
-                destinationTransport.setEtWait((Integer) etWait.getValue());
-                if (checkBoxEtCreate.isSelected()) {
-                    destinationTransport.setDestinationEtCreate("true");
-                } else {
-                    destinationTransport.setDestinationEtCreate("false;");
-                }
-                if (singleEventOutCheckBox.isSelected()) {
-                    destinationTransport.setSingle("true");
-                } else {
-                    destinationTransport.setSingle("false");
-                }
-                destinationTransport.setNoLink(false);
+                destinationTransport = createDefaultErTransport(destComponentName, destTransportName);
             } else {
-                // default is EmuSocket for the rest
+                // Default is EmuSocket for other types
                 destinationTransport = new JCGTransport();
-                destinationTransport.setName(DtName);
+                destinationTransport.setName(destTransportName);
                 destinationTransport.setNoLink(false);
             }
         }
+    }
 
+    /**
+     * Creates a default ET transport configuration for ER components.
+     */
+    private JCGTransport createDefaultErTransport(String componentName, String transportName) {
+        JCGTransport transport = new JCGTransport();
+        transport.setName(transportName);
+        transport.setTransClass("Et");
+        transport.setEtName("/tmp/et_" + stp.getExpid() + "_" + componentName);
+        transport.setEtEventNum((Integer) etNumberEvents.getValue());
+        transport.setEtEventSize((Integer) etEventSize.getValue() * 1000);
+        transport.setEtChunkSize((Integer) etChunkSize.getValue());
+        transport.setInputEtChunkSize((Integer) inputEtChunkSize.getValue());
+        transport.setEtWait((Integer) etWait.getValue());
+        transport.setDestinationEtCreate(checkBoxEtCreate.isSelected() ? "true" : "false");
+        transport.setSingle(singleEventOutCheckBox.isSelected() ? "true" : "false");
+        transport.setNoLink(false);
+        return transport;
+    }
 
-        link.setDestinationTransportName(DtName);
-        link.setSourceTransportName(StName);
+    /**
+     * Populates all form fields with data from the loaded transports.
+     */
+    private void populateFormFields(String sourceName, String destName) {
+        // Component names
+        sourceComponentTextField.setText(sourceName);
+        destinationComponentTextField.setText(destName);
 
-// fill the form
-        sourceComponentTextField.setText(SName);
-        destinationComponentTextField.setText(DName);
+        // ET configuration
+        populateEtFields(destName);
 
+        // File configuration
+        populateFileFields();
+
+        // EmuSocket configuration
+        populateEmuSocketFields();
+
+        // UDP Stream configuration
+        populateUdpStreamFields();
+
+        // TCP Stream configuration
+        populateTcpStreamFields();
+    }
+
+    /**
+     * Populates ET (Event Transfer) related form fields.
+     */
+    private void populateEtFields(String destComponentName) {
         transportClassComboBox.setSelectedItem(destinationTransport.getTransClass());
-        if(destinationTransport.getEtName().equals("undefined")){
-            etNameTextField.setText("/tmp/et_"+stp.getExpid()+"_"+DName);
+
+        if (destinationTransport.getEtName().equals("undefined")) {
+            etNameTextField.setText("/tmp/et_" + stp.getExpid() + "_" + destComponentName);
         } else {
             etNameTextField.setText(destinationTransport.getEtName());
         }
+
         etHostTextField.setText(destinationTransport.getEtHostName());
         etSubnetTextField.setText(destinationTransport.getEtSubNet());
         etTcpPortSpinner.setValue(destinationTransport.getEtTcpPort());
         etUdpPortSpinner.setValue(destinationTransport.getEtUdpPort());
         mAddressTextField.setText(destinationTransport.getmAddress());
         connectionMethodComboBox.setSelectedItem(destinationTransport.getEtMethodCon());
-        fileNameTextField.setText(destinationTransport.getFileName());
 
         etNumberEvents.setValue(destinationTransport.getEtEventNum());
         etEventSize.setValue(destinationTransport.getEtEventSize() / 1000);
         etChunkSize.setValue(destinationTransport.getEtChunkSize());
         inputEtChunkSize.setValue(destinationTransport.getInputEtChunkSize());
         etWait.setValue(destinationTransport.getEtWait());
-        if (destinationTransport.getDestinationEtCreate().equals("true")) {
-            checkBoxEtCreate.setSelected(true);
-        } else {
-            checkBoxEtCreate.setSelected(false);
-        }
-        if (destinationTransport.getSingle().equals("true")) {
-            singleEventOutCheckBox.setSelected(true);
-        } else {
-            singleEventOutCheckBox.setSelected(false);
-        }
+
+        checkBoxEtCreate.setSelected(destinationTransport.getDestinationEtCreate().equals("true"));
+        singleEventOutCheckBox.setSelected(destinationTransport.getSingle().equals("true"));
+    }
+
+    /**
+     * Populates file-related form fields.
+     */
+    private void populateFileFields() {
+        fileNameTextField.setText(destinationTransport.getFileName());
 
         if (destinationTransport.getFileSplit() < 0) {
             fileSplitSpinner.setValue(2000);
@@ -263,17 +320,24 @@ public class SNLinkForm extends JFrame {
         }
 
         fileTypeComboBox.setSelectedItem(destinationTransport.getFileType());
+    }
 
-        // emuSocket
+    /**
+     * Populates EmuSocket related form fields.
+     */
+    private void populateEmuSocketFields() {
         emuPortSpinner.setValue(destinationTransport.getEmuDirectPort());
         emuSocketWaitSpinner.setValue(destinationTransport.getEmuWait());
         emuMaxBufferSpinner.setValue(destinationTransport.getEmuMaxBuffer() / 1000);
         emuSubnetTextField.setText(destinationTransport.getEmuSubNet());
         fpgaLinkIpTextField.setText(destinationTransport.getFpgaLinkIp());
-
         emuFatPipeCheckBox.setSelected(sourceTransport.isEmuFatPipe());
+    }
 
-        // UdpStream
+    /**
+     * Populates UDP Stream related form fields.
+     */
+    private void populateUdpStreamFields() {
         UdpHostTextField.setText(destinationTransport.getUdpHost());
         UdpPortSpinner.setValue(destinationTransport.getUdpPort());
         UdpBufferSizeSpinner.setValue(destinationTransport.getUdpBufferSize() / 1000);
@@ -281,16 +345,18 @@ public class SNLinkForm extends JFrame {
         UdpStreamsSpinner.setValue(destinationTransport.getUdpStreams());
         UdpUseLoadBalancer.setSelected(destinationTransport.isLB());
         UdpUseErsap.setSelected(destinationTransport.isErsap());
+    }
 
-        // tcpStream
+    /**
+     * Populates TCP Stream related form fields.
+     */
+    private void populateTcpStreamFields() {
         tcpStreamsSpinner.setValue(destinationTransport.getEmuTcpStreams());
         tcpStreamPortSpinner.setValue(destinationTransport.getTcpStreamDirectPort());
         tcpStreamSocketWaitSpinner.setValue(destinationTransport.getTcpStreamWait());
         tcpStreamMaxBufferSpinner.setValue(destinationTransport.getTcpStreamMaxBuffer() / 1000);
         tcpStreamSubnetTextField.setText(destinationTransport.getTcpStreamSubNet());
         tcpStreamFpgaLinkIpTextField.setText(destinationTransport.getTcpStreamFpgaLinkIp());
-
-        checkTrClass();
     }
 
     private void enableEt() {
@@ -1637,7 +1703,7 @@ public class SNLinkForm extends JFrame {
         }
 
         public void actionPerformed(ActionEvent e) {
-            if (DrawingCanvas.getComp(link.getDestinationComponentName()).getType().equals(ACodaType.FILE.name())) {
+            if (canvas.getComp(link.getDestinationComponentName()).getType().equals(ACodaType.FILE.name())) {
                 transportClassComboBox.setSelectedItem("File");
             } else {
                 transportClassComboBox.setSelectedItem("EmuSocket");

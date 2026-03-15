@@ -254,243 +254,238 @@ public class LLConfigWriter {
         }
     }
 
+    /**
+     * Writes transport configuration XML based on transport class type.
+     * Delegates to specific methods for each transport type.
+     */
     private String writeTransport(ExternalConfig ec, JCGTransport tr, int nl, boolean isStreaming) {
         String cName = ec.getName();
-        StringBuilder out = new StringBuilder();
 
         switch (tr.getTransClass()) {
-
             case "Et":
-                tr.setEtCreate((tr.getName().equals((cName + "_transport"))) && (tr.getDestinationEtCreate().equals("true")));
-                int etEvtMin1 = (nl * 2 * tr.getEtChunkSize()) * 2;
-                int etEvtMin2 = (tr.getInputEtChunkSize() * 4) * 2;
-
-                if (etEvtMin1 >= etEvtMin2) {
-                    if (tr.getEtEventNum() < etEvtMin1) {
-                        tr.setEtEventNum(etEvtMin1);
-                        JCGComponent c = CDesktopNew.getDrawingCvanvas().getGCMPs().get(cName);
-                        for (JCGTransport t : c.getTrnsports()) {
-                            if (t.getName().equals(tr.getName())) {
-                                t.setEtEventNum(tr.getEtEventNum());
-                                break;
-                            }
-                        }
-                    }
-                } else {
-                    if (tr.getEtEventNum() < etEvtMin2) {
-                        tr.setEtEventNum(etEvtMin2);
-                        JCGComponent c = CDesktopNew.getDrawingCvanvas().getGCMPs().get(cName);
-                        for (JCGTransport t : c.getTrnsports()) {
-                            if (t.getName().equals(tr.getName())) {
-                                t.setEtEventNum(tr.getEtEventNum());
-                                break;
-                            }
-                        }
-                    }
-                }
-                if (tr.isEtCreate()) {
-                    out.append("     <server name=\"" + tr.getName() + "\" " +
-                            "streaming=\"" + "on" + "\" " +
-                            "class=\"Et\" " +
-                            "etName=\"" + tr.getEtName() + "\" " +
-                            "create=\"" + tr.getDestinationEtCreate() + "\" " +
-                            "uPort=\"" + tr.getEtUdpPort() + "\" " +
-                            "port=\"" + tr.getEtTcpPort() + "\" " +
-                            "mAddr=\"" + tr.getmAddress() + "\" " +
-                            "eventNum=\"" + tr.getEtEventNum() + "\" " +
-                            "eventSize=\"" + tr.getEtEventSize() + "\" " +
-                            "groups=\"" + nl + "\" " +
-//                        "wait=\"" + tr.getEtWait() + "\" " +
-                            "/>\n\n");
-                } else {
-                    if (tr.getEtSubNet().equals("undefined") || tr.getEtSubNet().equals("")) {
-                        out.append("     <server name=\"" + tr.getName() + "\" " +
-                                "class=\"Et\" " +
-                                "etName=\"" + tr.getEtName() + "\" " + "" +
-                                "method=\"" + tr.getEtMethodCon() + "\" " +
-                                "host=\"" + tr.getEtHostName() + "\" " +
-                                "port=\"" + tr.getEtTcpPort() + "\" " +
-                                "uPort=\"" + tr.getEtUdpPort() + "\" " +
-                                "wait=\"" + tr.getEtWait() + "\"" +
-                                "/>\n\n");
-                    } else {
-                        out.append("     <server name=\"" + tr.getName() + "\" " +
-                                "class=\"Et\" " +
-                                "etName=\"" + tr.getEtName() + "\" " + "" +
-                                "method=\"" + tr.getEtMethodCon() + "\" " +
-                                "host=\"" + tr.getEtHostName() + "\" " +
-                                "port=\"" + tr.getEtTcpPort() + "\" " +
-                                "uPort=\"" + tr.getEtUdpPort() + "\" " +
-                                "subnet=\"" + tr.getEtSubNet() + "\" " +
-                                "wait=\"" + tr.getEtWait() + "\"" +
-                                "/>\n\n");
-                    }
-                }
-                break;
-
+                return writeEtTransport(cName, tr, nl);
             case "EmuSocket":
-                if (tr.getName().equals((cName + "_transport"))) {
-                    out.append("     <client name=\"" + tr.getName() + "\" " +
-                            "class=\"Emu\" " +
-                            "port=\"" + tr.getEmuDirectPort() + "\" " +
-                            "/>\n\n");
-                } else {
-                    out.append("     <server name=\"" + tr.getName() + "\" " +
-                            "class=\"Emu\" " +
-                            "/>\n\n");
-                }
-                break;
-
+                return writeEmuSocketTransport(cName, tr);
             case "EmuSocket+Et":
-                if (ec.getType().equals(ACodaType.ER.name()) ||
-                        ec.getType().equals(ACodaType.EBER.name())) {
-                    // ET
-                    tr.setEtCreate((tr.getName().equals((cName + "_transport"))) && (tr.getDestinationEtCreate().equals("true")));
-
-                    etEvtMin1 = (nl * 2 * tr.getEtChunkSize()) * 2;
-                    etEvtMin2 = (tr.getInputEtChunkSize() * 4) * 2;
-
-                    if (etEvtMin1 >= etEvtMin2) {
-                        if (tr.getEtEventNum() < etEvtMin1) {
-                            tr.setEtEventNum(etEvtMin1);
-                            JCGComponent c = CDesktopNew.getDrawingCvanvas().getGCMPs().get(cName);
-                            for (JCGTransport t : c.getTrnsports()) {
-                                if (t.getName().equals(tr.getName())) {
-                                    t.setEtEventNum(tr.getEtEventNum());
-                                    break;
-                                }
-                            }
-                        }
-                    } else {
-                        if (tr.getEtEventNum() < etEvtMin2) {
-                            tr.setEtEventNum(etEvtMin2);
-                            JCGComponent c = CDesktopNew.getDrawingCvanvas().getGCMPs().get(cName);
-                            for (JCGTransport t : c.getTrnsports()) {
-                                if (t.getName().equals(tr.getName())) {
-                                    t.setEtEventNum(tr.getEtEventNum());
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    if (tr.isEtCreate()) {
-                        out.append("     <server name=\"" + tr.getName() + "_async" + "\" " +
-                                "class=\"Et\" " +
-                                "etName=\"" + tr.getEtName() + "\" " +
-                                "create=\"" + tr.getDestinationEtCreate() + "\" " +
-                                "uPort=\"" + tr.getEtUdpPort() + "\" " +
-                                "port=\"" + tr.getEtTcpPort() + "\" " +
-                                "mAddr=\"" + tr.getmAddress() + "\" " +
-                                "eventNum=\"" + tr.getEtEventNum() + "\" " +
-                                "eventSize=\"" + tr.getEtEventSize() + "\" " +
-                                "groups=\"" + nl + "\" " +
-//                        "wait=\"" + tr.getEtWait() + "\" " +
-                                "/>\n\n");
-                    } else {
-                        if (tr.getEtSubNet().equals("undefined") || tr.getEtSubNet().equals("")) {
-                            out.append("     <server name=\"" + tr.getName() + "_async" + "\" " +
-                                    "class=\"Et\" " +
-                                    "etName=\"" + tr.getEtName() + "\" " + "" +
-                                    "method=\"" + tr.getEtMethodCon() + "\" " +
-                                    "host=\"" + tr.getEtHostName() + "\" " +
-                                    "port=\"" + tr.getEtTcpPort() + "\" " +
-                                    "uPort=\"" + tr.getEtUdpPort() + "\" " +
-                                    "wait=\"" + tr.getEtWait() + "\"" +
-                                    "/>\n\n");
-                        } else {
-                            out.append("     <server name=\"" + tr.getName() + "_async" + "\" " +
-                                    "class=\"Et\" " +
-                                    "etName=\"" + tr.getEtName() + "\" " + "" +
-                                    "method=\"" + tr.getEtMethodCon() + "\" " +
-                                    "host=\"" + tr.getEtHostName() + "\" " +
-                                    "port=\"" + tr.getEtTcpPort() + "\" " +
-                                    "uPort=\"" + tr.getEtUdpPort() + "\" " +
-                                    "subnet=\"" + tr.getEtSubNet() + "\" " +
-                                    "wait=\"" + tr.getEtWait() + "\"" +
-                                    "/>\n\n");
-                        }
-                    }
-                }
-                break;
-
+                return writeEmuSocketPlusEtTransport(ec, cName, tr, nl);
             case "TcpStream":
-                if (tr.getName().equals((cName + "_transport"))) {
-                    out.append("     <client name=\"" + tr.getName() + "\" " +
-                            "streaming=\"" + "on" + "\" " +
-                            "class=\"TcpStream\" " +
-                            "port=\"" + tr.getTcpStreamDirectPort() + "\" " +
-                            "/>\n\n");
-                } else {
-                    out.append("     <server name=\"" + tr.getName() + "\" " +
-                            "streaming=\"" + "on" + "\" " +
-                            "class=\"TcpStream\" " +
-                            "/>\n\n");
-                }
-
-                break;
-
+                return writeTcpStreamTransport(cName, tr);
             case "UdpStream":
-                boolean isInChannel = false;
-                boolean isOutChannel = false;
-
-                for(JCGChannel ch: ec.getiChannels().values()){
-                    if(ch.getTransport().getName().equals(tr.getName())){
-                        isInChannel = true;
-                        break;
-                    } else if(ch.getTransport().getName().equals(tr.getName())){
-                        isOutChannel = true;
-                        break;
-                    }
-                }
-                if (isInChannel) {
-                    if (tr.getName().equals((cName + "_transport"))) {
-                        out.append("     <client name=\"" + tr.getName() + "\" " +
-                                "streaming=\"" + "on" + "\" " +
-                                "class=\"UdpStream\" " +
-                                "port=\"" + tr.getUdpPort() + "\" " +
-                                "/>\n\n");
-                    } else {
-                        out.append("     <client name=\"" + tr.getName() + "\" " +
-                                "streaming=\"" + "on" + "\" " +
-                                "class=\"UdpStream\"" +
-                                "/>\n\n");
-                    }
-                } else if (isOutChannel){
-                    if (tr.getName().equals((cName + "_transport"))) {
-                        out.append("     <client name=\"" + tr.getName() + "\" " +
-                                "streaming=\"" + "on" + "\" " +
-                                "class=\"UdpStream\" " +
-                                "port=\"" + tr.getUdpPort() + "\" " +
-                                "/>\n\n");
-                    } else {
-                        out.append("     <server name=\"" + tr.getName() + "\" " +
-                                "streaming=\"" + "on" + "\" " +
-                                "class=\"UdpStream\"" +
-                                "/>\n\n");
-                    }
-                } else {
-                    if (tr.getName().equals((cName + "_transport"))) {
-                        out.append("     <client name=\"" + tr.getName() + "\" " +
-                                "streaming=\"" + "on" + "\" " +
-                                "class=\"UdpStream\" " +
-                                "port=\"" + tr.getUdpPort() + "\" " +
-                                "/>\n\n");
-                    } else {
-                        out.append("     <server name=\"" + tr.getName() + "\" " +
-                                "streaming=\"" + "on" + "\" " +
-                                "class=\"UdpStream\"" +
-                                "/>\n\n");
-                    }
-                }
-                break;
-
+                return writeUdpStreamTransport(ec, cName, tr);
             case "File":
-                out.append("     <server name=\"" + tr.getName() + "\" " +
-                        "class=\"File\" " +
-                        "/>\n\n");
-                break;
+                return writeFileTransport(tr);
+            default:
+                return "";
         }
-        return out.toString();
+    }
+
+    /**
+     * Calculates and updates ET event number based on chunk sizes and number of links.
+     * This ensures sufficient events are available for the configuration.
+     */
+    private void calculateAndUpdateEtEventNum(JCGTransport tr, int nl, String componentName) {
+        int etEvtMin1 = (nl * 2 * tr.getEtChunkSize()) * 2;
+        int etEvtMin2 = (tr.getInputEtChunkSize() * 4) * 2;
+        int minRequired = Math.max(etEvtMin1, etEvtMin2);
+
+        if (tr.getEtEventNum() < minRequired) {
+            tr.setEtEventNum(minRequired);
+
+            // Update the transport in the component
+            JCGComponent c = CDesktopNew.getDrawingCvanvas().getGCMPs().get(componentName);
+            if (c != null) {
+                for (JCGTransport t : c.getTrnsports()) {
+                    if (t.getName().equals(tr.getName())) {
+                        t.setEtEventNum(minRequired);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Writes ET (Event Transfer) transport configuration XML.
+     */
+    private String writeEtTransport(String componentName, JCGTransport tr, int nl) {
+        tr.setEtCreate((tr.getName().equals((componentName + "_transport"))) &&
+                      (tr.getDestinationEtCreate().equals("true")));
+
+        calculateAndUpdateEtEventNum(tr, nl, componentName);
+
+        if (tr.isEtCreate()) {
+            return buildEtCreateXml(tr, nl, tr.getName());
+        } else {
+            return buildEtConnectXml(tr, tr.getName());
+        }
+    }
+
+    /**
+     * Builds XML for ET transport when creating a new ET system.
+     */
+    private String buildEtCreateXml(JCGTransport tr, int nl, String serverName) {
+        return "     <server name=\"" + serverName + "\" " +
+                "streaming=\"on\" " +
+                "class=\"Et\" " +
+                "etName=\"" + tr.getEtName() + "\" " +
+                "create=\"" + tr.getDestinationEtCreate() + "\" " +
+                "uPort=\"" + tr.getEtUdpPort() + "\" " +
+                "port=\"" + tr.getEtTcpPort() + "\" " +
+                "mAddr=\"" + tr.getmAddress() + "\" " +
+                "eventNum=\"" + tr.getEtEventNum() + "\" " +
+                "eventSize=\"" + tr.getEtEventSize() + "\" " +
+                "groups=\"" + nl + "\" " +
+                "/>\n\n";
+    }
+
+    /**
+     * Builds XML for ET transport when connecting to existing ET system.
+     */
+    private String buildEtConnectXml(JCGTransport tr, String serverName) {
+        StringBuilder xml = new StringBuilder();
+        xml.append("     <server name=\"").append(serverName).append("\" ")
+           .append("class=\"Et\" ")
+           .append("etName=\"").append(tr.getEtName()).append("\" ")
+           .append("method=\"").append(tr.getEtMethodCon()).append("\" ")
+           .append("host=\"").append(tr.getEtHostName()).append("\" ")
+           .append("port=\"").append(tr.getEtTcpPort()).append("\" ")
+           .append("uPort=\"").append(tr.getEtUdpPort()).append("\" ");
+
+        if (!tr.getEtSubNet().equals("undefined") && !tr.getEtSubNet().equals("")) {
+            xml.append("subnet=\"").append(tr.getEtSubNet()).append("\" ");
+        }
+
+        xml.append("wait=\"").append(tr.getEtWait()).append("\"")
+           .append("/>\n\n");
+
+        return xml.toString();
+    }
+
+    /**
+     * Writes EmuSocket transport configuration XML.
+     */
+    private String writeEmuSocketTransport(String componentName, JCGTransport tr) {
+        if (tr.getName().equals((componentName + "_transport"))) {
+            return "     <client name=\"" + tr.getName() + "\" " +
+                    "class=\"Emu\" " +
+                    "port=\"" + tr.getEmuDirectPort() + "\" " +
+                    "/>\n\n";
+        } else {
+            return "     <server name=\"" + tr.getName() + "\" " +
+                    "class=\"Emu\" " +
+                    "/>\n\n";
+        }
+    }
+
+    /**
+     * Writes combined EmuSocket+Et transport configuration XML (for ER/EBER components).
+     */
+    private String writeEmuSocketPlusEtTransport(ExternalConfig ec, String componentName,
+                                                  JCGTransport tr, int nl) {
+        if (!ec.getType().equals(ACodaType.ER.name()) &&
+            !ec.getType().equals(ACodaType.EBER.name())) {
+            return "";
+        }
+
+        tr.setEtCreate((tr.getName().equals((componentName + "_transport"))) &&
+                      (tr.getDestinationEtCreate().equals("true")));
+
+        calculateAndUpdateEtEventNum(tr, nl, componentName);
+
+        String serverName = tr.getName() + "_async";
+        if (tr.isEtCreate()) {
+            return buildEtCreateXml(tr, nl, serverName);
+        } else {
+            return buildEtConnectXml(tr, serverName);
+        }
+    }
+
+    /**
+     * Writes TcpStream transport configuration XML.
+     */
+    private String writeTcpStreamTransport(String componentName, JCGTransport tr) {
+        if (tr.getName().equals((componentName + "_transport"))) {
+            return "     <client name=\"" + tr.getName() + "\" " +
+                    "streaming=\"on\" " +
+                    "class=\"TcpStream\" " +
+                    "port=\"" + tr.getTcpStreamDirectPort() + "\" " +
+                    "/>\n\n";
+        } else {
+            return "     <server name=\"" + tr.getName() + "\" " +
+                    "streaming=\"on\" " +
+                    "class=\"TcpStream\" " +
+                    "/>\n\n";
+        }
+    }
+
+    /**
+     * Writes UdpStream transport configuration XML.
+     * Note: Original logic has unreachable code - isOutChannel can never be true
+     * due to duplicate condition check.
+     */
+    private String writeUdpStreamTransport(ExternalConfig ec, String componentName, JCGTransport tr) {
+        boolean isInChannel = false;
+        boolean isOutChannel = false;
+
+        // Determine if transport is used in input channels
+        // Note: The original code had a logic bug here where the else-if checked
+        // the same condition as the if, making isOutChannel always false
+        for (JCGChannel ch : ec.getiChannels().values()) {
+            if (ch.getTransport().getName().equals(tr.getName())) {
+                isInChannel = true;
+                break;
+            }
+        }
+
+        boolean isTransportName = tr.getName().equals((componentName + "_transport"));
+
+        // Build the XML based on channel type
+        String elementType;
+        boolean includePort;
+
+        if (isInChannel) {
+            elementType = "client";
+            includePort = isTransportName;
+        } else if (isOutChannel) {
+            // Note: This branch is unreachable due to logic bug preserved from original
+            if (isTransportName) {
+                elementType = "client";
+                includePort = true;
+            } else {
+                elementType = "server";
+                includePort = false;
+            }
+        } else {
+            if (isTransportName) {
+                elementType = "client";
+                includePort = true;
+            } else {
+                elementType = "server";
+                includePort = false;
+            }
+        }
+
+        StringBuilder xml = new StringBuilder();
+        xml.append("     <").append(elementType).append(" name=\"").append(tr.getName()).append("\" ")
+           .append("streaming=\"on\" ")
+           .append("class=\"UdpStream\"");
+
+        if (includePort) {
+            xml.append(" port=\"").append(tr.getUdpPort()).append("\"");
+        }
+
+        xml.append("/>\n\n");
+
+        return xml.toString();
+    }
+
+    /**
+     * Writes File transport configuration XML.
+     */
+    private String writeFileTransport(JCGTransport tr) {
+        return "     <server name=\"" + tr.getName() + "\" " +
+                "class=\"File\" " +
+                "/>\n\n";
     }
 
 

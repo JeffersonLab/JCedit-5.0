@@ -1453,18 +1453,6 @@ public class CDesktopNew extends JFrame {
         return false;
     }
 
-
-    private static boolean fCheckCreate(File f){
-        boolean suc = true;
-        if(!f.exists()){
-            suc = f.mkdir();
-            if(!suc){
-                System.out.println("Error: Cannot create f = "+f);
-            }
-        }
-        return suc;
-    }
-
     /**
      * Updates the foreign runType supervisor relevant rdf files with
      * process information of the current (editing) supervisor specified processes list.

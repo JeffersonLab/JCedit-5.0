@@ -69,13 +69,13 @@ java {
     withSourcesJar()
     withJavadocJar()
 
-    // Compile for Java 11
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    // Compile for Java 17
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 
-    // Ensure a Java 11 toolchain is used (portable across machines)
+    // Ensure a Java 17 toolchain is used (portable across machines)
     toolchain {
-        languageVersion = JavaLanguageVersion.of(11)
+        languageVersion = JavaLanguageVersion.of(17)
     }
 }
 
@@ -93,8 +93,8 @@ jar {
 }
 
 compileJava {
-    // Remove --release 17; use 11
-    options.release = 11
+    // Compile with Java 17
+    options.release = 17
 }
 
 javadoc {

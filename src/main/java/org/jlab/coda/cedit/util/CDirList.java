@@ -23,7 +23,6 @@
 package org.jlab.coda.cedit.util;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.Collections;

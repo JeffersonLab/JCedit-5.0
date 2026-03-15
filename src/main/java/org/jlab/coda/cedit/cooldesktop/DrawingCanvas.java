@@ -52,7 +52,6 @@ public class DrawingCanvas extends JPanel {
     private final double GRIDSIZE = 40.0;
     private final double FONTSIZE = 16.0;
     private double gridSize = GRIDSIZE;
-    private double currentGridSize = 0.0;
     private double x, y, w, h, _x, _y;
     private int prevX, prevY;
     private double px, py;
@@ -72,7 +71,7 @@ public class DrawingCanvas extends JPanel {
 
     private BufferedImage bufferedImage;
 
-    private static ConcurrentHashMap<String, JCGComponent> GCMPs = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<String, JCGComponent> GCMPs = new ConcurrentHashMap<>();
 
     private JCGComponent supervisor = new JCGComponent();
 
@@ -155,8 +154,12 @@ public class DrawingCanvas extends JPanel {
         this.supervisor = supervisor;
     }
 
-
-    public static JCGComponent getComp(String name) {
+    /**
+     * Gets a component by name from this canvas.
+     * @param name the component name
+     * @return the component, or null if not found
+     */
+    public JCGComponent getComp(String name) {
         return GCMPs.get(name);
     }
 

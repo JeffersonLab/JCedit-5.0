@@ -29,22 +29,14 @@ package org.jlab.coda.cedit.forms.simple;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.StringTokenizer;
-import java.util.regex.Pattern;
 import javax.swing.*;
 import javax.swing.border.*;
 
 import org.jlab.coda.cedit.cooldesktop.CDesktopNew;
-import org.jlab.coda.cedit.cooldesktop.DrawingCanvas;
-import org.jlab.coda.cedit.parsers.coolparser.JCParser;
 import org.jlab.coda.cedit.parsers.extconfig.CoolDatabaseBrowser;
 import org.jlab.coda.cedit.system.*;
-import org.jlab.coda.cedit.system.JCGComponent;
-import org.jlab.coda.cedit.system.JCGLink;
-import org.jlab.coda.cedit.system.JCGTransport;
-import org.jlab.coda.cedit.util.JCUtil;
 
 /**
  * @author Vardan Gyurjyan

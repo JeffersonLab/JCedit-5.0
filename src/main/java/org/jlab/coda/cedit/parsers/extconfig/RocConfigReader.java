@@ -25,60 +25,28 @@ package org.jlab.coda.cedit.parsers.extconfig;
 
 import org.jlab.coda.cedit.system.JCGCompConfig;
 import org.jlab.coda.cedit.system.JCGComponent;
-import org.jlab.coda.cedit.system.JCGSetup;
 import org.jlab.coda.cedit.system.JCGConcept;
 
 import java.io.*;
 import java.util.Set;
 import java.util.StringTokenizer;
 
-public class RocConfigReader {
+/**
+ * Configuration reader for ROC (Readout Controller) component configuration files.
+ * Reads line-based .dat files with key=value format.
+ */
+public class RocConfigReader extends AbstractConfigReader {
 
-    private String  fileName;
-
-    private JCGComponent component;
-    private JCGSetup stp = JCGSetup.getInstance();
-
-
-    public RocConfigReader(String runType, String compName){
-        fileName = stp.getCoolHome()+ File.separator+
-                stp.getExpid()+File.separator+
-                "config"+File.separator+
-                "Control"+File.separator +
-                runType+File.separator+
-                "Options"+File.separator+
-                compName+".dat";
+    public RocConfigReader(String runType, String compName) {
+        super(runType, compName, ".dat");
     }
 
-    public RocConfigReader(String runType, JCGComponent comp){
-        this.component = comp;
-        fileName = stp.getCoolHome()+ File.separator+
-                stp.getExpid()+File.separator+
-                "config"+File.separator+
-                "Control"+File.separator +
-                runType+File.separator+
-                "Options"+File.separator+
-                component.getName()+".dat";
+    public RocConfigReader(String runType, JCGComponent comp) {
+        super(runType, comp, ".dat");
     }
 
-    public boolean isConfigExists(){
-        return new File(fileName).exists();
-    }
-
-    public long getLastModified(){
-        long lm = 0;
-        File f = new File(fileName);
-        if(f.exists()){
-            lm = f.lastModified();
-        }
-        return lm;
-    }
-
-    public String getFileName(){
-        return fileName;
-    }
-
-    public JCGCompConfig parseConfig(){
+    @Override
+    public JCGCompConfig parseConfig() {
         JCGCompConfig c = new JCGCompConfig();
 
         // open and parse roc specific config file

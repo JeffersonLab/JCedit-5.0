@@ -42,14 +42,21 @@ public class ProcessForm extends JFrame {
     private JCGProcess gp;
     private DrawingCanvas canvas;
     private Pattern ptr = Pattern.compile("\\w+");
+    private boolean isStreamingProcess;
 
 
     public ProcessForm(SupervisorForm sForm, DrawingCanvas canvas,JCGProcess gp, JCGComponent s) {
+        this(sForm, canvas, gp, s, false);
+    }
+
+    public ProcessForm(SupervisorForm sForm, DrawingCanvas canvas,JCGProcess gp, JCGComponent s, boolean isStreamingProcess) {
         this.gp = gp;
         this.canvas = canvas;
         this.sForm = sForm;
+        this.isStreamingProcess = isStreamingProcess;
         spv = s;
         initComponents();
+        configureForStreamingIfNeeded();
         prePostGroup   = new ButtonGroup();
         prePostGroup.add(beforeRadioButton);
         prePostGroup.add(afterRadioButton);
@@ -57,14 +64,39 @@ public class ProcessForm extends JFrame {
     }
 
     public ProcessForm(SComponentForm compForm, DrawingCanvas canvas, JCGProcess gp, boolean isNew) {
+        this(compForm, canvas, gp, isNew, false);
+    }
+
+    public ProcessForm(SComponentForm compForm, DrawingCanvas canvas, JCGProcess gp, boolean isNew, boolean isStreamingProcess) {
         this.sCompForm = compForm;
         this.gp        = gp;
         this.canvas    = canvas;
+        this.isStreamingProcess = isStreamingProcess;
         initComponents();
+        configureForStreamingIfNeeded();
         prePostGroup   = new ButtonGroup();
         prePostGroup.add(beforeRadioButton);
         prePostGroup.add(afterRadioButton);
         update();
+    }
+
+    /**
+     * Configures the form for streaming processes by adding additional transitions.
+     * Called after initComponents() to augment the auto-generated UI.
+     */
+    private void configureForStreamingIfNeeded() {
+        if (isStreamingProcess) {
+            // Add streaming-specific transitions (reset, pause, resume)
+            stateComboBox.setModel(new DefaultComboBoxModel<>(new String[] {
+                "download",
+                "prestart",
+                "go",
+                "end",
+                "reset",
+                "pause",
+                "resume"
+            }));
+        }
     }
 
     private void setCommandPS(String sp){
@@ -248,36 +280,6 @@ public class ProcessForm extends JFrame {
             exitCodeSpinner.setEnabled(true);
             scriptCommandTextField.setEditable(true);
             scriptPathTextField.setEnabled(true);
-        }
-    }
-
-    private void receiveSubjectTextFieldActionPerformed(ActionEvent e) {
-        Matcher m = ptr.matcher(sendSubjectTextField.getText().trim());
-        if(m.matches()){
-            scriptCommandLabel.setForeground(Color.lightGray);
-            scriptErrorLabel.setForeground(Color.lightGray);
-            exitCodeSpinner.setEnabled(false);
-            scriptCommandTextField.setEditable(false);
-        } else {
-            scriptCommandLabel.setForeground(Color.black);
-            scriptErrorLabel.setForeground(Color.black);
-            exitCodeSpinner.setEnabled(true);
-            scriptCommandTextField.setEditable(true);
-        }
-    }
-
-    private void receiveSubjectTextFieldKeyTyped(KeyEvent e) {
-        Matcher m = ptr.matcher(sendSubjectTextField.getText().trim());
-        if(m.matches()){
-            scriptCommandLabel.setForeground(Color.lightGray);
-            scriptErrorLabel.setForeground(Color.lightGray);
-            exitCodeSpinner.setEnabled(false);
-            scriptCommandTextField.setEditable(false);
-        } else {
-            scriptCommandLabel.setForeground(Color.black);
-            scriptErrorLabel.setForeground(Color.black);
-            exitCodeSpinner.setEnabled(true);
-            scriptCommandTextField.setEditable(true);
         }
     }
 

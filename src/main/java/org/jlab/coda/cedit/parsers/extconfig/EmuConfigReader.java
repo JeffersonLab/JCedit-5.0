@@ -24,7 +24,6 @@ package org.jlab.coda.cedit.parsers.extconfig;
 
 import org.jlab.coda.cedit.system.JCGCompConfig;
 import org.jlab.coda.cedit.system.JCGComponent;
-import org.jlab.coda.cedit.system.JCGSetup;
 import org.jlab.coda.cedit.system.JCGConcept;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -36,51 +35,24 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Set;
 
-public class EmuConfigReader {
-
-    private String fileName;
-
-    private JCGComponent component;
+/**
+ * Configuration reader for EMU (Event Management Unit) component configuration files.
+ * Reads XML format configuration files using SAX parsing.
+ */
+public class EmuConfigReader extends AbstractConfigReader {
 
     private MyHandler handler = new MyHandler();
     private JCGCompConfig _cConfig;
-    private JCGSetup stp = JCGSetup.getInstance();
-
 
     public EmuConfigReader(String runType, String compName) {
-        fileName = stp.getCoolHome() + File.separator +
-                stp.getExpid() + File.separator +
-                "config" + File.separator +
-                "Control" + File.separator +
-                runType + File.separator +
-                "Options" + File.separator +
-                compName + ".xml";
+        super(runType, compName, ".xml");
     }
 
-    public EmuConfigReader(String runType, JCGComponent comp){
-        this.component = comp;
-        fileName = stp.getCoolHome()+ File.separator+
-                stp.getExpid()+File.separator+
-                "config"+File.separator+
-                "Control"+File.separator +
-                runType+File.separator+
-                "Options"+File.separator+
-                component.getName()+".dat";
+    public EmuConfigReader(String runType, JCGComponent comp) {
+        super(runType, comp, ".xml");
     }
 
-
-    public boolean isConfigExists() {
-        return new File(fileName).exists();
-    }
-
-    public long getLastModified() {
-        return new File(fileName).lastModified();
-    }
-
-    public String getFileName(){
-        return fileName;
-    }
-
+    @Override
     public JCGCompConfig parseConfig() {
         _cConfig = new JCGCompConfig();
 
