@@ -483,11 +483,159 @@ public class CDesktopNew extends JFrame {
 
     private void RocmiMouseClicked(MouseEvent e) {
         JLabel label = new JLabel(Rocmi.getText(), Rocmi.getIcon(), JLabel.CENTER);
+        label.setName("ROC");
 
         // Specify the location and size of the label
         int x = 100; // X-coordinate
         int y = 100; // Y-coordinate
         label.setBounds(x, y, 200, 50);
+        cnvs.addComponent(label);
+    }
+
+    private void TsmiMouseClicked(MouseEvent e) {
+        JLabel label = new JLabel(Tsmi.getText(), Tsmi.getIcon(), JLabel.CENTER);
+        label.setName("TS");
+        label.setBounds(100, 100, 200, 50);
+        cnvs.addComponent(label);
+    }
+
+    private void GtmiMouseClicked(MouseEvent e) {
+        JLabel label = new JLabel(Gtmi.getText(), Gtmi.getIcon(), JLabel.CENTER);
+        label.setName("GT");
+        label.setBounds(100, 100, 200, 50);
+        cnvs.addComponent(label);
+    }
+
+    private void DcmiMouseClicked(MouseEvent e) {
+        JLabel label = new JLabel(Dcmi.getText(), Dcmi.getIcon(), JLabel.CENTER);
+        label.setName("DC");
+        label.setBounds(100, 100, 200, 50);
+        cnvs.addComponent(label);
+    }
+
+    private void PebmiMouseClicked(MouseEvent e) {
+        JLabel label = new JLabel(Pebmi.getText(), Pebmi.getIcon(), JLabel.CENTER);
+        label.setName("PEB");
+        label.setBounds(100, 100, 200, 50);
+        cnvs.addComponent(label);
+    }
+
+    private void SebmiMouseClicked(MouseEvent e) {
+        JLabel label = new JLabel(Sebmi.getText(), Sebmi.getIcon(), JLabel.CENTER);
+        label.setName("SEB");
+        label.setBounds(100, 100, 200, 50);
+        cnvs.addComponent(label);
+    }
+
+    private void ErmiMouseClicked(MouseEvent e) {
+        JLabel label = new JLabel(Ermi.getText(), Ermi.getIcon(), JLabel.CENTER);
+        label.setName("ER");
+        label.setBounds(100, 100, 200, 50);
+        cnvs.addComponent(label);
+    }
+
+    private void EbermiMouseClicked(MouseEvent e) {
+        JLabel label = new JLabel(Ebermi.getText(), Ebermi.getIcon(), JLabel.CENTER);
+        label.setName("EBER");
+        label.setBounds(100, 100, 200, 50);
+        cnvs.addComponent(label);
+    }
+
+    private void OutmiMouseClicked(MouseEvent e) {
+        JLabel label = new JLabel(Outmi.getText(), Outmi.getIcon(), JLabel.CENTER);
+        label.setName("FILE");
+        label.setBounds(100, 100, 200, 50);
+        cnvs.addComponent(label);
+    }
+
+    private void VtpmiMouseClicked(MouseEvent e) {
+        JLabel label = new JLabel(Vtpmi.getText(), Vtpmi.getIcon(), JLabel.CENTER);
+        label.setName("FPGA");
+        label.setBounds(100, 100, 200, 50);
+        cnvs.addComponent(label);
+    }
+
+    private void PaggmiMouseClicked(MouseEvent e) {
+        JLabel label = new JLabel(Paggmi.getText(), Paggmi.getIcon(), JLabel.CENTER);
+        label.setName("PAGG");
+        label.setBounds(100, 100, 200, 50);
+        cnvs.addComponent(label);
+    }
+
+    private void SaggmiMouseClicked(MouseEvent e) {
+        JLabel label = new JLabel(Saggmi.getText(), Saggmi.getIcon(), JLabel.CENTER);
+        label.setName("SAGG");
+        label.setBounds(100, 100, 200, 50);
+        cnvs.addComponent(label);
+    }
+
+    private void FileSourcemiMouseClicked(MouseEvent e) {
+        JLabel label = new JLabel(FileSourcemi.getText(), FileSourcemi.getIcon(), JLabel.CENTER);
+        label.setName("FILE");
+        label.setBounds(100, 100, 200, 50);
+        cnvs.addComponent(label);
+    }
+
+    private void etSourceMiMouseClicked(MouseEvent e) {
+        JLabel label = new JLabel(etSourceMi.getText(), etSourceMi.getIcon(), JLabel.CENTER);
+        label.setName("FILE");
+        label.setBounds(100, 100, 200, 50);
+        cnvs.addComponent(label);
+    }
+
+    private void actorMiMouseClicked(MouseEvent e) {
+        JLabel label = new JLabel(actorMi.getText(), actorMi.getIcon(), JLabel.CENTER);
+        label.setName("USR");
+        label.setBounds(100, 100, 200, 50);
+        cnvs.addComponent(label);
+    }
+
+    private void histoActorMIMouseClicked(MouseEvent e) {
+        JLabel label = new JLabel(histoActorMI.getText(), histoActorMI.getIcon(), JLabel.CENTER);
+        label.setName("FILE");
+        label.setBounds(100, 100, 200, 50);
+        cnvs.addComponent(label);
+    }
+
+    private void menuItem30MouseClicked(MouseEvent e) {
+        JLabel label = new JLabel(menuItem30.getText(), menuItem30.getIcon(), JLabel.CENTER);
+        label.setName("FPGA");
+        label.setBounds(100, 100, 200, 50);
+        cnvs.addComponent(label);
+    }
+
+    private void menuItem33MouseClicked(MouseEvent e) {
+        JLabel label = new JLabel(menuItem33.getText(), menuItem33.getIcon(), JLabel.CENTER);
+        label.setName("FPGA");
+        label.setBounds(100, 100, 200, 50);
+        cnvs.addComponent(label);
+    }
+
+    private void menuItem34MouseClicked(MouseEvent e) {
+        JLabel label = new JLabel(menuItem34.getText(), menuItem34.getIcon(), JLabel.CENTER);
+        label.setName("FPGA");
+        label.setBounds(100, 100, 200, 50);
+        cnvs.addComponent(label);
+    }
+
+    private void ScmiMouseClicked(MouseEvent e) {
+        JLabel label = new JLabel(Scmi.getText(), Scmi.getIcon(), JLabel.CENTER);
+        label.setName("USR");
+        label.setBounds(100, 100, 200, 50);
+        cnvs.addComponent(label);
+    }
+
+    private void menuItem35MouseClicked(MouseEvent e) {
+        JLabel label = new JLabel(menuItem35.getText(), menuItem35.getIcon(), JLabel.CENTER);
+        label.setName("SLC");
+        label.setBounds(100, 100, 200, 50);
+        cnvs.addComponent(label);
+    }
+
+    private void menuItem36MouseClicked(MouseEvent e) {
+        JLabel label = new JLabel(menuItem36.getText(), menuItem36.getIcon(), JLabel.CENTER);
+        label.setName("WNC");
+        label.setBounds(100, 100, 200, 50);
         cnvs.addComponent(label);
     }
 
@@ -990,48 +1138,96 @@ public class CDesktopNew extends JFrame {
                         //---- Tsmi ----
                         Tsmi.setText("TS");
                         Tsmi.setIcon(new ImageIcon(getClass().getResource("/resources/TS_new.png")));
+                        Tsmi.addMouseListener(new MouseAdapter() {
+                            @Override
+                            public void mouseClicked(MouseEvent e) {
+                                TsmiMouseClicked(e);
+                            }
+                        });
                         TrMenu.add(Tsmi);
                         TrMenu.addSeparator();
 
                         //---- Gtmi ----
                         Gtmi.setText("GT");
                         Gtmi.setIcon(new ImageIcon(getClass().getResource("/resources/GT_new.png")));
+                        Gtmi.addMouseListener(new MouseAdapter() {
+                            @Override
+                            public void mouseClicked(MouseEvent e) {
+                                GtmiMouseClicked(e);
+                            }
+                        });
                         TrMenu.add(Gtmi);
                         TrMenu.addSeparator();
 
                         //---- Dcmi ----
                         Dcmi.setText("DC");
                         Dcmi.setIcon(new ImageIcon(getClass().getResource("/resources/DC_new.png")));
+                        Dcmi.addMouseListener(new MouseAdapter() {
+                            @Override
+                            public void mouseClicked(MouseEvent e) {
+                                DcmiMouseClicked(e);
+                            }
+                        });
                         TrMenu.add(Dcmi);
                         TrMenu.addSeparator();
 
                         //---- Pebmi ----
                         Pebmi.setText("PEB");
                         Pebmi.setIcon(new ImageIcon(getClass().getResource("/resources/PEB_new.png")));
+                        Pebmi.addMouseListener(new MouseAdapter() {
+                            @Override
+                            public void mouseClicked(MouseEvent e) {
+                                PebmiMouseClicked(e);
+                            }
+                        });
                         TrMenu.add(Pebmi);
                         TrMenu.addSeparator();
 
                         //---- Sebmi ----
                         Sebmi.setText("SEB");
                         Sebmi.setIcon(new ImageIcon(getClass().getResource("/resources/SEB_new.png")));
+                        Sebmi.addMouseListener(new MouseAdapter() {
+                            @Override
+                            public void mouseClicked(MouseEvent e) {
+                                SebmiMouseClicked(e);
+                            }
+                        });
                         TrMenu.add(Sebmi);
                         TrMenu.addSeparator();
 
                         //---- Ermi ----
                         Ermi.setText("ER");
                         Ermi.setIcon(new ImageIcon(getClass().getResource("/resources/ER_new.png")));
+                        Ermi.addMouseListener(new MouseAdapter() {
+                            @Override
+                            public void mouseClicked(MouseEvent e) {
+                                ErmiMouseClicked(e);
+                            }
+                        });
                         TrMenu.add(Ermi);
                         TrMenu.addSeparator();
 
                         //---- Ebermi ----
                         Ebermi.setText("EBER");
                         Ebermi.setIcon(new ImageIcon(getClass().getResource("/resources/EBER_new.png")));
+                        Ebermi.addMouseListener(new MouseAdapter() {
+                            @Override
+                            public void mouseClicked(MouseEvent e) {
+                                EbermiMouseClicked(e);
+                            }
+                        });
                         TrMenu.add(Ebermi);
                         TrMenu.addSeparator();
 
                         //---- Outmi ----
                         Outmi.setText("Sink");
                         Outmi.setIcon(new ImageIcon(getClass().getResource("/resources/SINK_new.png")));
+                        Outmi.addMouseListener(new MouseAdapter() {
+                            @Override
+                            public void mouseClicked(MouseEvent e) {
+                                OutmiMouseClicked(e);
+                            }
+                        });
                         TrMenu.add(Outmi);
                     }
                     DaqMenu.add(TrMenu);
@@ -1044,18 +1240,36 @@ public class CDesktopNew extends JFrame {
                         //---- Vtpmi ----
                         Vtpmi.setText("VTP");
                         Vtpmi.setIcon(new ImageIcon(getClass().getResource("/resources/VTP.png")));
+                        Vtpmi.addMouseListener(new MouseAdapter() {
+                            @Override
+                            public void mouseClicked(MouseEvent e) {
+                                VtpmiMouseClicked(e);
+                            }
+                        });
                         StrMenu.add(Vtpmi);
                         StrMenu.addSeparator();
 
                         //---- Paggmi ----
                         Paggmi.setText("PAGG");
                         Paggmi.setIcon(new ImageIcon(getClass().getResource("/resources/PAGG_new.png")));
+                        Paggmi.addMouseListener(new MouseAdapter() {
+                            @Override
+                            public void mouseClicked(MouseEvent e) {
+                                PaggmiMouseClicked(e);
+                            }
+                        });
                         StrMenu.add(Paggmi);
                         StrMenu.addSeparator();
 
                         //---- Saggmi ----
                         Saggmi.setText("SAGG");
                         Saggmi.setIcon(new ImageIcon(getClass().getResource("/resources/SAGG_new.png")));
+                        Saggmi.addMouseListener(new MouseAdapter() {
+                            @Override
+                            public void mouseClicked(MouseEvent e) {
+                                SaggmiMouseClicked(e);
+                            }
+                        });
                         StrMenu.add(Saggmi);
                     }
                     DaqMenu.add(StrMenu);
@@ -1069,24 +1283,48 @@ public class CDesktopNew extends JFrame {
                     //---- FileSourcemi ----
                     FileSourcemi.setText("File Source");
                     FileSourcemi.setIcon(new ImageIcon(getClass().getResource("/resources/SINK_source.png")));
+                    FileSourcemi.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            FileSourcemiMouseClicked(e);
+                        }
+                    });
                     ErsapMenu.add(FileSourcemi);
                     ErsapMenu.addSeparator();
 
                     //---- etSourceMi ----
                     etSourceMi.setText("ET Source");
                     etSourceMi.setIcon(new ImageIcon(getClass().getResource("/resources/ET_source.png")));
+                    etSourceMi.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            etSourceMiMouseClicked(e);
+                        }
+                    });
                     ErsapMenu.add(etSourceMi);
                     ErsapMenu.addSeparator();
 
                     //---- actorMi ----
                     actorMi.setText("Actor");
                     actorMi.setIcon(new ImageIcon(getClass().getResource("/resources/ACTOR_new.png")));
+                    actorMi.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            actorMiMouseClicked(e);
+                        }
+                    });
                     ErsapMenu.add(actorMi);
                     ErsapMenu.addSeparator();
 
                     //---- histoActorMI ----
                     histoActorMI.setText("Histogram Actor");
                     histoActorMI.setIcon(new ImageIcon(getClass().getResource("/resources/SINK_histogram.png")));
+                    histoActorMI.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            histoActorMIMouseClicked(e);
+                        }
+                    });
                     ErsapMenu.add(histoActorMI);
                 }
                 menuBar2.add(ErsapMenu);
@@ -1098,18 +1336,36 @@ public class CDesktopNew extends JFrame {
                     //---- menuItem30 ----
                     menuItem30.setText("Packetizer");
                     menuItem30.setIcon(new ImageIcon(getClass().getResource("/resources/PACKETIZE.png")));
+                    menuItem30.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            menuItem30MouseClicked(e);
+                        }
+                    });
                     EjfatMenu.add(menuItem30);
                     EjfatMenu.addSeparator();
 
                     //---- menuItem33 ----
                     menuItem33.setText("Load Balancer");
                     menuItem33.setIcon(new ImageIcon(getClass().getResource("/resources/LB_new.png")));
+                    menuItem33.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            menuItem33MouseClicked(e);
+                        }
+                    });
                     EjfatMenu.add(menuItem33);
                     EjfatMenu.addSeparator();
 
                     //---- menuItem34 ----
                     menuItem34.setText("Reassembly");
                     menuItem34.setIcon(new ImageIcon(getClass().getResource("/resources/REASSEMBLE.png")));
+                    menuItem34.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            menuItem34MouseClicked(e);
+                        }
+                    });
                     EjfatMenu.add(menuItem34);
                 }
                 menuBar2.add(EjfatMenu);
@@ -1121,18 +1377,36 @@ public class CDesktopNew extends JFrame {
                     //---- Scmi ----
                     Scmi.setText("Application");
                     Scmi.setIcon(new ImageIcon(getClass().getResource("/resources/Application.png")));
+                    Scmi.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            ScmiMouseClicked(e);
+                        }
+                    });
                     ProcMenu.add(Scmi);
                     ProcMenu.addSeparator();
 
                     //---- menuItem35 ----
                     menuItem35.setText("Shell Process");
                     menuItem35.setIcon(new ImageIcon(getClass().getResource("/resources/ShellProcess.png")));
+                    menuItem35.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            menuItem35MouseClicked(e);
+                        }
+                    });
                     ProcMenu.add(menuItem35);
                     ProcMenu.addSeparator();
 
                     //---- menuItem36 ----
                     menuItem36.setText("Docker Container");
                     menuItem36.setIcon(new ImageIcon(getClass().getResource("/resources/DockerContainer.png")));
+                    menuItem36.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            menuItem36MouseClicked(e);
+                        }
+                    });
                     ProcMenu.add(menuItem36);
                 }
                 menuBar2.add(ProcMenu);
