@@ -566,6 +566,12 @@ public class DrawingCanvas extends JPanel {
 
 
     private void defineLineStartXY(double x, double y) {
+        // Reset to undefined first
+        lineStartX = 0;
+        lineStartY = 0;
+        lineStartGc = "undefined";
+
+        // Search for a component at the click location
         for (JCGComponent gc : GCMPs.values()) {
             if (x > gc.getX() && x < (gc.getX() + gc.getW()) && y > gc.getY() && y < (gc.getY() + gc.getH())) {
                 lineStartX = gc.getX() + gc.getW();
@@ -575,15 +581,17 @@ public class DrawingCanvas extends JPanel {
                 isLineStartGcStreaming = gc.isStreaming();
                 selectedGCmpName = lineStartGc;
                 return;
-            } else {
-                lineStartX = 0;
-                lineStartY = 0;
-                lineStartGc = "undefined";
             }
         }
     }
 
     private void defineLineEndXY(double x, double y) {
+        // Reset to undefined first
+        lineEndX = 0;
+        lineEndY = 0;
+        lineEndGc = "undefined";
+
+        // Search for a component at the click location
         for (JCGComponent gc : GCMPs.values()) {
             if (x > gc.getX() && x < (gc.getX() + gc.getW()) && y > gc.getY() && y < (gc.getY() + gc.getH())) {
                 lineEndX = gc.getX();
@@ -592,10 +600,6 @@ public class DrawingCanvas extends JPanel {
                 lineEndGcType = gc.getType();
                 isLineEndGcStreaming = gc.isStreaming();
                 return;
-            } else {
-                lineEndX = 0;
-                lineEndY = 0;
-                lineEndGc = "undefined";
             }
         }
     }
@@ -614,6 +618,7 @@ public class DrawingCanvas extends JPanel {
                 break;
             case FPGA:
                 res = endType.equals(ACodaType.PAGG.name()) ||
+                        endType.equals(ACodaType.USR.name()) ||
                         endType.equals(ACodaType.FILE.name());
                 break;
             case PAGG:
@@ -639,6 +644,11 @@ public class DrawingCanvas extends JPanel {
             case ER:
                 res = endType.equals(ACodaType.FILE.name()) ||
                         endType.equals(ACodaType.USR.name());
+                break;
+            case USR:
+                // USR components (EJFAT: Packetizer, Load Balancer, Reassembly) can link to other USR or FILE
+                res = endType.equals(ACodaType.USR.name()) ||
+                        endType.equals(ACodaType.FILE.name());
                 break;
         }
 
@@ -716,6 +726,32 @@ public class DrawingCanvas extends JPanel {
         return bufferedImage;
     }
 
+    /**
+     * Converts an ImageIcon to a BufferedImage
+     * @param icon The ImageIcon to convert
+     * @return BufferedImage containing the icon's image
+     */
+    public BufferedImage iconToBufferedImage(ImageIcon icon) {
+        Image img = icon.getImage();
+        if (img instanceof BufferedImage) {
+            return (BufferedImage) img;
+        }
+
+        // Create a buffered image with the icon's dimensions
+        BufferedImage bimage = new BufferedImage(
+            img.getWidth(null),
+            img.getHeight(null),
+            BufferedImage.TYPE_INT_ARGB
+        );
+
+        // Draw the image onto the buffered image
+        Graphics2D g = bimage.createGraphics();
+        g.drawImage(img, 0, 0, null);
+        g.dispose();
+
+        return bimage;
+    }
+
     public void drawGrid(double gSize) {
         if (isGridVisible) {
             Color c = g2D.getColor();
@@ -748,7 +784,11 @@ public class DrawingCanvas extends JPanel {
             System.out.println("Severe Error: null component. " + compName);
             return;
         }
-        cmp.setImage(createBufferedImage(File.separator + "resources" + File.separator + cmp.getType() + ".png"));
+        // Only reload the image if it hasn't been set yet
+        // This preserves the component-specific image set during creation
+        if (cmp.getImage() == null) {
+            cmp.setImage(createBufferedImage(File.separator + "resources" + File.separator + cmp.getType() + ".png"));
+        }
         if (cmp.getImage() == null) {
             System.out.println("Severe Error: can not create component image. " + compName);
             return;

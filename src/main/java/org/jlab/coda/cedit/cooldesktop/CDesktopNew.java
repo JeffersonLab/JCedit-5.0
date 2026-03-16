@@ -250,12 +250,15 @@ public class CDesktopNew extends JFrame {
                 ids.add(c.getId());
             }
         }
-        if (JCTools.getPredefinedIds(type).isEmpty()){
+        // Add predefined IDs if they exist
+        if (!JCTools.getPredefinedIds(type).isEmpty()){
+            ids.addAll(JCTools.getPredefinedIds(type).values());
+        }
 
+        // If no existing IDs found, return 1, otherwise return max + 1
+        if (ids.isEmpty()){
             return 1;
         } else {
-            // open predefined component file and add predefined ids for a specific type.
-            ids.addAll(JCTools.getPredefinedIds(type).values());
             return Collections.max(ids) + 1;
         }
     }
@@ -599,21 +602,21 @@ public class CDesktopNew extends JFrame {
 
     private void menuItem30MouseClicked(MouseEvent e) {
         JLabel label = new JLabel(menuItem30.getText(), menuItem30.getIcon(), JLabel.CENTER);
-        label.setName("FPGA");
+        label.setName("USR");  // EJFAT Packetizer - using USR type
         label.setBounds(100, 100, 200, 50);
         cnvs.addComponent(label);
     }
 
     private void menuItem33MouseClicked(MouseEvent e) {
         JLabel label = new JLabel(menuItem33.getText(), menuItem33.getIcon(), JLabel.CENTER);
-        label.setName("FPGA");
+        label.setName("USR");  // EJFAT Load Balancer - using USR type
         label.setBounds(100, 100, 200, 50);
         cnvs.addComponent(label);
     }
 
     private void menuItem34MouseClicked(MouseEvent e) {
         JLabel label = new JLabel(menuItem34.getText(), menuItem34.getIcon(), JLabel.CENTER);
-        label.setName("FPGA");
+        label.setName("USR");  // EJFAT Reassembly - using USR type
         label.setBounds(100, 100, 200, 50);
         cnvs.addComponent(label);
     }
@@ -1126,108 +1129,63 @@ public class CDesktopNew extends JFrame {
                         Rocmi.setText("Roc");
                         System.out.println(getClass().getResource("/resources/ROC.png"));
                         Rocmi.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/ROC.png"))));
-                        Rocmi.addMouseListener(new MouseAdapter() {
-                            @Override
-                            public void mouseClicked(MouseEvent e) {
-                                RocmiMouseClicked(e);
-                            }
-                        });
+                        Rocmi.addActionListener(e -> RocmiMouseClicked(null));
                         TrMenu.add(Rocmi);
                         TrMenu.addSeparator();
 
                         //---- Tsmi ----
                         Tsmi.setText("TS");
                         Tsmi.setIcon(new ImageIcon(getClass().getResource("/resources/TS_new.png")));
-                        Tsmi.addMouseListener(new MouseAdapter() {
-                            @Override
-                            public void mouseClicked(MouseEvent e) {
-                                TsmiMouseClicked(e);
-                            }
-                        });
+                        Tsmi.addActionListener(e -> TsmiMouseClicked(null));
                         TrMenu.add(Tsmi);
                         TrMenu.addSeparator();
 
                         //---- Gtmi ----
                         Gtmi.setText("GT");
                         Gtmi.setIcon(new ImageIcon(getClass().getResource("/resources/GT_new.png")));
-                        Gtmi.addMouseListener(new MouseAdapter() {
-                            @Override
-                            public void mouseClicked(MouseEvent e) {
-                                GtmiMouseClicked(e);
-                            }
-                        });
+                        Gtmi.addActionListener(e -> GtmiMouseClicked(null));
                         TrMenu.add(Gtmi);
                         TrMenu.addSeparator();
 
                         //---- Dcmi ----
                         Dcmi.setText("DC");
                         Dcmi.setIcon(new ImageIcon(getClass().getResource("/resources/DC_new.png")));
-                        Dcmi.addMouseListener(new MouseAdapter() {
-                            @Override
-                            public void mouseClicked(MouseEvent e) {
-                                DcmiMouseClicked(e);
-                            }
-                        });
+                        Dcmi.addActionListener(e -> DcmiMouseClicked(null));
                         TrMenu.add(Dcmi);
                         TrMenu.addSeparator();
 
                         //---- Pebmi ----
                         Pebmi.setText("PEB");
                         Pebmi.setIcon(new ImageIcon(getClass().getResource("/resources/PEB_new.png")));
-                        Pebmi.addMouseListener(new MouseAdapter() {
-                            @Override
-                            public void mouseClicked(MouseEvent e) {
-                                PebmiMouseClicked(e);
-                            }
-                        });
+                        Pebmi.addActionListener(e -> PebmiMouseClicked(null));
                         TrMenu.add(Pebmi);
                         TrMenu.addSeparator();
 
                         //---- Sebmi ----
                         Sebmi.setText("SEB");
                         Sebmi.setIcon(new ImageIcon(getClass().getResource("/resources/SEB_new.png")));
-                        Sebmi.addMouseListener(new MouseAdapter() {
-                            @Override
-                            public void mouseClicked(MouseEvent e) {
-                                SebmiMouseClicked(e);
-                            }
-                        });
+                        Sebmi.addActionListener(e -> SebmiMouseClicked(null));
                         TrMenu.add(Sebmi);
                         TrMenu.addSeparator();
 
                         //---- Ermi ----
                         Ermi.setText("ER");
                         Ermi.setIcon(new ImageIcon(getClass().getResource("/resources/ER_new.png")));
-                        Ermi.addMouseListener(new MouseAdapter() {
-                            @Override
-                            public void mouseClicked(MouseEvent e) {
-                                ErmiMouseClicked(e);
-                            }
-                        });
+                        Ermi.addActionListener(e -> ErmiMouseClicked(null));
                         TrMenu.add(Ermi);
                         TrMenu.addSeparator();
 
                         //---- Ebermi ----
                         Ebermi.setText("EBER");
                         Ebermi.setIcon(new ImageIcon(getClass().getResource("/resources/EBER_new.png")));
-                        Ebermi.addMouseListener(new MouseAdapter() {
-                            @Override
-                            public void mouseClicked(MouseEvent e) {
-                                EbermiMouseClicked(e);
-                            }
-                        });
+                        Ebermi.addActionListener(e -> EbermiMouseClicked(null));
                         TrMenu.add(Ebermi);
                         TrMenu.addSeparator();
 
                         //---- Outmi ----
                         Outmi.setText("Sink");
                         Outmi.setIcon(new ImageIcon(getClass().getResource("/resources/SINK_new.png")));
-                        Outmi.addMouseListener(new MouseAdapter() {
-                            @Override
-                            public void mouseClicked(MouseEvent e) {
-                                OutmiMouseClicked(e);
-                            }
-                        });
+                        Outmi.addActionListener(e -> OutmiMouseClicked(null));
                         TrMenu.add(Outmi);
                     }
                     DaqMenu.add(TrMenu);
@@ -1240,36 +1198,21 @@ public class CDesktopNew extends JFrame {
                         //---- Vtpmi ----
                         Vtpmi.setText("VTP");
                         Vtpmi.setIcon(new ImageIcon(getClass().getResource("/resources/VTP.png")));
-                        Vtpmi.addMouseListener(new MouseAdapter() {
-                            @Override
-                            public void mouseClicked(MouseEvent e) {
-                                VtpmiMouseClicked(e);
-                            }
-                        });
+                        Vtpmi.addActionListener(e -> VtpmiMouseClicked(null));
                         StrMenu.add(Vtpmi);
                         StrMenu.addSeparator();
 
                         //---- Paggmi ----
                         Paggmi.setText("PAGG");
                         Paggmi.setIcon(new ImageIcon(getClass().getResource("/resources/PAGG_new.png")));
-                        Paggmi.addMouseListener(new MouseAdapter() {
-                            @Override
-                            public void mouseClicked(MouseEvent e) {
-                                PaggmiMouseClicked(e);
-                            }
-                        });
+                        Paggmi.addActionListener(e -> PaggmiMouseClicked(null));
                         StrMenu.add(Paggmi);
                         StrMenu.addSeparator();
 
                         //---- Saggmi ----
                         Saggmi.setText("SAGG");
                         Saggmi.setIcon(new ImageIcon(getClass().getResource("/resources/SAGG_new.png")));
-                        Saggmi.addMouseListener(new MouseAdapter() {
-                            @Override
-                            public void mouseClicked(MouseEvent e) {
-                                SaggmiMouseClicked(e);
-                            }
-                        });
+                        Saggmi.addActionListener(e -> SaggmiMouseClicked(null));
                         StrMenu.add(Saggmi);
                     }
                     DaqMenu.add(StrMenu);
@@ -1283,48 +1226,28 @@ public class CDesktopNew extends JFrame {
                     //---- FileSourcemi ----
                     FileSourcemi.setText("File Source");
                     FileSourcemi.setIcon(new ImageIcon(getClass().getResource("/resources/SINK_source.png")));
-                    FileSourcemi.addMouseListener(new MouseAdapter() {
-                        @Override
-                        public void mouseClicked(MouseEvent e) {
-                            FileSourcemiMouseClicked(e);
-                        }
-                    });
+                    FileSourcemi.addActionListener(e -> FileSourcemiMouseClicked(null));
                     ErsapMenu.add(FileSourcemi);
                     ErsapMenu.addSeparator();
 
                     //---- etSourceMi ----
                     etSourceMi.setText("ET Source");
                     etSourceMi.setIcon(new ImageIcon(getClass().getResource("/resources/ET_source.png")));
-                    etSourceMi.addMouseListener(new MouseAdapter() {
-                        @Override
-                        public void mouseClicked(MouseEvent e) {
-                            etSourceMiMouseClicked(e);
-                        }
-                    });
+                    etSourceMi.addActionListener(e -> etSourceMiMouseClicked(null));
                     ErsapMenu.add(etSourceMi);
                     ErsapMenu.addSeparator();
 
                     //---- actorMi ----
                     actorMi.setText("Actor");
                     actorMi.setIcon(new ImageIcon(getClass().getResource("/resources/ACTOR_new.png")));
-                    actorMi.addMouseListener(new MouseAdapter() {
-                        @Override
-                        public void mouseClicked(MouseEvent e) {
-                            actorMiMouseClicked(e);
-                        }
-                    });
+                    actorMi.addActionListener(e -> actorMiMouseClicked(null));
                     ErsapMenu.add(actorMi);
                     ErsapMenu.addSeparator();
 
                     //---- histoActorMI ----
                     histoActorMI.setText("Histogram Actor");
                     histoActorMI.setIcon(new ImageIcon(getClass().getResource("/resources/SINK_histogram.png")));
-                    histoActorMI.addMouseListener(new MouseAdapter() {
-                        @Override
-                        public void mouseClicked(MouseEvent e) {
-                            histoActorMIMouseClicked(e);
-                        }
-                    });
+                    histoActorMI.addActionListener(e -> histoActorMIMouseClicked(null));
                     ErsapMenu.add(histoActorMI);
                 }
                 menuBar2.add(ErsapMenu);
@@ -1336,36 +1259,21 @@ public class CDesktopNew extends JFrame {
                     //---- menuItem30 ----
                     menuItem30.setText("Packetizer");
                     menuItem30.setIcon(new ImageIcon(getClass().getResource("/resources/PACKETIZE.png")));
-                    menuItem30.addMouseListener(new MouseAdapter() {
-                        @Override
-                        public void mouseClicked(MouseEvent e) {
-                            menuItem30MouseClicked(e);
-                        }
-                    });
+                    menuItem30.addActionListener(e -> menuItem30MouseClicked(null));
                     EjfatMenu.add(menuItem30);
                     EjfatMenu.addSeparator();
 
                     //---- menuItem33 ----
                     menuItem33.setText("Load Balancer");
                     menuItem33.setIcon(new ImageIcon(getClass().getResource("/resources/LB_new.png")));
-                    menuItem33.addMouseListener(new MouseAdapter() {
-                        @Override
-                        public void mouseClicked(MouseEvent e) {
-                            menuItem33MouseClicked(e);
-                        }
-                    });
+                    menuItem33.addActionListener(e -> menuItem33MouseClicked(null));
                     EjfatMenu.add(menuItem33);
                     EjfatMenu.addSeparator();
 
                     //---- menuItem34 ----
                     menuItem34.setText("Reassembly");
                     menuItem34.setIcon(new ImageIcon(getClass().getResource("/resources/REASSEMBLE.png")));
-                    menuItem34.addMouseListener(new MouseAdapter() {
-                        @Override
-                        public void mouseClicked(MouseEvent e) {
-                            menuItem34MouseClicked(e);
-                        }
-                    });
+                    menuItem34.addActionListener(e -> menuItem34MouseClicked(null));
                     EjfatMenu.add(menuItem34);
                 }
                 menuBar2.add(EjfatMenu);
@@ -1377,36 +1285,21 @@ public class CDesktopNew extends JFrame {
                     //---- Scmi ----
                     Scmi.setText("Application");
                     Scmi.setIcon(new ImageIcon(getClass().getResource("/resources/Application.png")));
-                    Scmi.addMouseListener(new MouseAdapter() {
-                        @Override
-                        public void mouseClicked(MouseEvent e) {
-                            ScmiMouseClicked(e);
-                        }
-                    });
+                    Scmi.addActionListener(e -> ScmiMouseClicked(null));
                     ProcMenu.add(Scmi);
                     ProcMenu.addSeparator();
 
                     //---- menuItem35 ----
                     menuItem35.setText("Shell Process");
                     menuItem35.setIcon(new ImageIcon(getClass().getResource("/resources/ShellProcess.png")));
-                    menuItem35.addMouseListener(new MouseAdapter() {
-                        @Override
-                        public void mouseClicked(MouseEvent e) {
-                            menuItem35MouseClicked(e);
-                        }
-                    });
+                    menuItem35.addActionListener(e -> menuItem35MouseClicked(null));
                     ProcMenu.add(menuItem35);
                     ProcMenu.addSeparator();
 
                     //---- menuItem36 ----
                     menuItem36.setText("Docker Container");
                     menuItem36.setIcon(new ImageIcon(getClass().getResource("/resources/DockerContainer.png")));
-                    menuItem36.addMouseListener(new MouseAdapter() {
-                        @Override
-                        public void mouseClicked(MouseEvent e) {
-                            menuItem36MouseClicked(e);
-                        }
-                    });
+                    menuItem36.addActionListener(e -> menuItem36MouseClicked(null));
                     ProcMenu.add(menuItem36);
                 }
                 menuBar2.add(ProcMenu);

@@ -51,16 +51,18 @@ public class CCanvas extends CanvasDropTarget {
 
     public void addComponent(JLabel label) {
         JCGComponent gc = new JCGComponent();
-        gCmpName = label.getName();
         String type = label.getName();
 
-        gCmpImageFile = File.separator + "resources" + File.separator + type + ".png";
         gc.setType(type);
         gc.setPreDefined(true);
         gc.setPriority(ACodaType.getEnum(type).priority());
 
         // assigning a unique ID to a new component. Note this is not a predefined component.
-        gc.setId(CDesktopNew.assignUniqueId(type));
+        int id = CDesktopNew.assignUniqueId(type);
+        gc.setId(id);
+
+        // Create unique name by concatenating type and ID (e.g., "ROC1", "ROC2")
+        gCmpName = type + id;
 
         if (!CDesktopNew.defineRocMastership(gCmpName, type, gc)) {
             return;
@@ -69,7 +71,17 @@ public class CCanvas extends CanvasDropTarget {
         gc.setName(gCmpName);
         gc.setW(drawingCanvas.getW());
         gc.setH(drawingCanvas.getH());
-        gc.setImage(drawingCanvas.createBufferedImage(gCmpImageFile));
+
+        // Use the image directly from the label's icon if available
+        // This allows each component instance to have its own specific image
+        if (label.getIcon() != null && label.getIcon() instanceof ImageIcon) {
+            ImageIcon icon = (ImageIcon) label.getIcon();
+            gc.setImage(drawingCanvas.iconToBufferedImage(icon));
+        } else {
+            // Fallback to type-based image loading
+            gCmpImageFile = File.separator + "resources" + File.separator + type + ".png";
+            gc.setImage(drawingCanvas.createBufferedImage(gCmpImageFile));
+        }
 
         if (!typePositions.keySet().contains(type)) {
             int gridSize2 = 120;
