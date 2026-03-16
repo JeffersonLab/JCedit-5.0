@@ -1,13 +1,25 @@
-#!/bin/csh -f
+#!/bin/bash
 
-#Starts JCedit interface
-#author vhg 30-Aug-2013
+# JCedit launcher script
 
-setenv CLASSPATH "$CODA/common/jar/*:$CODA/common/jar/jena/*"
+# Determine the directory where this script is located
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-#$JAVA_HOME/bin/java -Xms200m -Xmx500m -Dsun.java2d.pmoffscreen=false -Dorg.xml.sax.parser="com.sun.org.apache.xerces.internal.parsers.SAXParser" \
-#-Djavax.xml.parsers.DocumentBuilderFactory="com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl" \
-#-Djavax.xml.parsers.SAXParserFactory="com.sun.org.apache.xerces.internal.jaxp.SAXParserFactoryImpl" \
-#org.jlab.coda.cedit.cooldesktop.CDesktop
+# Path to the jar file (script is in bin/, jar is in build/libs/)
+JAR_FILE="${SCRIPT_DIR}/../build/libs/jcedit-5.0-SNAPSHOT.jar"
 
-$JAVA_HOME/bin/java -Xms200m -Xmx500m -Dcom.sun.management.jmxremote -Dcom.sun.xml.bind.v2.bytecode.Clastailor.noOptimize org.jlab.coda.cedit.cooldesktop.CDesktop
+# Check if jar exists
+if [ ! -f "$JAR_FILE" ]; then
+    echo "Error: JAR file not found at $JAR_FILE"
+    echo "Please run './gradlew build' first to build the project."
+    exit 1
+fi
+
+# Check if Java is available
+if ! command -v java &> /dev/null; then
+    echo "Error: Java is not installed or not in PATH"
+    exit 1
+fi
+
+# Run the application with all passed arguments
+exec java -jar "$JAR_FILE" "$@"
