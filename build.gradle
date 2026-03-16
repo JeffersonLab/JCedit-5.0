@@ -86,8 +86,8 @@ jar {
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
-    from('src/resources') {
-        into 'resources'
+    from('src/main/resources') {
+        include 'resources/**'
     }
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
