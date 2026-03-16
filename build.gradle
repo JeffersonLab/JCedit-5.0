@@ -45,9 +45,12 @@ repositories {
 }
 
 dependencies {
-    // JAXB and other dependencies
-    implementation 'jakarta.xml.bind:jakarta.xml.bind-api:2.3.3'
-    runtimeOnly 'org.glassfish.jaxb:jaxb-runtime:2.3.3'
+    // JAXB and other dependencies - using javax.xml.bind compatible versions for Java 17
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'
+    implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.9'
+    implementation 'javax.activation:activation:1.1.1'
+    // SLF4J logging
+    implementation 'org.slf4j:slf4j-simple:1.7.36'
     implementation 'org.apache.jena:jena-core:4.6.0'
     implementation 'org.apache.jena:jena-arq:4.6.0'
     implementation 'org.yaml:snakeyaml:1.18'
@@ -82,6 +85,7 @@ java {
 jar {
     manifest {
         attributes 'Main-Class': 'org.jlab.coda.cedit.cooldesktop.CDesktopNew'
+        attributes 'Add-Opens': 'java.base/java.lang java.base/java.lang.reflect'
     }
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
@@ -90,6 +94,18 @@ jar {
         include 'resources/**'
     }
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+// Add run task with necessary JVM arguments for Java 17 + JAXB compatibility
+tasks.register('run', JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'org.jlab.coda.cedit.cooldesktop.CDesktopNew'
+    jvmArgs = [
+        '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
+        '--add-opens', 'java.base/java.lang.reflect=ALL-UNNAMED',
+        '--add-opens', 'java.base/java.io=ALL-UNNAMED',
+        '--add-opens', 'java.xml/com.sun.org.apache.xerces.internal.jaxp=ALL-UNNAMED'
+    ]
 }
 
 compileJava {
