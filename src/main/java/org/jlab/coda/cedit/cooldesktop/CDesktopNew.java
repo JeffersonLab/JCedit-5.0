@@ -1043,7 +1043,7 @@ public class CDesktopNew extends JFrame {
 
                         //---- Vtpmi ----
                         Vtpmi.setText("VTP");
-                        Vtpmi.setIcon(new ImageIcon(getClass().getResource("/resources/VTP_new.png")));
+                        Vtpmi.setIcon(new ImageIcon(getClass().getResource("/resources/VTP.png")));
                         StrMenu.add(Vtpmi);
                         StrMenu.addSeparator();
 

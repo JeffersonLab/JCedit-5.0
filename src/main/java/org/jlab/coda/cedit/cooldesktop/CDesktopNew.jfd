@@ -613,7 +613,7 @@ scrollPane2.setViewportView(drawingCanvas);
                  <string>icon</string>
                  <object class="com.jformdesigner.model.SwingIcon">
                   <int>0</int>
-                  <string>/resources/VTP_new.png</string>
+                  <string>/resources/VTP.png</string>
                  </object>
                 </void>
                 <void property="name">
