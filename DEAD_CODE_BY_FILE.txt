@@ -1,0 +1,277 @@
+================================================================================
+DEAD CODE FINDINGS - ORGANIZED BY FILE
+JCedit-5.0 Codebase
+Analysis Date: 2026-03-15
+================================================================================
+
+This document lists all dead code findings organized by file for easy lookup.
+
+================================================================================
+FILES WITH ISSUES (9 files)
+================================================================================
+
+1. RefactorForm.java (8 unused imports)
+2. DrawingCanvas.java (1 unused private field)
+3. JCGModule.java (1 unused private field)
+4. CDesktopNew.java (1 unused private method)
+5. ProcessForm.java (2 unused private methods)
+6. ProcessFormS.java (2 unused private methods)
+7. CoolDatabaseBrowser.java (1 unused private method)
+8. JCGLink.java (1 unused import)
+9. CDirList.java (1 unused import)
+
+POTENTIALLY UNUSED CLASSES (2 files):
+- COutForm.java (entire class)
+- JOptionPanelMultiInput.java (entire class)
+
+================================================================================
+DETAILED FINDINGS BY FILE
+================================================================================
+
+FILE: /Users/gurjyan/Documents/Devel/JCedit-5.0/src/main/java/org/jlab/coda/cedit/forms/simple/RefactorForm.java
+--------------------------------------------------------------------------------
+TYPE: Unused Imports (8 items)
+PRIORITY: HIGH
+CONFIDENCE: HIGH
+ACTION: Remove immediately
+
+Line 32: import java.util.ArrayList;
+Line 35: import java.util.regex.Pattern;
+Line 40: import org.jlab.coda.cedit.cooldesktop.DrawingCanvas;
+Line 41: import org.jlab.coda.cedit.parsers.coolparser.JCParser;
+Line 44: import org.jlab.coda.cedit.system.JCGComponent;
+Line 45: import org.jlab.coda.cedit.system.JCGLink;
+Line 46: import org.jlab.coda.cedit.system.JCGTransport;
+Line 47: import org.jlab.coda.cedit.util.JCUtil;
+
+REASON: None of these classes are referenced in the file body
+RISK: Zero - safe to remove
+TIME: 2 minutes
+
+================================================================================
+
+FILE: /Users/gurjyan/Documents/Devel/JCedit-5.0/src/main/java/org/jlab/coda/cedit/cooldesktop/DrawingCanvas.java
+--------------------------------------------------------------------------------
+TYPE: Unused Private Field (1 item)
+PRIORITY: HIGH
+CONFIDENCE: HIGH
+ACTION: Remove immediately
+
+Line 55: private double currentGridSize = 0.0;
+
+REASON: Field is initialized but never read or written
+RISK: Zero - safe to remove
+TIME: 1 minute
+
+================================================================================
+
+FILE: /Users/gurjyan/Documents/Devel/JCedit-5.0/src/main/java/org/jlab/coda/cedit/system/JCGModule.java
+--------------------------------------------------------------------------------
+TYPE: Unused Private Field (1 item)
+PRIORITY: HIGH
+CONFIDENCE: HIGH
+ACTION: Remove immediately
+
+Line 47: private String fcsModuleClass = "FarmController";
+
+REASON: Field is initialized but never accessed
+RISK: Zero - safe to remove
+TIME: 1 minute
+NOTE: May be leftover from Farm Controller integration
+
+================================================================================
+
+FILE: /Users/gurjyan/Documents/Devel/JCedit-5.0/src/main/java/org/jlab/coda/cedit/cooldesktop/CDesktopNew.java
+--------------------------------------------------------------------------------
+TYPE: Unused Private Method (1 item)
+PRIORITY: MEDIUM
+CONFIDENCE: HIGH
+ACTION: Review then remove
+
+Line 1457: private static boolean fCheckCreate(File f)
+
+METHOD BODY:
+    private static boolean fCheckCreate(File f){
+        // ... file checking logic ...
+    }
+
+REASON: Method is defined but never called within the class
+RISK: Low - appears to be planned utility method that was never used
+TIME: 3 minutes
+VERIFICATION: Search entire codebase for "fCheckCreate"
+
+================================================================================
+
+FILE: /Users/gurjyan/Documents/Devel/JCedit-5.0/src/main/java/org/jlab/coda/cedit/forms/simple/ProcessForm.java
+--------------------------------------------------------------------------------
+TYPE: Unused Private Methods (2 items)
+PRIORITY: MEDIUM
+CONFIDENCE: HIGH
+ACTION: Review then remove
+
+Line 254: private void receiveSubjectTextFieldActionPerformed(ActionEvent e)
+Line 269: private void receiveSubjectTextFieldKeyTyped(KeyEvent e)
+
+METHOD SIGNATURES:
+    private void receiveSubjectTextFieldActionPerformed(ActionEvent e) {
+        // ... event handling logic ...
+    }
+
+    private void receiveSubjectTextFieldKeyTyped(KeyEvent e) {
+        // ... event handling logic ...
+    }
+
+REASON: Event handler methods defined but not registered to UI components
+RISK: Low - handlers not wired to components
+TIME: 5 minutes
+VERIFICATION: Check if receiveSubjectTextField component exists and needs these handlers
+
+================================================================================
+
+FILE: /Users/gurjyan/Documents/Devel/JCedit-5.0/src/main/java/org/jlab/coda/cedit/forms/simple/ProcessFormS.java
+--------------------------------------------------------------------------------
+TYPE: Unused Private Methods (2 items)
+PRIORITY: MEDIUM
+CONFIDENCE: HIGH
+ACTION: Review then remove
+
+Line 254: private void receiveSubjectTextFieldActionPerformed(ActionEvent e)
+Line 269: private void receiveSubjectTextFieldKeyTyped(KeyEvent e)
+
+METHOD SIGNATURES:
+    private void receiveSubjectTextFieldActionPerformed(ActionEvent e) {
+        // ... event handling logic ...
+    }
+
+    private void receiveSubjectTextFieldKeyTyped(KeyEvent e) {
+        // ... event handling logic ...
+    }
+
+REASON: Duplicate of ProcessForm.java - event handlers not wired to UI
+RISK: Low - same issue as ProcessForm.java
+TIME: 5 minutes
+VERIFICATION: Check if this is duplicate code or separate form
+
+================================================================================
+
+FILE: /Users/gurjyan/Documents/Devel/JCedit-5.0/src/main/java/org/jlab/coda/cedit/parsers/extconfig/CoolDatabaseBrowser.java
+--------------------------------------------------------------------------------
+TYPE: Unused Private Method (1 item)
+PRIORITY: MEDIUM
+CONFIDENCE: HIGH
+ACTION: Review then remove
+
+Line 64: private File getSerializedCompPath(String runType, String compName)
+
+METHOD SIGNATURE:
+    private File getSerializedCompPath(String runType, String compName){
+        // ... path construction logic ...
+    }
+
+REASON: Helper method for path construction but never invoked
+RISK: Low - utility method not called
+TIME: 3 minutes
+VERIFICATION: Search for "getSerializedCompPath" in codebase
+
+================================================================================
+
+FILE: /Users/gurjyan/Documents/Devel/JCedit-5.0/src/main/java/org/jlab/coda/cedit/system/JCGLink.java
+--------------------------------------------------------------------------------
+TYPE: Unused Import (1 item)
+PRIORITY: MEDIUM
+CONFIDENCE: MEDIUM
+ACTION: Review then remove
+
+Line 26: import javax.xml.bind.annotation.XmlTransient;
+
+REASON: XmlTransient annotation not used in class
+RISK: Low - likely leftover from JAXB annotation removal
+TIME: 2 minutes
+VERIFICATION: Confirm XmlTransient annotations were removed from this class
+
+================================================================================
+
+FILE: /Users/gurjyan/Documents/Devel/JCedit-5.0/src/main/java/org/jlab/coda/cedit/util/CDirList.java
+--------------------------------------------------------------------------------
+TYPE: Unused Import (1 item)
+PRIORITY: MEDIUM
+CONFIDENCE: MEDIUM
+ACTION: Review then remove
+
+Line 26: import java.io.FileNotFoundException;
+
+REASON: FileNotFoundException not thrown or caught in the class
+RISK: Low - exception class not referenced
+TIME: 2 minutes
+VERIFICATION: Confirm exception handling was refactored
+
+================================================================================
+
+FILE: /Users/gurjyan/Documents/Devel/JCedit-5.0/src/main/java/org/jlab/coda/cedit/forms/simple/COutForm.java
+--------------------------------------------------------------------------------
+TYPE: Potentially Unused Class (entire file)
+PRIORITY: LOW
+CONFIDENCE: MEDIUM
+ACTION: Domain expert review required
+
+ANALYSIS:
+- Class has no external references in the codebase
+- Appears to be a GUI form for output configuration
+- May be legacy code from older version
+- Could be planned feature not yet implemented
+
+RISK: Medium - requires domain knowledge to confirm
+TIME: 10 minutes review + 1 minute to delete if confirmed
+VERIFICATION:
+  1. Review with team: Is this used or planned?
+  2. Check version history for context
+  3. If truly unused, delete entire file
+
+================================================================================
+
+FILE: /Users/gurjyan/Documents/Devel/JCedit-5.0/src/main/java/org/jlab/coda/cedit/forms/util/JOptionPanelMultiInput.java
+--------------------------------------------------------------------------------
+TYPE: Potentially Unused Class (entire file)
+PRIORITY: LOW
+CONFIDENCE: MEDIUM
+ACTION: Domain expert review required
+
+ANALYSIS:
+- Utility class for multi-input dialogs
+- No external references found
+- May be utility kept for future use
+- Could be legacy code
+
+RISK: Medium - requires domain knowledge to confirm
+TIME: 10 minutes review + 1 minute to delete if confirmed
+VERIFICATION:
+  1. Review with team: Is this utility needed?
+  2. Check if similar functionality exists elsewhere
+  3. If truly unused, delete entire file
+
+================================================================================
+SUMMARY BY PRIORITY
+================================================================================
+
+HIGH PRIORITY (10 items) - Safe to remove immediately:
+- RefactorForm.java: 8 unused imports
+- DrawingCanvas.java: 1 unused field
+- JCGModule.java: 1 unused field
+
+MEDIUM PRIORITY (8 items) - Review then remove:
+- CDesktopNew.java: 1 unused method
+- ProcessForm.java: 2 unused methods
+- ProcessFormS.java: 2 unused methods
+- CoolDatabaseBrowser.java: 1 unused method
+- JCGLink.java: 1 unused import
+- CDirList.java: 1 unused import
+
+LOW PRIORITY (2 items) - Domain expert review:
+- COutForm.java: potentially unused class
+- JOptionPanelMultiInput.java: potentially unused class
+
+TOTAL: 20 items (18 + 2 classes)
+
+================================================================================
+END OF FILE-BY-FILE BREAKDOWN
+================================================================================
