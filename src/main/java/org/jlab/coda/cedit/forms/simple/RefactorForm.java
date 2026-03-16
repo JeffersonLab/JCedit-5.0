@@ -41,7 +41,7 @@ import org.jlab.coda.cedit.system.*;
 /**
  * @author Vardan Gyurjyan
  */
-public class RefactorForm extends JFrame {
+public class RefactorForm extends BaseForm {
     private String name;
 //    private HashMap<String, CDefinedComponent> cmt ;
     private CoolDatabaseBrowser coolDbBrowser;
@@ -111,6 +111,17 @@ public class RefactorForm extends JFrame {
 
     }
 
+    // BaseForm implementation
+    @Override
+    protected boolean validateForm() {
+        // No validation needed for this form
+        return true;
+    }
+
+    @Override
+    protected void saveForm() {
+        // No save operation needed for this form (save logic is commented out)
+    }
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -264,7 +275,9 @@ public class RefactorForm extends JFrame {
 //                    JCTools.isNumber(IdTextField.getText().trim()),
 //                    descriptionTtextArea.getText());
 //            GOwner.defineIDs();
-            dispose();
+            if (handleOk()) {
+                closeForm();
+            }
         }
     }
 
@@ -277,7 +290,7 @@ public class RefactorForm extends JFrame {
         }
 
         public void actionPerformed(ActionEvent e) {
-            dispose();
+            handleCancel();
         }
     }
 }

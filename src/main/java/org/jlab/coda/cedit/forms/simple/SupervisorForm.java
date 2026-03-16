@@ -40,7 +40,7 @@ import javax.swing.border.*;
 /**
  * @author Vardan Gyurjyan
  */
-public class SupervisorForm extends JFrame {
+public class SupervisorForm extends BaseForm {
     private int processID;
     private JCGComponent superv;
     private DrawingCanvas parentCanvas;
@@ -62,6 +62,18 @@ public class SupervisorForm extends JFrame {
         sForm = this;
         setSize(500,235);
         me = this;
+    }
+
+    // BaseForm implementation
+    @Override
+    protected boolean validateForm() {
+        // No validation needed for this form
+        return true;
+    }
+
+    @Override
+    protected void saveForm() {
+        // No save operation needed for this form
     }
 
     public void addProcessCombo(String name){
@@ -312,7 +324,7 @@ public class SupervisorForm extends JFrame {
         }
 
         public void actionPerformed(ActionEvent e) {
-            dispose();
+            handleCancel();
         }
     }
 
@@ -325,7 +337,9 @@ public class SupervisorForm extends JFrame {
         }
 
         public void actionPerformed(ActionEvent e) {
-           dispose();
+            if (handleOk()) {
+                closeForm();
+            }
         }
     }
 

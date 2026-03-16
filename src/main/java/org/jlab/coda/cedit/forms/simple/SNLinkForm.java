@@ -38,7 +38,7 @@ import org.jlab.coda.cedit.util.JCUtil;
 /**
  * @author Vardan Gyurjyan
  */
-public class SNLinkForm extends JFrame {
+public class SNLinkForm extends BaseForm {
     // Constants for transport configuration
     private static final int BYTES_TO_KILOBYTES = 1000;
     private static final long FILE_SPLIT_MULTIPLIER = 10000000L;
@@ -118,6 +118,109 @@ public class SNLinkForm extends JFrame {
             removeButton.setEnabled(false);
             clearButton.setEnabled(false);
         }
+    }
+
+    // BaseForm implementation
+    @Override
+    protected boolean validateForm() {
+        // Validate ET host IP address if enabled
+        if (etHostTextField.isEnabled()) {
+            if (!JCUtil.IP_validate(etHostTextField.getText())) {
+                showWarning("Host name must be a valid IP address (e.g. 129.57.29.62)");
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    protected void saveForm() {
+        // Fill and add/update the transport
+        destinationTransport.setTransClass(transportClassComboBox.getSelectedItem().toString());
+        destinationTransport.setEtName(etNameTextField.getText().trim());
+
+        destinationTransport.setEtHostName(etHostTextField.getText().trim());
+        destinationTransport.setEtSubNet(etSubnetTextField.getText().trim());
+        destinationTransport.setEtTcpPort((Integer) etTcpPortSpinner.getValue());
+        destinationTransport.setEtUdpPort((Integer) etUdpPortSpinner.getValue());
+        destinationTransport.setmAddress(mAddressTextField.getText().trim());
+        destinationTransport.setEtMethodCon(connectionMethodComboBox.getSelectedItem().toString());
+        destinationTransport.setEtEventNum((Integer) etNumberEvents.getValue());
+        destinationTransport.setEtEventSize((Integer) etEventSize.getValue() * BYTES_TO_KILOBYTES);
+        destinationTransport.setEtChunkSize((Integer) etChunkSize.getValue());
+        destinationTransport.setInputEtChunkSize((Integer) inputEtChunkSize.getValue());
+        destinationTransport.setEtWait((Integer) etWait.getValue());
+
+        if (checkBoxEtCreate.isSelected()) {
+            destinationTransport.setDestinationEtCreate("true");
+        } else {
+            destinationTransport.setDestinationEtCreate("false");
+        }
+
+        if (singleEventOutCheckBox.isSelected()) {
+            destinationTransport.setSingle("true");
+        } else {
+            destinationTransport.setSingle("false");
+        }
+
+        destinationTransport.setFileName(fileNameTextField.getText().trim());
+
+        int d = (Integer) fileSplitSpinner.getValue();
+        destinationTransport.setFileSplit(d * FILE_SPLIT_MULTIPLIER);
+        destinationTransport.setFileType((String) fileTypeComboBox.getSelectedItem());
+
+        // Emu configuration
+        destinationTransport.setEmuDirectPort((int) emuPortSpinner.getValue());
+        destinationTransport.setEmuMaxBuffer((int) emuMaxBufferSpinner.getValue() * BYTES_TO_KILOBYTES);
+        destinationTransport.setEmuWait((int) emuSocketWaitSpinner.getValue());
+        destinationTransport.setEmuSubNet(emuSubnetTextField.getText());
+        destinationTransport.setFpgaLinkIp(fpgaLinkIpTextField.getText());
+
+        sourceTransport.setEmuFatPipe(emuFatPipeCheckBox.isSelected());
+
+        // TcpStream configuration
+        destinationTransport.setTcpStreamDirectPort((int) tcpStreamPortSpinner.getValue());
+        destinationTransport.setTcpStreamMaxBuffer((int) tcpStreamMaxBufferSpinner.getValue() * BYTES_TO_KILOBYTES);
+        destinationTransport.setTcpStreamWait((int) tcpStreamSocketWaitSpinner.getValue());
+        destinationTransport.setTcpStreamSubNet(tcpStreamSubnetTextField.getText());
+        destinationTransport.setTcpStreamFpgaLinkIp(tcpStreamFpgaLinkIpTextField.getText());
+        destinationTransport.setEmuTcpStreams((int)tcpStreamsSpinner.getValue());
+        destinationTransport.setTcpStreamFpgaLinkIp(tcpStreamFpgaLinkIpTextField.getText());
+
+        // UDP configuration
+        destinationTransport.setUdpHost(UdpHostTextField.getText());
+        destinationTransport.setUdpPort((int) UdpPortSpinner.getValue());
+        destinationTransport.setUdpBufferSize((int)UdpBufferSizeSpinner.getValue() * BYTES_TO_KILOBYTES);
+        destinationTransport.setUdpStreams((int)UdpStreamsSpinner.getValue());
+        destinationTransport.setLB(UdpUseLoadBalancer.isSelected());
+        destinationTransport.setErsap(UdpUseErsap.isSelected());
+        destinationTransport.setUdpFpgaLinkIp(UdpFpgaLinkIp.getText());
+
+        // Update subtype of the destination component if it is of type File
+        JCGComponent tc = canvas.getGCMPs().get(link.getDestinationComponentName());
+        if (tc.getType().equals(ACodaType.FILE.name())) {
+            tc.setSubType(destinationTransport.getTransClass());
+        }
+
+        // Add transports to the destination component
+        canvas.getGCMPs().get(link.getDestinationComponentName()).addTrnsport(destinationTransport);
+
+        // Add links
+        canvas.getGCMPs().get(link.getSourceComponentName()).addLnk(link);
+        canvas.getGCMPs().get(link.getDestinationComponentName()).addLnk(link);
+
+        if (transportClassComboBox.getSelectedItem().equals("UdpStream") ||
+                transportClassComboBox.getSelectedItem().equals("TcpStream")) {
+            canvas.getGCMPs().get(link.getSourceComponentName()).setStreaming(true);
+            canvas.getGCMPs().get(link.getDestinationComponentName()).setStreaming(true);
+        }
+
+        if(transportClassComboBox.getSelectedItem().equals("File") ||
+           transportClassComboBox.getSelectedItem().equals("ET")) {
+            canvas.getGCMPs().get(link.getDestinationComponentName()).setStreaming(false);
+        }
+
+        canvas.repaint();
     }
 
     public void enableEtCustomization(boolean b) {
@@ -1418,10 +1521,6 @@ public class SNLinkForm extends JFrame {
 // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
 
-    private void showWarning(String s) {
-        JOptionPane.showMessageDialog(this, s);
-    }
-
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     private JMenuBar menuBar2;
     private JMenu etCustomizationMenue;
@@ -1609,105 +1708,9 @@ public class SNLinkForm extends JFrame {
         }
 
         public void actionPerformed(ActionEvent e) {
-
-            if (etHostTextField.isEnabled()) {
-                if (!JCUtil.IP_validate(etHostTextField.getText())) {
-                    showWarning("Host name must be a valid IP address (e.g. 129.57.29.62)");
-                    return;
-                }
+            if (handleOk()) {
+                closeForm();
             }
-            // fill and add/update the transport
-            destinationTransport.setTransClass(transportClassComboBox.getSelectedItem().toString());
-            destinationTransport.setEtName(etNameTextField.getText().trim());
-
-            destinationTransport.setEtHostName(etHostTextField.getText().trim());
-            destinationTransport.setEtSubNet(etSubnetTextField.getText().trim());
-            destinationTransport.setEtTcpPort((Integer) etTcpPortSpinner.getValue());
-            destinationTransport.setEtUdpPort((Integer) etUdpPortSpinner.getValue());
-            destinationTransport.setmAddress(mAddressTextField.getText().trim());
-            destinationTransport.setEtMethodCon(connectionMethodComboBox.getSelectedItem().toString());
-            destinationTransport.setEtEventNum((Integer) etNumberEvents.getValue());
-            destinationTransport.setEtEventSize((Integer) etEventSize.getValue() * BYTES_TO_KILOBYTES);
-            destinationTransport.setEtChunkSize((Integer) etChunkSize.getValue());
-            destinationTransport.setInputEtChunkSize((Integer) inputEtChunkSize.getValue());
-            destinationTransport.setEtWait((Integer) etWait.getValue());
-
-            if (checkBoxEtCreate.isSelected()) {
-                destinationTransport.setDestinationEtCreate("true");
-            } else {
-                destinationTransport.setDestinationEtCreate("false");
-            }
-
-            if (singleEventOutCheckBox.isSelected()) {
-                destinationTransport.setSingle("true");
-            } else {
-                destinationTransport.setSingle("false");
-            }
-
-            destinationTransport.setFileName(fileNameTextField.getText().trim());
-
-            int d = (Integer) fileSplitSpinner.getValue();
-            destinationTransport.setFileSplit(d * FILE_SPLIT_MULTIPLIER);
-            destinationTransport.setFileType((String) fileTypeComboBox.getSelectedItem());
-
-            //emu
-            destinationTransport.setEmuDirectPort((int) emuPortSpinner.getValue());
-            destinationTransport.setEmuMaxBuffer((int) emuMaxBufferSpinner.getValue() * BYTES_TO_KILOBYTES);
-            destinationTransport.setEmuWait((int) emuSocketWaitSpinner.getValue());
-            destinationTransport.setEmuSubNet(emuSubnetTextField.getText());
-            destinationTransport.setFpgaLinkIp(fpgaLinkIpTextField.getText());
-
-            sourceTransport.setEmuFatPipe(emuFatPipeCheckBox.isSelected());
-
-            //TcpStream
-            destinationTransport.setTcpStreamDirectPort((int) tcpStreamPortSpinner.getValue());
-            destinationTransport.setTcpStreamMaxBuffer((int) tcpStreamMaxBufferSpinner.getValue() * BYTES_TO_KILOBYTES);
-            destinationTransport.setTcpStreamWait((int) tcpStreamSocketWaitSpinner.getValue());
-            destinationTransport.setTcpStreamSubNet(tcpStreamSubnetTextField.getText());
-            destinationTransport.setTcpStreamFpgaLinkIp(tcpStreamFpgaLinkIpTextField.getText());
-            destinationTransport.setEmuTcpStreams((int)tcpStreamsSpinner.getValue());
-            destinationTransport.setTcpStreamFpgaLinkIp(tcpStreamFpgaLinkIpTextField.getText());
-
-            //Udp
-            destinationTransport.setUdpHost(UdpHostTextField.getText());
-            destinationTransport.setUdpPort((int) UdpPortSpinner.getValue());
-            destinationTransport.setUdpBufferSize((int)UdpBufferSizeSpinner.getValue() * BYTES_TO_KILOBYTES);
-            destinationTransport.setUdpStreams((int)UdpStreamsSpinner.getValue());
-            destinationTransport.setLB(UdpUseLoadBalancer.isSelected());
-            destinationTransport.setErsap(UdpUseErsap.isSelected());
-            destinationTransport.setUdpFpgaLinkIp(UdpFpgaLinkIp.getText());
-
-            // update subtype of the destination component if it is of type File
-            JCGComponent tc = canvas.getGCMPs().get(link.getDestinationComponentName());
-            if (tc.getType().equals(ACodaType.FILE.name())) {
-                tc.setSubType(destinationTransport.getTransClass());
-            }
-
-            // add transports to the destination component
-            canvas.getGCMPs().get(link.getDestinationComponentName()).addTrnsport(destinationTransport);
-
-            // add links
-            canvas.getGCMPs().get(link.getSourceComponentName()).addLnk(link);
-            canvas.getGCMPs().get(link.getDestinationComponentName()).addLnk(link);
-
-                if (transportClassComboBox.getSelectedItem().equals("UdpStream") ||
-                        transportClassComboBox.getSelectedItem().equals("TcpStream")) {
-                    canvas.getGCMPs().get(link.getSourceComponentName()).setStreaming(true);
-                    canvas.getGCMPs().get(link.getDestinationComponentName()).setStreaming(true);
-                }
-//                else {
-//                    canvas.getGCMPs().get(link.getSourceComponentName()).setStreaming(false);
-//                    canvas.getGCMPs().get(link.getDestinationComponentName()).setStreaming(false);
-//                }
-                if(transportClassComboBox.getSelectedItem().equals("File") ||
-                    transportClassComboBox.getSelectedItem().equals("ET")) {
-                canvas.getGCMPs().get(link.getDestinationComponentName()).setStreaming(false);
-            }
-
-
-            canvas.repaint();
-            dispose();
-
         }
     }
 
@@ -1778,7 +1781,7 @@ public class SNLinkForm extends JFrame {
         }
 
         public void actionPerformed(ActionEvent e) {
-            dispose();
+            handleCancel();
         }
     }
 

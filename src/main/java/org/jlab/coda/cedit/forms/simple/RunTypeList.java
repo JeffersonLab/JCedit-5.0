@@ -42,7 +42,7 @@ import javax.swing.text.Position;
 /**
  * @author Vardan Gyurjyan
  */
-public class RunTypeList extends JFrame {
+public class RunTypeList extends BaseForm {
 
     private SupervisorForm parent;
     private SortedListModel model;
@@ -70,6 +70,20 @@ public class RunTypeList extends JFrame {
             list1.setSelectedValue(currentRunType, true);
         }
 
+    }
+
+    // BaseForm implementation
+    @Override
+    protected boolean validateForm() {
+        // No validation needed for this form
+        return true;
+    }
+
+    @Override
+    protected void saveForm() {
+        CDesktopNew.supervisorList = list1.getSelectedValuesList();
+        CDesktopNew.updateManySupervisors = true;
+        parent.dispose();
     }
 
     private void initComponents() {
@@ -166,10 +180,9 @@ public class RunTypeList extends JFrame {
         }
 
         public void actionPerformed(ActionEvent e) {
-            CDesktopNew.supervisorList = list1.getSelectedValuesList();
-            CDesktopNew.updateManySupervisors = true;
-            parent.dispose();
-            dispose();
+            if (handleOk()) {
+                closeForm();
+            }
         }
     }
 
@@ -181,7 +194,7 @@ public class RunTypeList extends JFrame {
         }
 
         public void actionPerformed(ActionEvent e) {
-            dispose();
+            handleCancel();
         }
     }
 }

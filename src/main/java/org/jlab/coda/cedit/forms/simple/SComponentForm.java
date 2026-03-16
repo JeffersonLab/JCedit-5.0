@@ -40,7 +40,7 @@ import org.jlab.coda.cedit.util.ValidationResult;
 /**
  * @author Vardan Gyurjyan
  */
-public class SComponentForm extends JFrame {
+public class SComponentForm extends BaseForm {
     // Constants
     private static final String UNDEFINED_VALUE = "undefined";
 
@@ -266,6 +266,45 @@ public class SComponentForm extends JFrame {
             descriptionTextArea.setEnabled(false);
             descriptionTextArea.setText(predefinedDescription);
         }
+    }
+
+    // BaseForm implementation
+
+    @Override
+    protected boolean validateForm() {
+        String _name = getNameFromTextField();
+
+        // Validate component name (checks empty, underscore, duplicates)
+        ValidationResult nameValidation = FormValidator.validateComponentName(_name, parentCanvas);
+        if (!nameValidation.isValid()) {
+            nameValidation.showDialogIfInvalid(cForm);
+            return false;
+        }
+
+        // Check if predefined
+        String tp = typeTextField.getText().trim();
+        if (!pName.equals(_name)) {
+            if (CDesktopNew.isComponentPredefined(tp, _name)) {
+                showError("Component with the name = " + _name + " is predefined", "Error");
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    @Override
+    protected void saveForm() {
+        String _name = getNameFromTextField();
+        String tp = typeTextField.getText().trim();
+
+        // Assign unique ID if name changed
+        if (!pName.equals(_name)) {
+            idTextField.setText(Integer.toString(CDesktopNew.assignUniqueId(tp)));
+        }
+
+        // Update component info
+        updateComponentInfo();
     }
 
     public String getComponentName(){
@@ -1188,7 +1227,7 @@ public class SComponentForm extends JFrame {
         }
 
         public void actionPerformed(ActionEvent e) {
-            dispose();
+            handleCancel();
         }
     }
 
@@ -1225,27 +1264,9 @@ public class SComponentForm extends JFrame {
         }
 
         public void actionPerformed(ActionEvent e) {
-            String _name = getNameFromTextField();
-
-            // Validate component name (checks empty, underscore, duplicates)
-            ValidationResult nameValidation = FormValidator.validateComponentName(_name, parentCanvas);
-            if (!nameValidation.isValid()) {
-                nameValidation.showDialogIfInvalid(cForm);
-                return;
+            if (handleOk()) {
+                closeForm();
             }
-
-            String tp = typeTextField.getText().trim();
-            if(!pName.equals(_name)) {
-                if(CDesktopNew.isComponentPredefined(tp,_name)) {
-                    JOptionPane.showMessageDialog(cForm,"Component with the name = "+_name+
-                            " is predefined","Error",JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                idTextField.setText(Integer.toString(CDesktopNew.assignUniqueId(tp)));
-            }
-
-            updateComponentInfo();
-            dispose();
         }
     }
 
@@ -1257,26 +1278,15 @@ public class SComponentForm extends JFrame {
         }
 
         public void actionPerformed(ActionEvent e) {
-            String _name = getNameFromTextField();
-
-            // Validate component name (checks empty, underscore, duplicates)
-            ValidationResult nameValidation = FormValidator.validateComponentName(_name, parentCanvas);
-            if (!nameValidation.isValid()) {
-                nameValidation.showDialogIfInvalid(cForm);
+            // Validate using BaseForm method
+            if (!validateForm()) {
                 return;
             }
 
-            String tp = typeTextField.getText().trim();
-            if(!pName.equals(_name)) {
-                if(CDesktopNew.isComponentPredefined(tp,_name)) {
-                    JOptionPane.showMessageDialog(cForm,"Component with the name = "+_name+
-                            " is predefined","Error",JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                idTextField.setText(Integer.toString(CDesktopNew.assignUniqueId(tp)));
-            }
+            // Save form data
+            saveForm();
 
-            updateComponentInfo();
+            // Apply to all components in group
             if (parentCanvas.isGroupMode){
                 for(JCGComponent c:parentCanvas.selectedGroup){
                     if(c.getType().equals(component.getType())){

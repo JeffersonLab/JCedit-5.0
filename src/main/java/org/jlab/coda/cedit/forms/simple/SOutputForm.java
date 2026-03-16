@@ -41,7 +41,7 @@ import javax.swing.border.*;
 /**
  * @author Vardan Gyurjyan
  */
-public class SOutputForm extends JFrame {
+public class SOutputForm extends BaseForm {
     private DrawingCanvas canvas;
     private JCGComponent component;
     private JCGLink glob;
@@ -122,6 +122,95 @@ public class SOutputForm extends JFrame {
             compressionThreadsSpinner.setEnabled(false);
 
         }
+    }
+
+    // BaseForm implementation
+    @Override
+    protected boolean validateForm() {
+        if (nameTextField.getText() == null || nameTextField.getText().trim().isEmpty()) {
+            showError("Component name is undefined", "Validation Error");
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    protected void saveForm() {
+        String predefinedDescription = CDesktopNew.isComponentPredefined(nameTextField.getText().trim(),
+                ACodaType.FILE.name(),
+                component.getSubType(),
+                descriptionTextArea.getText().replace("\\n","\n"));
+        if(predefinedDescription.equals("undefined")) {
+            descriptionTextArea.setEnabled(true);
+        } else {
+            descriptionTextArea.setEnabled(false);
+            descriptionTextArea.setText(predefinedDescription);
+        }
+
+        // Remove component
+        canvas.removeCmp(component);
+        component.removeTrnsports();
+        component.removeLnks();
+
+        // Update component
+        component.setName(nameTextField.getText().trim());
+        component.setSubType(transportClassComboBox.getSelectedItem().toString());
+        component.setDescription(descriptionTextArea.getText().replace("\\n","\n"));
+
+        JCGTransport gt = new JCGTransport();
+        // Fill and add/update the transport
+        gt.setTransClass(transportClassComboBox.getSelectedItem().toString());
+        gt.setEtName("/tmp/et_" + stp.getExpid() + "_" + etNameTextField.getText().trim());
+        gt.setEtHostName(etHostTextField.getText().trim());
+        gt.setEtTcpPort((Integer) etTcpPortSpinner.getValue());
+        gt.setEtUdpPort((Integer) etUdpPortSpinner.getValue());
+        gt.setmAddress(mAddressTextField.getText().trim());
+        gt.setEtMethodCon(connectionMethodComboBox.getSelectedItem().toString());
+        gt.setFileName(fileNameTextField.getText().trim());
+
+        int d = (Integer)fileSplitSpinner.getValue();
+        gt.setFileSplit(d*10000000L);
+
+        gt.setFileInternalBuffer(Integer.parseInt(fileInternalBuffer.getSelectedItem().toString()));
+        gt.setFileType((String) fileTypeComboBox.getSelectedItem());
+        gt.setNoLink(true);
+
+        if(compressionCheckBox.isSelected()){
+            gt.setCompression(compressionModeComboBox.getSelectedIndex());
+            gt.setCompressionThreads((Integer)compressionThreadsSpinner.getValue());
+        } else {
+            gt.setCompression(0);
+        }
+
+        gt.setName(nameTextField.getText().trim()+"_transport");
+
+        // Add transport
+        component.addTrnsport(gt);
+
+        // Add component to the map
+        canvas.addgCmp(component);
+
+        if(glob != null){
+            // Remove and add links
+            if(canvas.getGCMPs().containsKey(glob.getSourceComponentName())){
+                canvas.getGCMPs().get(glob.getSourceComponentName()).removeLnk(glob);
+            } else {
+                System.out.println("Error: malformed configuration. SourceComponent of the link is not defined.");
+            }
+
+            glob.setName(glob.getSourceComponentName() + "_" + component.getName());
+            glob.setDestinationComponentName(component.getName());
+            glob.setDestinationComponentType(component.getType());
+            glob.setDestinationModuleName(component.getModule().getName());
+
+            canvas.getGCMPs().get(glob.getDestinationComponentName()).addTrnsport(gt);
+            canvas.getGCMPs().get(glob.getSourceComponentName()).addTrnsport(gt);
+
+            canvas.getGCMPs().get(glob.getSourceComponentName()).addLnk(glob);
+            canvas.getGCMPs().get(glob.getDestinationComponentName()).addLnk(glob);
+        }
+
+        canvas.repaint();
     }
 
     private void update() {
@@ -807,98 +896,9 @@ public class SOutputForm extends JFrame {
         }
 
         public void actionPerformed(ActionEvent e) {
-            int i = 0;
-            if(!nameTextField.getText().equals("")){
-
-                String predefinedDescription = CDesktopNew.isComponentPredefined(nameTextField.getText().trim(),
-                        ACodaType.FILE.name(),
-                        component.getSubType(),
-                        descriptionTextArea.getText().replace("\\n","\n"));
-                if(predefinedDescription.equals("undefined")) {
-                    descriptionTextArea.setEnabled(true);
-                } else {
-                    descriptionTextArea.setEnabled(false);
-                    descriptionTextArea.setText(predefinedDescription);
-                }
-
-                // remove component
-                canvas.removeCmp(component);
-                component.removeTrnsports();
-                component.removeLnks();
-
-                // update a component
-                component.setName(nameTextField.getText().trim());
-                component.setSubType(transportClassComboBox.getSelectedItem().toString());
-                component.setDescription(descriptionTextArea.getText().replace("\\n","\n"));
-
-
-                JCGTransport gt = new JCGTransport();
-                // fill and add/update the transport
-                gt.setTransClass(transportClassComboBox.getSelectedItem().toString());
-                gt.setEtName("/tmp/et_" + stp.getExpid() + "_" + etNameTextField.getText().trim());
-                gt.setEtHostName(etHostTextField.getText().trim());
-                gt.setEtTcpPort((Integer) etTcpPortSpinner.getValue());
-                gt.setEtUdpPort((Integer) etUdpPortSpinner.getValue());
-                gt.setmAddress(mAddressTextField.getText().trim());
-                gt.setEtMethodCon(connectionMethodComboBox.getSelectedItem().toString());
-                gt.setFileName(fileNameTextField.getText().trim());
-
-                int d =  (Integer)fileSplitSpinner.getValue();
-                gt.setFileSplit(d*10000000L);
-
-                gt.setFileInternalBuffer(Integer.parseInt(fileInternalBuffer.getSelectedItem().toString()));
-                gt.setFileType((String) fileTypeComboBox.getSelectedItem());
-                gt.setNoLink(true);
-
-                if(compressionCheckBox.isSelected()){
-                    gt.setCompression(compressionModeComboBox.getSelectedIndex());
-                    gt.setCompressionThreads((Integer)compressionThreadsSpinner.getValue());
-                } else {
-                    gt.setCompression(0);
-                }
-
-                gt.setName(nameTextField.getText().trim()+"_transport");
-
-
-                // add transport
-                // remove the old transport if exists
-//                component.removeTrnsport(gt);
-                component.addTrnsport(gt);
-
-                // add component to tht map
-                canvas.addgCmp(component);
-
-                if(glob != null){
-
-                    // remove and add links
-                    if(canvas.getGCMPs().containsKey(glob.getSourceComponentName())){
-                    canvas.getGCMPs().get(glob.getSourceComponentName()).removeLnk(glob);
-                    } else {
-                        System.out.println("Error: malformed configuration. SourceComponent of the link is not defined.");
-                    }
-                    //canvas.getGCMPs().get(glob.getDestinationComponent().getNameFromTextField()).removeLink(glob.getNameFromTextField());
-
-                    glob.setName(glob.getSourceComponentName() + "_" + component.getName());
-                    glob.setDestinationComponentName(component.getName());
-                    glob.setDestinationComponentType(component.getType());
-                    glob.setDestinationModuleName(component.getModule().getName());
-
-                    // remove and add transports
-//                    canvas.getGCMPs().get(glob.getSourceComponentName()).removeTrnsport(gt);
-//                    canvas.getGCMPs().get(glob.getDestinationComponentName()).removeTrnsport(gt);
-
-                    canvas.getGCMPs().get(glob.getDestinationComponentName()).addTrnsport(gt);
-                    canvas.getGCMPs().get(glob.getSourceComponentName()).addTrnsport(gt);
-
-                    canvas.getGCMPs().get(glob.getSourceComponentName()).addLnk(glob);
-                    canvas.getGCMPs().get(glob.getDestinationComponentName()).addLnk(glob);
-                }
-
-                canvas.repaint();
-            } else {
-                JOptionPane.showMessageDialog(me,"Component name is undefined","",JOptionPane.ERROR_MESSAGE);
+            if (handleOk()) {
+                closeForm();
             }
-            dispose();
         }
     }
 
@@ -947,7 +947,7 @@ public class SOutputForm extends JFrame {
         }
 
         public void actionPerformed(ActionEvent e) {
-            dispose();
+            handleCancel();
         }
     }
 }

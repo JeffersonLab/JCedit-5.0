@@ -34,7 +34,7 @@ import org.jlab.coda.cedit.system.JCGComponent;
 import org.jlab.coda.cedit.system.JCGProcess;
 
 
-public class ProcessForm extends JFrame {
+public class ProcessForm extends BaseForm {
 
     private JCGComponent spv;
     private SupervisorForm sForm = null;
@@ -78,6 +78,65 @@ public class ProcessForm extends JFrame {
         prePostGroup.add(beforeRadioButton);
         prePostGroup.add(afterRadioButton);
         update();
+    }
+
+    // BaseForm implementation
+
+    @Override
+    protected boolean validateForm() {
+        // Validate that process name is not empty
+        if (nameTextField.getText() == null || nameTextField.getText().trim().isEmpty()) {
+            showError("Process name cannot be empty.", "Validation Error");
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    protected void saveForm() {
+        // Save all form data to the process object
+        gp.setName(nameTextField.getText().trim());
+
+        gp.setSync(syncCheckBox.isSelected());
+
+        if (periodicCheckBox.isSelected()) {
+            gp.setPeriodic(true);
+            gp.setPeriod((Integer) periodSpinner.getValue());
+        } else {
+            gp.setPeriodic(false);
+            gp.setPeriod(-1);
+        }
+
+        gp.setTransition((String) stateComboBox.getSelectedItem());
+
+        if (beforeRadioButton.isSelected()) {
+            gp.setBefore(true);
+            gp.setAfter(false);
+        } else if (afterRadioButton.isSelected()) {
+            gp.setAfter(true);
+            gp.setBefore(false);
+        }
+
+        if (exitCodeSpinner.isEnabled()) {
+            gp.setScriptCommand(getCommandPS());
+            gp.setExitCode((Integer) exitCodeSpinner.getValue());
+        }
+
+        if (sendSubjectTextField.isEditable()) {
+            gp.setSendSubject(sendSubjectTextField.getText().trim());
+            gp.setSendType(sendTypeTextField.getText().trim());
+            gp.setSendText(sendTextTextField.getText().trim());
+            gp.setSendRc(sendIsRcCheckBox.isSelected());
+        }
+
+        // Add process to the component
+        if (sCompForm != null) {
+            canvas.getGCMPs().get(sCompForm.getNameFromTextField()).addPrcess(gp);
+            sCompForm.addProcessCombo(gp.getName());
+        } else if (sForm != null) {
+            canvas.getSupervisor().addPrcess(gp);
+            sForm.addProcessCombo(gp.getName());
+        }
     }
 
     /**
@@ -733,69 +792,8 @@ public class ProcessForm extends JFrame {
         }
 
         public void actionPerformed(ActionEvent e) {
-            if(!nameTextField.getText().equals("")){
-                gp.setName(nameTextField.getText().trim());
-
-                if(syncCheckBox.isSelected()){
-                    gp.setSync(true);
-                } else {
-                    gp.setSync(false);
-                }
-
-                if(periodicCheckBox.isSelected()){
-                    gp.setPeriodic(true);
-                    gp.setPeriod((Integer)periodSpinner.getValue());
-                } else {
-                    gp.setPeriodic(false);
-                    gp.setPeriod(-1);
-                }
-
-
-                gp.setTransition( (String)stateComboBox.getSelectedItem());
-
-                if(beforeRadioButton.isSelected()){
-                    gp.setBefore(true);
-                    gp.setAfter(false);
-                }
-                else if(afterRadioButton.isSelected()){
-                    gp.setAfter(true);
-                    gp.setBefore(false);
-                }
-
-                if(exitCodeSpinner.isEnabled()){
-                    gp.setScriptCommand(getCommandPS());
-                    gp.setExitCode((Integer)exitCodeSpinner.getValue());
-                }
-
-                if(sendSubjectTextField.isEditable()){
-                    gp.setSendSubject(sendSubjectTextField.getText().trim());
-                    gp.setSendType(sendTypeTextField.getText().trim());
-                    gp.setSendText(sendTextTextField.getText().trim());
-                    if(sendIsRcCheckBox.isSelected())gp.setSendRc(true);
-//                    if(initiatorCheckBox.isSelected())gp.setInitiator(true);
-                }
-
-//                if(receiveSubjectTextField.isEnabled()){
-//                    gp.setReceiveSubject(receiveSubjectTextField.getText().trim());
-//                    gp.setReceiveType(receiveTypeTextField.getText().trim());
-//                    gp.setReceiveText(receiveTextTextField.getText().trim());
-//                    if(receiveIsRcCheckBox.isSelected())gp.setSendRc(true);
-//                    if(initiatorCheckBox.isSelected())gp.setInitiator(true);
-//
-//                }
-
-                // add process to the component
-                if(sCompForm!=null){
-                    canvas.getGCMPs().get(sCompForm.getNameFromTextField()).addPrcess(gp);
-
-                    // add process name to the combo box of the component form
-                    sCompForm.addProcessCombo(gp.getName());
-                }  else if(sForm!=null){
-                    canvas.getSupervisor().addPrcess(gp);
-                    sForm.addProcessCombo(gp.getName());
-                }
-                dispose();
-
+            if (handleOk()) {
+                closeForm();
             }
         }
     }
@@ -808,7 +806,7 @@ public class ProcessForm extends JFrame {
         }
 
         public void actionPerformed(ActionEvent e) {
-            dispose();
+            handleCancel();
         }
     }
 

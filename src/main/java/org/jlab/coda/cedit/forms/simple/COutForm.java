@@ -34,7 +34,7 @@ import javax.swing.border.*;
 /**
  * @author Vardan Gyurjyan
  */
-public class COutForm extends JFrame {
+public class COutForm extends BaseForm {
     private DrawingCanvas parentCanvas;
     private JCGComponent component;
 
@@ -59,6 +59,35 @@ public class COutForm extends JFrame {
         }
 
         setVisible(true);
+    }
+
+    // BaseForm implementation
+    @Override
+    protected boolean validateForm() {
+        // No validation needed for this form
+        return true;
+    }
+
+    @Override
+    protected void saveForm() {
+        String pName = component.getName();
+        if(!nameTextField.getText().trim().equals(pName)){
+            parentCanvas.linkDelete2(pName);
+        }
+
+        component.setName(nameTextField.getText().trim());
+        typeTextField.setText(typeTextField.getText().trim().toUpperCase());
+        component.setSubType(typeTextField.getText().trim());
+
+        component.setDescription(descriptionTextArea.getText());
+
+        // Add the modified/created component to the graphics component map
+        if(!parentCanvas.getGCMPs().containsKey(component.getName())) {
+            parentCanvas.getGCMPs().remove(pName);
+            parentCanvas.addgCmp(component);
+        }
+
+        parentCanvas.repaint();
     }
 
     private void initComponents() {
@@ -258,7 +287,7 @@ public class COutForm extends JFrame {
         }
 
         public void actionPerformed(ActionEvent e) {
-            dispose();
+            handleCancel();
         }
     }
 
@@ -283,25 +312,9 @@ public class COutForm extends JFrame {
         }
 
         public void actionPerformed(ActionEvent e) {
-            String pName = component.getName();
-            if(!nameTextField.getText().trim().equals(pName)){
-                parentCanvas.linkDelete2(pName);
+            if (handleOk()) {
+                closeForm();
             }
-
-            component.setName(nameTextField.getText().trim());
-            typeTextField.setText(typeTextField.getText().trim().toUpperCase());
-            component.setSubType(typeTextField.getText().trim());
-
-            component.setDescription(descriptionTextArea.getText());
-
-            // add the modified/created component to the graphics component map
-            if(!parentCanvas.getGCMPs().containsKey(component.getName())) {
-                parentCanvas.getGCMPs().remove(pName);
-                parentCanvas.addgCmp(component);
-            }
-
-            parentCanvas.repaint();
-            dispose();
         }
     }
 }
