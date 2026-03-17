@@ -581,63 +581,63 @@ public class CDesktopNew extends JFrame {
 
     private void etSourceMiMouseClicked(MouseEvent e) {
         JLabel label = new JLabel(etSourceMi.getText(), etSourceMi.getIcon(), JLabel.CENTER);
-        label.setName("FILE");
+        label.setName("ET");
         label.setBounds(100, 100, 200, 50);
         cnvs.addComponent(label);
     }
 
     private void actorMiMouseClicked(MouseEvent e) {
         JLabel label = new JLabel(actorMi.getText(), actorMi.getIcon(), JLabel.CENTER);
-        label.setName("USR");
+        label.setName("ACTOR");
         label.setBounds(100, 100, 200, 50);
         cnvs.addComponent(label);
     }
 
     private void histoActorMIMouseClicked(MouseEvent e) {
         JLabel label = new JLabel(histoActorMI.getText(), histoActorMI.getIcon(), JLabel.CENTER);
-        label.setName("FILE");
+        label.setName("HACTOR");
         label.setBounds(100, 100, 200, 50);
         cnvs.addComponent(label);
     }
 
     private void menuItem30MouseClicked(MouseEvent e) {
         JLabel label = new JLabel(menuItem30.getText(), menuItem30.getIcon(), JLabel.CENTER);
-        label.setName("USR");  // EJFAT Packetizer - using USR type
+        label.setName("PAC");
         label.setBounds(100, 100, 200, 50);
         cnvs.addComponent(label);
     }
 
     private void menuItem33MouseClicked(MouseEvent e) {
         JLabel label = new JLabel(menuItem33.getText(), menuItem33.getIcon(), JLabel.CENTER);
-        label.setName("USR");  // EJFAT Load Balancer - using USR type
+        label.setName("LB");
         label.setBounds(100, 100, 200, 50);
         cnvs.addComponent(label);
     }
 
     private void menuItem34MouseClicked(MouseEvent e) {
         JLabel label = new JLabel(menuItem34.getText(), menuItem34.getIcon(), JLabel.CENTER);
-        label.setName("USR");  // EJFAT Reassembly - using USR type
+        label.setName("RAS");
         label.setBounds(100, 100, 200, 50);
         cnvs.addComponent(label);
     }
 
     private void ScmiMouseClicked(MouseEvent e) {
         JLabel label = new JLabel(Scmi.getText(), Scmi.getIcon(), JLabel.CENTER);
-        label.setName("USR");
+        label.setName("AP");
         label.setBounds(100, 100, 200, 50);
         cnvs.addComponent(label);
     }
 
     private void menuItem35MouseClicked(MouseEvent e) {
         JLabel label = new JLabel(menuItem35.getText(), menuItem35.getIcon(), JLabel.CENTER);
-        label.setName("SLC");
+        label.setName("SHELL");
         label.setBounds(100, 100, 200, 50);
         cnvs.addComponent(label);
     }
 
     private void menuItem36MouseClicked(MouseEvent e) {
         JLabel label = new JLabel(menuItem36.getText(), menuItem36.getIcon(), JLabel.CENTER);
-        label.setName("WNC");
+        label.setName("DOC");
         label.setBounds(100, 100, 200, 50);
         cnvs.addComponent(label);
     }
@@ -1284,21 +1284,21 @@ public class CDesktopNew extends JFrame {
 
                     //---- Scmi ----
                     Scmi.setText("Application");
-                    Scmi.setIcon(new ImageIcon(getClass().getResource("/resources/USR.png")));
+                    Scmi.setIcon(new ImageIcon(getClass().getResource("/resources/AP.png")));
                     Scmi.addActionListener(e -> ScmiMouseClicked(null));
                     ProcMenu.add(Scmi);
                     ProcMenu.addSeparator();
 
                     //---- menuItem35 ----
                     menuItem35.setText("Shell Process");
-                    menuItem35.setIcon(new ImageIcon(getClass().getResource("/resources/SLC.png")));
+                    menuItem35.setIcon(new ImageIcon(getClass().getResource("/resources/SHELL.png")));
                     menuItem35.addActionListener(e -> menuItem35MouseClicked(null));
                     ProcMenu.add(menuItem35);
                     ProcMenu.addSeparator();
 
                     //---- menuItem36 ----
                     menuItem36.setText("Docker Container");
-                    menuItem36.setIcon(new ImageIcon(getClass().getResource("/resources/WNC.png")));
+                    menuItem36.setIcon(new ImageIcon(getClass().getResource("/resources/DOC.png")));
                     menuItem36.addActionListener(e -> menuItem36MouseClicked(null));
                     ProcMenu.add(menuItem36);
                 }

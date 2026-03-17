@@ -317,6 +317,31 @@ public class JCParser {
          * @return cl               list of {@link org.jlab.coda.cedit.system.JCGComponent} objects
          */
 
+        /**
+         * Migrates legacy type names to current ACodaType values
+         * @param oldType The type name from the RDF file
+         * @return The migrated type name, or null if type has been removed
+         */
+        private String migrateTypeName(String oldType) {
+            if (oldType == null) return null;
+
+            switch (oldType.toUpperCase()) {
+                case "FPGA":
+                    System.out.println("COOL-INFO: Migrating type FPGA → VTP");
+                    return "VTP";
+                case "SHEL":
+                    System.out.println("COOL-INFO: Migrating type SHEL → SHELL");
+                    return "SHELL";
+                case "FCS":
+                case "SMS":
+                case "RCS":
+                    System.out.println("COOL-WARNING: Type " + oldType + " has been removed and is no longer supported.");
+                    return null;
+                default:
+                    return oldType;
+            }
+        }
+
         private Map<String, JCGComponent> parseComponent (Object subject, String predicate){
             JCGComponent cmp;
             String tmps;
@@ -345,6 +370,22 @@ public class JCParser {
 
                 tmps = getValue(x, "hasType");
                 if (tmps != null) {
+                    // Migrate legacy type names to current ACodaType values
+                    String originalType = tmps;
+                    tmps = migrateTypeName(tmps);
+
+                    // Skip component if type was removed (migration returned null)
+                    if (tmps == null) {
+                        System.out.println("COOL-WARNING: Component " + cmp.getName() + " has removed type '" + originalType + "'. Skipping component.");
+                        continue;
+                    }
+
+                    // Validate against ACodaType enum
+                    if (ACodaType.getEnum(tmps) == null) {
+                        System.out.println("COOL-WARNING: Invalid type '" + tmps + "' for component " + cmp.getName() + ". Skipping component.");
+                        continue;
+                    }
+
                     cmp.setType(tmps);
                 }
 
@@ -368,6 +409,19 @@ public class JCParser {
                         cmp.setId(Integer.valueOf(tmps));
                     } catch (NumberFormatException e) {
                         e.printStackTrace();
+                    }
+                }
+
+                // Regenerate component name if type was migrated
+                // Component name should always be type + id (e.g., "VTP1", "SHELL2")
+                if (cmp.getType() != null && cmp.getId() > 0) {
+                    String expectedName = cmp.getType() + cmp.getId();
+
+                    // If name doesn't match current convention, regenerate it
+                    if (!cmp.getName().equals(expectedName)) {
+                        System.out.println("COOL-INFO: Migrating component name from '" +
+                                         cmp.getName() + "' to '" + expectedName + "'");
+                        cmp.setName(expectedName);
                     }
                 }
 
