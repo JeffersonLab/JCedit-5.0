@@ -23,7 +23,6 @@
 package org.jlab.coda.cedit.system;
 
 public enum ACodaType {
-    USR  (10),
     ET (10),
     FS (10),
     ACTOR (10),
