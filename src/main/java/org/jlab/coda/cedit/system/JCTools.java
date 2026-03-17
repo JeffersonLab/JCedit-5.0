@@ -308,7 +308,7 @@ public class JCTools {
                 sebIds.add(p.getId());
             } else if (t.equals(ACodaType.SAGG.name())) {
                 sagIds.add(p.getId());
-            } else if (t.equals(ACodaType.EBER.name())) {
+            } else if (t.equals(ACodaType.VTP.name())) {
                 eberIds.add(p.getId());
             } else if (t.equals(ACodaType.ER.name())) {
                 erIds.add(p.getId());

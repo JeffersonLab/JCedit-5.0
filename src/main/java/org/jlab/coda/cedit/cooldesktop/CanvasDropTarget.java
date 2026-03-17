@@ -205,7 +205,7 @@ public abstract class CanvasDropTarget implements DropTargetListener {
                         dropAction(ACodaType.SAGG.name());
                         break;
                     case 9:
-                        dropAction(ACodaType.EBER.name());
+                        dropAction(ACodaType.VTP.name());
                         break;
                     case 10:
                         dropAction(ACodaType.ER.name());

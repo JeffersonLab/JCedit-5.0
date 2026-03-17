@@ -613,7 +613,7 @@ public class DrawingCanvas extends JPanel {
                 res = endType.equals(ACodaType.PEB.name()) ||
                         endType.equals(ACodaType.DC.name()) ||
                         endType.equals(ACodaType.EB.name()) ||
-                        endType.equals(ACodaType.EBER.name()) ||
+                        endType.equals(ACodaType.VTP.name()) ||
                         endType.equals(ACodaType.FILE.name());
                 break;
             case FPGA:
@@ -629,7 +629,7 @@ public class DrawingCanvas extends JPanel {
                 break;
             case DC:
                 res = endType.equals(ACodaType.SEB.name()) ||
-                        endType.equals(ACodaType.EBER.name()) ||
+                        endType.equals(ACodaType.VTP.name()) ||
                         endType.equals(ACodaType.FILE.name());
                 break;
             case EB:
@@ -640,7 +640,7 @@ public class DrawingCanvas extends JPanel {
                         endType.equals(ACodaType.ER.name()) ||
                         endType.equals(ACodaType.USR.name());
                 break;
-            case EBER:
+            case VTP:
             case ER:
                 res = endType.equals(ACodaType.FILE.name()) ||
                         endType.equals(ACodaType.USR.name());

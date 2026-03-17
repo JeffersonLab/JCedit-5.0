@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="libs">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/build/libs/jcedit-5.0-SNAPSHOT.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/libs/jcedit-5.0-SNAPSHOT-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/build/libs/jcedit-5.0-SNAPSHOT-javadoc.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

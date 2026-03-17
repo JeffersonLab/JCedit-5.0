@@ -207,7 +207,7 @@ public class LLConfigWriter {
                         }
                     }
 
-                    if (cmp.getType().equals(ACodaType.EBER.name())) {
+                    if (cmp.getType().equals(ACodaType.VTP.name())) {
                         out.write(writeEBERModulesAndChannels(cmp));
                         for (JCGChannel ch : ec.getoChannels().values()) {
                             out.write(writeOutChannels(ch, ec.isFat, cmp.getId()));
@@ -412,7 +412,7 @@ public class LLConfigWriter {
     private String writeEmuSocketPlusEtTransport(ExternalConfig ec, String componentName,
                                                   JCGTransport tr, int nl) {
         if (!ec.getType().equals(ACodaType.ER.name()) &&
-            !ec.getType().equals(ACodaType.EBER.name())) {
+            !ec.getType().equals(ACodaType.VTP.name())) {
             return "";
         }
 
@@ -559,7 +559,7 @@ public class LLConfigWriter {
                 }
             }
             out.append("   <modules>\n\n");
-            if (cmp.getType().equals(ACodaType.EBER.name())) {
+            if (cmp.getType().equals(ACodaType.VTP.name())) {
                 // EB module =============================================
                 if (cmp.isStreaming()) {
                     if (isEndianLittle) {

@@ -74,7 +74,7 @@ public class CDesktopNew extends JFrame {
             ACodaType.PAGG.name(),
             ACodaType.SEB.name(),
             ACodaType.SAGG.name(),
-            ACodaType.EBER.name(),
+            ACodaType.VTP.name(),
             ACodaType.ER.name(),
             ACodaType.SLC.name(),
             ACodaType.USR.name(),

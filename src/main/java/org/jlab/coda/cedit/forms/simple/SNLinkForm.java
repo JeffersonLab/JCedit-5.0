@@ -66,7 +66,7 @@ public class SNLinkForm extends BaseForm {
                     "Debug",
                     "None"
             });
-        } else if (gl.getDestinationComponentType().equals(ACodaType.EBER.name()))   {
+        } else if (gl.getDestinationComponentType().equals(ACodaType.VTP.name()))   {
             comboModel = new DefaultComboBoxModel(new String[]{
                     "EmuSocket+Et",
                     "EmuSocket",
@@ -233,7 +233,7 @@ public class SNLinkForm extends BaseForm {
             checkBoxEtCreate.setEnabled(true);
             if ((canvas.getComp(link.getDestinationComponentName()).getType().equals(ACodaType.PEB.name())) ||
                     (canvas.getComp(link.getDestinationComponentName()).getType().equals(ACodaType.SEB.name())) ||
-                    (canvas.getComp(link.getDestinationComponentName()).getType().equals(ACodaType.EBER.name())) ||
+                    (canvas.getComp(link.getDestinationComponentName()).getType().equals(ACodaType.VTP.name())) ||
                     (canvas.getComp(link.getDestinationComponentName()).getType().equals(ACodaType.ER.name()))
             ) {
                 singleEventOutCheckBox.setEnabled(true);

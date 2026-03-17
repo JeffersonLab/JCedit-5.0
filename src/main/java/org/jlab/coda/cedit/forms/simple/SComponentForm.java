@@ -155,7 +155,7 @@ public class SComponentForm extends BaseForm {
             case PEB:
             case SEB:
             case EB:
-            case EBER:
+            case VTP:
             case DC:
                 Rol1Label.setForeground(Color.lightGray);
                 Rol1usrStringLabel.setForeground(Color.lightGray);
