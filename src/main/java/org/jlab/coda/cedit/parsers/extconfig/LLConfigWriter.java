@@ -173,7 +173,7 @@ public class LLConfigWriter {
                 if (ec.getType().equals(ACodaType.ROC.name()) ||
                         ec.getType().equals(ACodaType.USR.name()) ||
                         ec.getType().equals(ACodaType.GT.name()) ||
-                        ec.getType().equals(ACodaType.FPGA.name()) ||
+                        ec.getType().equals(ACodaType.VTP.name()) ||
                         ec.getType().equals(ACodaType.TS.name())) {
                     createRocConfigFile(ec.getName());
                 }
@@ -231,8 +231,8 @@ public class LLConfigWriter {
                             out.write("     </RocModule>\n\n");
                         } else if (ec.getType().equals(ACodaType.GT.name())) {
                             out.write("     </GTriggerModule>\n\n");
-                        } else if (ec.getType().equals(ACodaType.FPGA.name())) {
-                            out.write("     </FPGATriggerModule>\n\n");
+                        } else if (ec.getType().equals(ACodaType.VTP.name())) {
+                            out.write("     </VTPTriggerModule>\n\n");
                         } else if (ec.getType().equals(ACodaType.USR.name())) {
                             out.write("     </UsrModule>\n\n");
                         } else if (ec.getType().equals(ACodaType.TS.name())) {
@@ -733,16 +733,16 @@ public class LLConfigWriter {
                             "> \n\n");
                 }
 
-                // ------ FPGA --------
-            } else if (cmp.getType().equals(ACodaType.FPGA.name())) {
+                // ------ VTP --------
+            } else if (cmp.getType().equals(ACodaType.VTP.name())) {
                 if (cmp.isStreaming()) {
-                    out.append("     <FPGATriggerModule class=\"" + md.getModuleClass(ACodaType.FPGA.name()) + "\" " +
+                    out.append("     <VTPTriggerModule class=\"" + md.getModuleClass(ACodaType.VTP.name()) + "\" " +
                             "streaming=\"" + "on" + "\" " +
                             "id=\"" + md.getId() + "\" " +
                             "timeStats=\"off\" " +
                             "> \n\n");
                 } else {
-                    out.append("     <FPGATriggerModule class=\"" + md.getModuleClass(ACodaType.FPGA.name()) + "\" " +
+                    out.append("     <VTPTriggerModule class=\"" + md.getModuleClass(ACodaType.VTP.name()) + "\" " +
                             "id=\"" + md.getId() + "\" " +
                             "timeStats=\"off\" " +
                             "> \n\n");
@@ -1038,7 +1038,7 @@ public class LLConfigWriter {
 
             if (cmp.getType().equals(ACodaType.ROC.name()) ||
                     cmp.getType().equals(ACodaType.TS.name()) ||
-                    cmp.getType().equals(ACodaType.FPGA.name()) ||
+                    cmp.getType().equals(ACodaType.VTP.name()) ||
                     cmp.getType().equals(ACodaType.GT.name())
             ) {
 
@@ -1087,7 +1087,7 @@ public class LLConfigWriter {
                                             out.write("output                = " + tt.getTransClass() + "\n");
                                             out.write("emuName               = " + l.getDestinationComponentName() + "\n");
                                             out.write("emuPort               = " + tt.getEmuDirectPort() + "\n");
-                                            if (cmp.getType().equals(ACodaType.FPGA.name())) {
+                                            if (cmp.getType().equals(ACodaType.VTP.name())) {
                                                 out.write("fpgaNet               = " + tt.getFpgaLinkIp() + "\n");
                                                 out.write("emuNet                = NA" + "\n");
 
@@ -1104,7 +1104,7 @@ public class LLConfigWriter {
                                             out.write("output                = EmuSocket\n");
                                             out.write("emuName               = " + l.getDestinationComponentName() + "\n");
                                             out.write("emuPort               = " + tt.getEmuDirectPort() + "\n");
-                                            if (cmp.getType().equals(ACodaType.FPGA.name())) {
+                                            if (cmp.getType().equals(ACodaType.VTP.name())) {
                                                 out.write("fpgaNet                = " + tt.getFpgaLinkIp() + "\n");
                                             } else {
                                                 out.write("emuNet                = " + tt.getEmuSubNet() + "\n");
@@ -1118,7 +1118,7 @@ public class LLConfigWriter {
                                             out.write("emuName               = " + l.getDestinationComponentName() + "\n");
                                             out.write("emuHost               = " + tt.getUdpHost() + "\n");
                                             out.write("emuPort               = " + tt.getUdpPort() + "\n");
-                                            if (cmp.getType().equals(ACodaType.FPGA.name())) {
+                                            if (cmp.getType().equals(ACodaType.VTP.name())) {
                                                 out.write("fpgaNet               = " + tt.getUdpFpgaLinkIp() + "\n");
                                                 out.write("emuNet                = NA" + "\n");
                                             }
@@ -1130,7 +1130,7 @@ public class LLConfigWriter {
                                             out.write("output                = " + tt.getTransClass() + "\n");
                                             out.write("emuName               = " + l.getDestinationComponentName() + "\n");
                                             out.write("emuPort               = " + tt.getTcpStreamDirectPort() + "\n");
-                                            if (cmp.getType().equals(ACodaType.FPGA.name())) {
+                                            if (cmp.getType().equals(ACodaType.VTP.name())) {
                                                 out.write("fpgaNet               = " + tt.getTcpStreamFpgaLinkIp() + "\n");
                                                 out.write("emuNet                = NA" + "\n");
                                             } else {

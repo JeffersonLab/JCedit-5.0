@@ -31,12 +31,12 @@ public enum ACodaType {
     PAC (10),
     RAS (10),
     AP (10),
-    SHEL (10),
+    SHELL (10),
     DOC (10),
     SLC  (110),
     WNC  (210),
     ER   (310),
-    FCS  (410),
+    EBER (360),
     PEB  (510),
     PAGG (560),
     SEB  (610),
@@ -44,13 +44,11 @@ public enum ACodaType {
     EB   (710),
     VTP  (810),
     DC   (910),
-    FPGA (960),
     ROC  (1010),
     GT   (1110),
     TS   (1210),
-    SMS  (1310),
-    RCS  (1410),
-    FILE (1510);
+    FILE (1510),
+    USR  (1610);
 
     private int p;
 

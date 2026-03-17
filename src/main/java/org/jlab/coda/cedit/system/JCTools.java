@@ -295,7 +295,7 @@ public class JCTools {
             String t = p.getType();
             if (t.equals(ACodaType.ROC.name()) ||
                     t.equals(ACodaType.GT.name()) ||
-                    t.equals(ACodaType.FPGA.name()) ||
+                    t.equals(ACodaType.VTP.name()) ||
                     t.equals(ACodaType.TS.name())) {
                 rtgIds.add(p.getId());
             } else if (t.equals(ACodaType.DC.name())) {
@@ -515,15 +515,15 @@ public class JCTools {
         JCGSetup stp = JCGSetup.getInstance();
         HashMap<String, Integer> res = new HashMap<>();
         String baseDir = stp.getCoolHome() + File.separator + stp.getExpid() + File.separator + "jcedit" + File.separator;
-        // For ROC, GT, FPGA, TS types - read from all relevant files
+        // For ROC, GT, VTP, TS types - read from all relevant files
         if (t.equals(ACodaType.ROC.name()) ||
                 t.equals(ACodaType.GT.name()) ||
-                t.equals(ACodaType.FPGA.name()) ||
+                t.equals(ACodaType.VTP.name()) ||
                 t.equals(ACodaType.TS.name())
         ) {
             readPredefinedIdsFromFile(baseDir + ACodaType.ROC.name() + ".txt", res);
             readPredefinedIdsFromFile(baseDir + ACodaType.GT.name() + ".txt", res);
-            readPredefinedIdsFromFile(baseDir + ACodaType.FPGA.name() + ".txt", res);
+            readPredefinedIdsFromFile(baseDir + ACodaType.VTP.name() + ".txt", res);
             readPredefinedIdsFromFile(baseDir + ACodaType.TS.name() + ".txt", res);
         } else {
             // For other component types - read from type-specific file

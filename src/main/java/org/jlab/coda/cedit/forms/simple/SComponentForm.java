@@ -214,7 +214,6 @@ public class SComponentForm extends BaseForm {
                 break;
             case ROC:
             case GT:
-            case FPGA:
             case TS:
                 runDataCheckBox.setEnabled(false);
                 tsCheckBox.setEnabled(false);
@@ -630,7 +629,7 @@ public class SComponentForm extends BaseForm {
             case PAGG:
             case SEB:
             case SAGG:
-            case FPGA:
+            case VTP:
                 return 50;
             default:
                 return 100;

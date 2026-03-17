@@ -178,7 +178,7 @@ public abstract class CanvasDropTarget implements DropTargetListener {
                 Integer ind = Integer.parseInt(s);
                 switch(ind) {
                     case 0:
-                        dropAction(ACodaType.FPGA.name());
+                        dropAction(ACodaType.VTP.name());
                         break;
                      case 1:
                         dropAction(ACodaType.TS.name());

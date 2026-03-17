@@ -65,7 +65,7 @@ public class CDesktopNew extends JFrame {
 
     private ImageIcon[] images;
     private String[] componentStrings = {
-            ACodaType.FPGA.name(),
+            ACodaType.VTP.name(),
             ACodaType.TS.name(),
             ACodaType.GT.name(),
             ACodaType.ROC.name(),
@@ -145,7 +145,7 @@ public class CDesktopNew extends JFrame {
         if(drawingCanvas.getGCMPs().isEmpty()){
             if(type.equals(ACodaType.TS.name()) ||
                     type.equals(ACodaType.GT.name())||
-                    type.equals(ACodaType.FPGA.name())||
+                    type.equals(ACodaType.VTP.name())||
                     type.equals(ACodaType.ROC.name())){
                 gc.setMaster(true);
             }
@@ -187,7 +187,7 @@ public class CDesktopNew extends JFrame {
                 } else {
                     gc.setMaster(false);
                 }
-            } else if(type.equals(ACodaType.FPGA.name())){
+            } else if(type.equals(ACodaType.VTP.name())){
                 if(CDesktopNew.containsTs(drawingCanvas)!=null || CDesktopNew.containsGt(drawingCanvas)!=null){
                     gc.setMaster(false);
                 } else if(CDesktopNew.getNumberOfRocs(drawingCanvas)==0){
@@ -553,7 +553,7 @@ public class CDesktopNew extends JFrame {
 
     private void VtpmiMouseClicked(MouseEvent e) {
         JLabel label = new JLabel(Vtpmi.getText(), Vtpmi.getIcon(), JLabel.CENTER);
-        label.setName("FPGA");
+        label.setName("VTP");
         label.setBounds(100, 100, 200, 50);
         cnvs.addComponent(label);
     }
@@ -2324,7 +2324,7 @@ public class CDesktopNew extends JFrame {
         if(type.equals(ACodaType.ROC.name()) ||
                 type.equals(ACodaType.USR.name()) ||
                 type.equals(ACodaType.TS.name()) ||
-                type.equals(ACodaType.FPGA.name()) ||
+                type.equals(ACodaType.VTP.name()) ||
                 type.equals(ACodaType.GT.name())){
             RocConfigReader rd = new RocConfigReader(runType, com.getName());
             if(rd.isConfigExists()){
@@ -2402,7 +2402,7 @@ public class CDesktopNew extends JFrame {
         for(JCGComponent tCmp: drawingCanvas.getGCMPs().values()){
             if(tCmp.getType().equals(ACodaType.ROC.name()) ||
                     tCmp.getType().equals(ACodaType.TS.name()) ||
-                    tCmp.getType().equals(ACodaType.FPGA.name()) ||
+                    tCmp.getType().equals(ACodaType.VTP.name()) ||
                     tCmp.getType().equals(ACodaType.GT.name())){
                 return true;
             }
@@ -2670,12 +2670,12 @@ public class CDesktopNew extends JFrame {
                 if(gc.getPriority() == ACodaType.TS.priority()){
                     gc.setPriority(ACodaType.ROC.priority());
                 }
-            } else if(gc.getType().equals(ACodaType.FPGA.name())){
+            } else if(gc.getType().equals(ACodaType.VTP.name())){
                 gc.setMaster(false);
-                // set default ROC priority in case it was previously bumped to TS priority. Keep the rest of ROCs
-                // with user specified priorities within the ROC priority range.
+                // set default VTP priority in case it was previously bumped to TS priority. Keep the rest of VTPs
+                // with user specified priorities within the VTP priority range.
                 if(gc.getPriority() == ACodaType.TS.priority()){
-                    gc.setPriority(ACodaType.FPGA.priority());
+                    gc.setPriority(ACodaType.VTP.priority());
                 }
             } else if (gc.getType().equals(ACodaType.TS.name()) || gc.getType().equals(ACodaType.GT.name())) {
                 gc.setMaster(false);
@@ -2918,7 +2918,7 @@ public class CDesktopNew extends JFrame {
                     }
                     if((c.getType().equals(ACodaType.ROC.name()) ||
                             c.getType().equals(ACodaType.GT.name()) ||
-                            c.getType().equals(ACodaType.FPGA.name()) ||
+                            c.getType().equals(ACodaType.VTP.name()) ||
                             c.getType().equals(ACodaType.TS.name()))
                             && c.getRol1().equals("undefined")){
                         noRolCmps.append(c.getName()).append(", ");
@@ -3013,7 +3013,7 @@ public class CDesktopNew extends JFrame {
                 for(JCGComponent c:drawingCanvas.getGCMPs().values()){
                     if((c.getType().equals(ACodaType.ROC.name()) ||
                             c.getType().equals(ACodaType.GT.name()) ||
-                            c.getType().equals(ACodaType.FPGA.name()) ||
+                            c.getType().equals(ACodaType.VTP.name()) ||
                             c.getType().equals(ACodaType.TS.name())
                     )
                             && c.getRol1().equals("undefined")){
