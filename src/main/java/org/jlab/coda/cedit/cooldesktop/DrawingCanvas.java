@@ -605,54 +605,8 @@ public class DrawingCanvas extends JPanel {
     }
 
     private boolean isLinkAllowed(String startType, String endType) {
-        boolean res = true;
-        switch (ACodaType.getEnum(startType)) {
-            case ROC:
-            case GT:
-            case TS:
-                res = endType.equals(ACodaType.PEB.name()) ||
-                        endType.equals(ACodaType.DC.name()) ||
-                        endType.equals(ACodaType.EB.name()) ||
-                        endType.equals(ACodaType.VTP.name()) ||
-                        endType.equals(ACodaType.FILE.name());
-                break;
-            case PAGG:
-                res = endType.equals(ACodaType.SAGG.name()) ||
-                        endType.equals(ACodaType.ER.name()) ||
-                        endType.equals(ACodaType.USR.name()) ||
-                        endType.equals(ACodaType.FILE.name());
-                break;
-            case DC:
-                res = endType.equals(ACodaType.SEB.name()) ||
-                        endType.equals(ACodaType.VTP.name()) ||
-                        endType.equals(ACodaType.FILE.name());
-                break;
-            case EB:
-            case PEB:
-            case SEB:
-            case SAGG:
-                res = endType.equals(ACodaType.FILE.name()) ||
-                        endType.equals(ACodaType.ER.name()) ||
-                        endType.equals(ACodaType.USR.name());
-                break;
-            case VTP:
-                res = endType.equals(ACodaType.PAGG.name()) ||
-                        endType.equals(ACodaType.USR.name()) ||
-                        endType.equals(ACodaType.FILE.name());
-                break;
-            case ER:
-                res = endType.equals(ACodaType.FILE.name()) ||
-                        endType.equals(ACodaType.USR.name());
-                break;
-            case USR:
-                // USR components (EJFAT: Packetizer, Load Balancer, Reassembly) can link to other USR or FILE
-                res = endType.equals(ACodaType.USR.name()) ||
-                        endType.equals(ACodaType.FILE.name());
-                break;
-        }
-
-        return res;
-
+        // Type-based linking restrictions removed - all component types can now link to any other type
+        return true;
     }
 
     private void connectGComponents() {

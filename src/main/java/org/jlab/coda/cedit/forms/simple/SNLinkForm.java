@@ -59,52 +59,17 @@ public class SNLinkForm extends BaseForm {
         this.canvas = canvas;
 
 
-        if (gl.getDestinationComponentType().equals(ACodaType.FILE.name())) {
-            comboModel = new DefaultComboBoxModel(new String[]{
-                    "File",
-                    "Et",
-                    "Debug",
-                    "None"
-            });
-        } else if (gl.getDestinationComponentType().equals(ACodaType.VTP.name()))   {
-            comboModel = new DefaultComboBoxModel(new String[]{
-                    "EmuSocket+Et",
-                    "EmuSocket",
-                    "None"
-            });
-        } else if (gl.getDestinationComponentType().equals(ACodaType.PEB.name())) {
-            comboModel = new DefaultComboBoxModel(new String[]{
-                    "Et",
-                    "EmuSocket",
-                    "None"
-            });
-        } else if (gl.getDestinationComponentType().equals(ACodaType.DC.name())) {
-            comboModel = new DefaultComboBoxModel(new String[]{
-                    "Et",
-                    "EmuSocket",
-                    "None"
-            });
-        } else if (gl.getDestinationComponentType().equals(ACodaType.PAGG.name())) {
-            comboModel = new DefaultComboBoxModel(new String[]{
-                    "TcpStream",
-                    "UdpStream",
-                    "None"
-            });
-        } else if (gl.getDestinationComponentType().equals(ACodaType.SAGG.name())) {
-            comboModel = new DefaultComboBoxModel(new String[]{
-                    "TcpStream",
-                    "UdpStream",
-                    "None"
-            });
-        } else {
-            comboModel = new DefaultComboBoxModel(new String[]{
-                    "Et",
-                    "EmuSocket",
-                    "TcpStream",
-                    "UdpStream",
-                    "None"
-            });
-        }
+        // Transport type restrictions removed - all transports available for all component types
+        comboModel = new DefaultComboBoxModel(new String[]{
+                "File",
+                "Et",
+                "EmuSocket",
+                "EmuSocket+Et",
+                "TcpStream",
+                "UdpStream",
+                "Debug",
+                "None"
+        });
 
         initComponents();
         update();
@@ -231,13 +196,8 @@ public class SNLinkForm extends BaseForm {
             inputEtChunkSize.setEnabled(true);
             etWait.setEnabled(true);
             checkBoxEtCreate.setEnabled(true);
-            if ((canvas.getComp(link.getDestinationComponentName()).getType().equals(ACodaType.PEB.name())) ||
-                    (canvas.getComp(link.getDestinationComponentName()).getType().equals(ACodaType.SEB.name())) ||
-                    (canvas.getComp(link.getDestinationComponentName()).getType().equals(ACodaType.VTP.name())) ||
-                    (canvas.getComp(link.getDestinationComponentName()).getType().equals(ACodaType.ER.name()))
-            ) {
-                singleEventOutCheckBox.setEnabled(true);
-            }
+            // SingleEventOut type restrictions removed - available for all component types
+            singleEventOutCheckBox.setEnabled(true);
             etDefaultsMenuItem.setEnabled(true);
         } else {
             etNumberEvents.setEnabled(false);
