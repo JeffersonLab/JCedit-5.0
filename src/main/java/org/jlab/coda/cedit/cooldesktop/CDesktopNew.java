@@ -1135,56 +1135,56 @@ public class CDesktopNew extends JFrame {
 
                         //---- Tsmi ----
                         Tsmi.setText("TS");
-                        Tsmi.setIcon(new ImageIcon(getClass().getResource("/resources/TS_new.png")));
+                        Tsmi.setIcon(new ImageIcon(getClass().getResource("/resources/TS.png")));
                         Tsmi.addActionListener(e -> TsmiMouseClicked(null));
                         TrMenu.add(Tsmi);
                         TrMenu.addSeparator();
 
                         //---- Gtmi ----
                         Gtmi.setText("GT");
-                        Gtmi.setIcon(new ImageIcon(getClass().getResource("/resources/GT_new.png")));
+                        Gtmi.setIcon(new ImageIcon(getClass().getResource("/resources/GT.png")));
                         Gtmi.addActionListener(e -> GtmiMouseClicked(null));
                         TrMenu.add(Gtmi);
                         TrMenu.addSeparator();
 
                         //---- Dcmi ----
                         Dcmi.setText("DC");
-                        Dcmi.setIcon(new ImageIcon(getClass().getResource("/resources/DC_new.png")));
+                        Dcmi.setIcon(new ImageIcon(getClass().getResource("/resources/DC.png")));
                         Dcmi.addActionListener(e -> DcmiMouseClicked(null));
                         TrMenu.add(Dcmi);
                         TrMenu.addSeparator();
 
                         //---- Pebmi ----
                         Pebmi.setText("PEB");
-                        Pebmi.setIcon(new ImageIcon(getClass().getResource("/resources/PEB_new.png")));
+                        Pebmi.setIcon(new ImageIcon(getClass().getResource("/resources/PEB.png")));
                         Pebmi.addActionListener(e -> PebmiMouseClicked(null));
                         TrMenu.add(Pebmi);
                         TrMenu.addSeparator();
 
                         //---- Sebmi ----
                         Sebmi.setText("SEB");
-                        Sebmi.setIcon(new ImageIcon(getClass().getResource("/resources/SEB_new.png")));
+                        Sebmi.setIcon(new ImageIcon(getClass().getResource("/resources/SEB.png")));
                         Sebmi.addActionListener(e -> SebmiMouseClicked(null));
                         TrMenu.add(Sebmi);
                         TrMenu.addSeparator();
 
                         //---- Ermi ----
                         Ermi.setText("ER");
-                        Ermi.setIcon(new ImageIcon(getClass().getResource("/resources/ER_new.png")));
+                        Ermi.setIcon(new ImageIcon(getClass().getResource("/resources/ER.png")));
                         Ermi.addActionListener(e -> ErmiMouseClicked(null));
                         TrMenu.add(Ermi);
                         TrMenu.addSeparator();
 
                         //---- Ebermi ----
                         Ebermi.setText("EBER");
-                        Ebermi.setIcon(new ImageIcon(getClass().getResource("/resources/EBER_new.png")));
+                        Ebermi.setIcon(new ImageIcon(getClass().getResource("/resources/EBER.png")));
                         Ebermi.addActionListener(e -> EbermiMouseClicked(null));
                         TrMenu.add(Ebermi);
                         TrMenu.addSeparator();
 
                         //---- Outmi ----
                         Outmi.setText("Sink");
-                        Outmi.setIcon(new ImageIcon(getClass().getResource("/resources/SINK_new.png")));
+                        Outmi.setIcon(new ImageIcon(getClass().getResource("/resources/FILE.png")));
                         Outmi.addActionListener(e -> OutmiMouseClicked(null));
                         TrMenu.add(Outmi);
                     }
@@ -1204,14 +1204,14 @@ public class CDesktopNew extends JFrame {
 
                         //---- Paggmi ----
                         Paggmi.setText("PAGG");
-                        Paggmi.setIcon(new ImageIcon(getClass().getResource("/resources/PAGG_new.png")));
+                        Paggmi.setIcon(new ImageIcon(getClass().getResource("/resources/PAGG.png")));
                         Paggmi.addActionListener(e -> PaggmiMouseClicked(null));
                         StrMenu.add(Paggmi);
                         StrMenu.addSeparator();
 
                         //---- Saggmi ----
                         Saggmi.setText("SAGG");
-                        Saggmi.setIcon(new ImageIcon(getClass().getResource("/resources/SAGG_new.png")));
+                        Saggmi.setIcon(new ImageIcon(getClass().getResource("/resources/SAGG.png")));
                         Saggmi.addActionListener(e -> SaggmiMouseClicked(null));
                         StrMenu.add(Saggmi);
                     }
@@ -1225,28 +1225,28 @@ public class CDesktopNew extends JFrame {
 
                     //---- FileSourcemi ----
                     FileSourcemi.setText("File Source");
-                    FileSourcemi.setIcon(new ImageIcon(getClass().getResource("/resources/SINK_source.png")));
+                    FileSourcemi.setIcon(new ImageIcon(getClass().getResource("/resources/FILE.png")));
                     FileSourcemi.addActionListener(e -> FileSourcemiMouseClicked(null));
                     ErsapMenu.add(FileSourcemi);
                     ErsapMenu.addSeparator();
 
                     //---- etSourceMi ----
                     etSourceMi.setText("ET Source");
-                    etSourceMi.setIcon(new ImageIcon(getClass().getResource("/resources/ET_source.png")));
+                    etSourceMi.setIcon(new ImageIcon(getClass().getResource("/resources/ET.png")));
                     etSourceMi.addActionListener(e -> etSourceMiMouseClicked(null));
                     ErsapMenu.add(etSourceMi);
                     ErsapMenu.addSeparator();
 
                     //---- actorMi ----
                     actorMi.setText("Actor");
-                    actorMi.setIcon(new ImageIcon(getClass().getResource("/resources/ACTOR_new.png")));
+                    actorMi.setIcon(new ImageIcon(getClass().getResource("/resources/ACTOR.png")));
                     actorMi.addActionListener(e -> actorMiMouseClicked(null));
                     ErsapMenu.add(actorMi);
                     ErsapMenu.addSeparator();
 
                     //---- histoActorMI ----
                     histoActorMI.setText("Histogram Actor");
-                    histoActorMI.setIcon(new ImageIcon(getClass().getResource("/resources/SINK_histogram.png")));
+                    histoActorMI.setIcon(new ImageIcon(getClass().getResource("/resources/HACTOR.png")));
                     histoActorMI.addActionListener(e -> histoActorMIMouseClicked(null));
                     ErsapMenu.add(histoActorMI);
                 }
@@ -1258,21 +1258,21 @@ public class CDesktopNew extends JFrame {
 
                     //---- menuItem30 ----
                     menuItem30.setText("Packetizer");
-                    menuItem30.setIcon(new ImageIcon(getClass().getResource("/resources/PACKETIZE.png")));
+                    menuItem30.setIcon(new ImageIcon(getClass().getResource("/resources/PAC.png")));
                     menuItem30.addActionListener(e -> menuItem30MouseClicked(null));
                     EjfatMenu.add(menuItem30);
                     EjfatMenu.addSeparator();
 
                     //---- menuItem33 ----
                     menuItem33.setText("Load Balancer");
-                    menuItem33.setIcon(new ImageIcon(getClass().getResource("/resources/LB_new.png")));
+                    menuItem33.setIcon(new ImageIcon(getClass().getResource("/resources/LB.png")));
                     menuItem33.addActionListener(e -> menuItem33MouseClicked(null));
                     EjfatMenu.add(menuItem33);
                     EjfatMenu.addSeparator();
 
                     //---- menuItem34 ----
                     menuItem34.setText("Reassembly");
-                    menuItem34.setIcon(new ImageIcon(getClass().getResource("/resources/REASSEMBLE.png")));
+                    menuItem34.setIcon(new ImageIcon(getClass().getResource("/resources/RAS.png")));
                     menuItem34.addActionListener(e -> menuItem34MouseClicked(null));
                     EjfatMenu.add(menuItem34);
                 }
