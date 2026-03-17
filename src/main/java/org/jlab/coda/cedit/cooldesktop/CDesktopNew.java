@@ -1284,21 +1284,21 @@ public class CDesktopNew extends JFrame {
 
                     //---- Scmi ----
                     Scmi.setText("Application");
-                    Scmi.setIcon(new ImageIcon(getClass().getResource("/resources/Application.png")));
+                    Scmi.setIcon(new ImageIcon(getClass().getResource("/resources/USR.png")));
                     Scmi.addActionListener(e -> ScmiMouseClicked(null));
                     ProcMenu.add(Scmi);
                     ProcMenu.addSeparator();
 
                     //---- menuItem35 ----
                     menuItem35.setText("Shell Process");
-                    menuItem35.setIcon(new ImageIcon(getClass().getResource("/resources/ShellProcess.png")));
+                    menuItem35.setIcon(new ImageIcon(getClass().getResource("/resources/SLC.png")));
                     menuItem35.addActionListener(e -> menuItem35MouseClicked(null));
                     ProcMenu.add(menuItem35);
                     ProcMenu.addSeparator();
 
                     //---- menuItem36 ----
                     menuItem36.setText("Docker Container");
-                    menuItem36.setIcon(new ImageIcon(getClass().getResource("/resources/DockerContainer.png")));
+                    menuItem36.setIcon(new ImageIcon(getClass().getResource("/resources/WNC.png")));
                     menuItem36.addActionListener(e -> menuItem36MouseClicked(null));
                     ProcMenu.add(menuItem36);
                 }
