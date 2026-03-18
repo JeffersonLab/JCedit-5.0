@@ -114,7 +114,7 @@ public class SComponentForm extends BaseForm {
         configFileTextField.setText(comp.getUserConfig());
         p_userConfig =comp.getUserConfig();
 
-        descriptionTextArea.setText(comp.getDescription());
+        hostTextField.setText(comp.getHost());
 
         // Create priority model based on component type
         priorityModel = createPriorityModelForType(comp.getType());
@@ -227,7 +227,7 @@ public class SComponentForm extends BaseForm {
                 break;
         }
         if(component.isPreDefined()){
-            descriptionTextArea.setEnabled(false);
+            hostTextField.setEnabled(false);
         }
         setVisible(true);
         if(!editable){
@@ -238,7 +238,7 @@ public class SComponentForm extends BaseForm {
             Rol2TextField.setEnabled(false);
             Rol2UserStrTextField.setEnabled(false);
             configFileTextField.setEnabled(false);
-            descriptionTextArea.setEnabled(false);
+            hostTextField.setEnabled(false);
             processComboBox.setEnabled(false);
             runDataCheckBox.setEnabled(false);
             sparsifyCheckBox.setEnabled(false);
@@ -255,15 +255,15 @@ public class SComponentForm extends BaseForm {
         }
 
         cForm = this;
-        String predefinedDescription = CDesktopNew.isComponentPredefined(getNameFromTextField(),
+        String predefinedHost = CDesktopNew.isComponentPredefined(getNameFromTextField(),
                 typeTextField.getText().trim(),
                 component.getSubType(),
-                descriptionTextArea.getText().replace("\\n","\n"));
-        if(predefinedDescription.equals("UNDEFINED_VALUE")) {
-            descriptionTextArea.setEnabled(true);
+                hostTextField.getText().replace("\\n","\n"));
+        if(predefinedHost.equals("UNDEFINED_VALUE")) {
+            hostTextField.setEnabled(true);
         } else {
-            descriptionTextArea.setEnabled(false);
-            descriptionTextArea.setText(predefinedDescription);
+            hostTextField.setEnabled(false);
+            hostTextField.setText(predefinedHost);
         }
     }
 
@@ -422,7 +422,7 @@ public class SComponentForm extends BaseForm {
             } else {
                 component.setUserConfig(configFileTextField.getText().trim());
             }
-            component.setDescription(descriptionTextArea.getText().replace("\\n","\n"));
+            component.setHost(hostTextField.getText().replace("\\n","\n"));
 
             if(runDataCheckBox.isEnabled()){
                 component.getModule().setRunData(runDataCheckBox.isSelected());
@@ -471,10 +471,6 @@ public class SComponentForm extends BaseForm {
                     component.setMaster(true);
                     component.setPriority(ACodaType.TS.priority());
                 }
-//                else {
-//                    component.setMaster(false);
-//                    component.setPriority(ACodaType.getEnum(component.getType()).priority());
-//                }
             }
 
             updateInMemory(pName);
@@ -560,7 +556,6 @@ public class SComponentForm extends BaseForm {
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             File selectedFile = jfc.getSelectedFile();
             Rol2TextField.setText(selectedFile.getAbsolutePath());
-//            System.out.println(selectedFile.getAbsolutePath());
         }
     }
 
@@ -686,12 +681,8 @@ public class SComponentForm extends BaseForm {
         panel2 = new JPanel();
         processButton = new JButton();
         processComboBox = new JComboBox<>();
-        label2 = new JLabel();
         prioritySpinner = new JSpinner();
         configFileLabel2 = new JLabel();
-        scrollPane1 = new JScrollPane();
-        descriptionTextArea = new JTextArea();
-        label3 = new JLabel();
         runDataCheckBox = new JCheckBox();
         sparsifyCheckBox = new JCheckBox();
         tsCheckBox = new JCheckBox();
@@ -701,6 +692,7 @@ public class SComponentForm extends BaseForm {
         buildTreadsSpinner = new JSpinner();
         label6 = new JLabel();
         endianCheckBox = new JCheckBox();
+        hostTextField = new JTextField();
         okButton = new JButton();
         clearButton = new JButton();
         cancelButton = new JButton();
@@ -714,7 +706,7 @@ public class SComponentForm extends BaseForm {
 
         //======== this ========
         setTitle("Component");
-        var contentPane = getContentPane();
+        Container contentPane = getContentPane();
 
         //======== dialogPane ========
         {
@@ -762,7 +754,7 @@ public class SComponentForm extends BaseForm {
                 Rol2UsrStringLabel.setText("User String");
 
                 //---- Rol2UserStrTextField ----
-                Rol2UserStrTextField.setText("UNDEFINED_VALUE");
+                Rol2UserStrTextField.setText("undefined");
                 Rol2UserStrTextField.addKeyListener(new KeyAdapter() {
                     @Override
                     public void keyPressed(KeyEvent e) {
@@ -774,7 +766,7 @@ public class SComponentForm extends BaseForm {
                 Rol1Label.setText("ROL1");
 
                 //---- Rol1TextField ----
-                Rol1TextField.setText("UNDEFINED_VALUE");
+                Rol1TextField.setText("undefined");
                 Rol1TextField.addKeyListener(new KeyAdapter() {
                     @Override
                     public void keyPressed(KeyEvent e) {
@@ -786,7 +778,7 @@ public class SComponentForm extends BaseForm {
                 Rol1usrStringLabel.setText("User String");
 
                 //---- Rol1UserStrTextField ----
-                Rol1UserStrTextField.setText("UNDEFINED_VALUE");
+                Rol1UserStrTextField.setText("undefined");
                 Rol1UserStrTextField.addKeyListener(new KeyAdapter() {
                     @Override
                     public void keyPressed(KeyEvent e) {
@@ -836,25 +828,12 @@ public class SComponentForm extends BaseForm {
                     );
                 }
 
-                //---- label2 ----
-                label2.setText("(optional)");
-                label2.setEnabled(false);
-
                 //---- prioritySpinner ----
                 prioritySpinner.setModel(new SpinnerNumberModel(0, null, null, 1));
                 prioritySpinner.addChangeListener(e -> prioritySpinnerStateChanged(e));
 
                 //---- configFileLabel2 ----
-                configFileLabel2.setText("Description");
-
-                //======== scrollPane1 ========
-                {
-                    scrollPane1.setViewportView(descriptionTextArea);
-                }
-
-                //---- label3 ----
-                label3.setText("(optional)");
-                label3.setEnabled(false);
+                configFileLabel2.setText("Host");
 
                 //---- runDataCheckBox ----
                 runDataCheckBox.setText("RunData");
@@ -911,6 +890,14 @@ public class SComponentForm extends BaseForm {
                     }
                 });
 
+                //---- hostTextField ----
+                hostTextField.addKeyListener(new KeyAdapter() {
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                        configFileTextFieldKeyPressed(e);
+                    }
+                });
+
                 GroupLayout contentPanelLayout = new GroupLayout(contentPanel);
                 contentPanel.setLayout(contentPanelLayout);
                 contentPanelLayout.setHorizontalGroup(
@@ -919,6 +906,28 @@ public class SComponentForm extends BaseForm {
                             .addContainerGap()
                             .addGroup(contentPanelLayout.createParallelGroup()
                                 .addGroup(contentPanelLayout.createSequentialGroup()
+                                    .addComponent(panel2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                    .addGap(36, 36, 36)
+                                    .addGroup(contentPanelLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                                        .addComponent(runDataCheckBox)
+                                        .addComponent(sparsifyCheckBox))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(contentPanelLayout.createParallelGroup()
+                                        .addGroup(contentPanelLayout.createSequentialGroup()
+                                            .addComponent(tsSlopSpinner, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(label4)
+                                            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addComponent(endianCheckBox)
+                                            .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGroup(contentPanelLayout.createSequentialGroup()
+                                            .addComponent(tsCheckBox, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(buildTreadsSpinner, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(label6)
+                                            .addGap(24, 24, 24))))
+                                .addGroup(GroupLayout.Alignment.TRAILING, contentPanelLayout.createSequentialGroup()
                                     .addGroup(contentPanelLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                                         .addGroup(GroupLayout.Alignment.LEADING, contentPanelLayout.createSequentialGroup()
                                             .addGroup(contentPanelLayout.createParallelGroup()
@@ -963,41 +972,14 @@ public class SComponentForm extends BaseForm {
                                                             .addGap(1, 1, 1)
                                                             .addComponent(idTextField, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE))))))
                                         .addGroup(GroupLayout.Alignment.LEADING, contentPanelLayout.createSequentialGroup()
-                                            .addComponent(configFileLabel)
+                                            .addGroup(contentPanelLayout.createParallelGroup()
+                                                .addComponent(configFileLabel)
+                                                .addComponent(configFileLabel2))
                                             .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(configFileTextField)
-                                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(label2, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)))
-                                    .addGap(12, 12, 12))
-                                .addGroup(contentPanelLayout.createSequentialGroup()
-                                    .addComponent(panel2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                    .addGap(36, 36, 36)
-                                    .addGroup(contentPanelLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                                        .addComponent(runDataCheckBox)
-                                        .addComponent(sparsifyCheckBox))
-                                    .addGap(18, 18, 18)
-                                    .addGroup(contentPanelLayout.createParallelGroup()
-                                        .addGroup(contentPanelLayout.createSequentialGroup()
-                                            .addComponent(tsSlopSpinner, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(label4)
-                                            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(endianCheckBox)
-                                            .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addGroup(contentPanelLayout.createSequentialGroup()
-                                            .addComponent(tsCheckBox, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(buildTreadsSpinner, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(label6)
-                                            .addGap(24, 24, 24))))
-                                .addGroup(contentPanelLayout.createSequentialGroup()
-                                    .addGroup(contentPanelLayout.createParallelGroup()
-                                        .addComponent(configFileLabel2)
-                                        .addComponent(label3, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE))
-                                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(scrollPane1)
-                                    .addContainerGap())))
+                                            .addGroup(contentPanelLayout.createParallelGroup()
+                                                .addComponent(configFileTextField)
+                                                .addComponent(hostTextField))))
+                                    .addGap(12, 12, 12))))
                 );
                 contentPanelLayout.setVerticalGroup(
                     contentPanelLayout.createParallelGroup()
@@ -1034,16 +1016,12 @@ public class SComponentForm extends BaseForm {
                             .addGap(18, 18, 18)
                             .addGroup(contentPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                 .addComponent(configFileLabel)
-                                .addComponent(configFileTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                .addComponent(label2))
+                                .addComponent(configFileTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                             .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(contentPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                .addGroup(contentPanelLayout.createSequentialGroup()
-                                    .addComponent(configFileLabel2)
-                                    .addGap(1, 1, 1)
-                                    .addComponent(label3))
-                                .addComponent(scrollPane1))
-                            .addGap(18, 18, 18)
+                            .addGroup(contentPanelLayout.createParallelGroup()
+                                .addComponent(configFileLabel2)
+                                .addComponent(hostTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                            .addGap(28, 28, 28)
                             .addGroup(contentPanelLayout.createParallelGroup()
                                 .addGroup(contentPanelLayout.createSequentialGroup()
                                     .addGroup(contentPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
@@ -1097,7 +1075,7 @@ public class SComponentForm extends BaseForm {
             dialogPaneLayout.setVerticalGroup(
                 dialogPaneLayout.createParallelGroup()
                     .addGroup(GroupLayout.Alignment.TRAILING, dialogPaneLayout.createSequentialGroup()
-                        .addComponent(contentPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(contentPanel, GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(separator1, GroupLayout.PREFERRED_SIZE, 2, GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
@@ -1152,12 +1130,8 @@ public class SComponentForm extends BaseForm {
     private JPanel panel2;
     private JButton processButton;
     private JComboBox<String> processComboBox;
-    private JLabel label2;
     private JSpinner prioritySpinner;
     private JLabel configFileLabel2;
-    private JScrollPane scrollPane1;
-    private JTextArea descriptionTextArea;
-    private JLabel label3;
     private JCheckBox runDataCheckBox;
     private JCheckBox sparsifyCheckBox;
     private JCheckBox tsCheckBox;
@@ -1167,6 +1141,7 @@ public class SComponentForm extends BaseForm {
     private JSpinner buildTreadsSpinner;
     private JLabel label6;
     private JCheckBox endianCheckBox;
+    private JTextField hostTextField;
     private JButton okButton;
     private JButton clearButton;
     private JButton cancelButton;

@@ -149,7 +149,7 @@ public class CCanvas extends CanvasDropTarget {
             gc.setId(id);
             gc.setPriority(ACodaType.getEnum(type).priority());
             if(o.lastIndexOf("%^")>0){
-                gc.setDescription(o.substring(o.lastIndexOf("%^")+2));
+                gc.setHost(o.substring(o.lastIndexOf("%^")+2));
             }
         } else {
             // new component drag and drop
@@ -248,7 +248,7 @@ public class CCanvas extends CanvasDropTarget {
                         gc.getType() + "$" +
                         gc.getSubType() + "$" +
                         gc.getId() + "$" +
-                        gc.getDescription() + "@@\n"
+                        gc.getHost() + "@@\n"
                 );
                 bw.close();
             } catch (IOException e) {

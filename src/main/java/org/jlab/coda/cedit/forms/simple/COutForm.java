@@ -23,10 +23,10 @@
 
 package org.jlab.coda.cedit.forms.simple;
 
+import java.awt.*;
 import org.jlab.coda.cedit.cooldesktop.DrawingCanvas;
 import org.jlab.coda.cedit.system.JCGComponent;
 
-import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
@@ -52,8 +52,8 @@ public class COutForm extends BaseForm {
 
         typeTextField.setText(comp.getSubType());
 
-        descriptionTextArea.setText(comp.getDescription());
-        if (!comp.getDescription().equals("")) {
+        descriptionTextArea.setText(comp.getHost());
+        if (!comp.getHost().equals("")) {
             descriptionTextArea.setEditable(false);
             descriptionTextArea.setEnabled(false);
         }
@@ -79,7 +79,7 @@ public class COutForm extends BaseForm {
         typeTextField.setText(typeTextField.getText().trim().toUpperCase());
         component.setSubType(typeTextField.getText().trim());
 
-        component.setDescription(descriptionTextArea.getText());
+        component.setHost(descriptionTextArea.getText());
 
         // Add the modified/created component to the graphics component map
         if(!parentCanvas.getGCMPs().containsKey(component.getName())) {
@@ -112,7 +112,7 @@ public class COutForm extends BaseForm {
 
         //======== this ========
         setTitle("Output");
-        var contentPane = getContentPane();
+        Container contentPane = getContentPane();
 
         //======== dialogPane ========
         {
@@ -152,18 +152,18 @@ public class COutForm extends BaseForm {
                                 .addGroup(contentPanelLayout.createSequentialGroup()
                                     .addComponent(label1)
                                     .addGap(15, 15, 15)
-                                    .addComponent(nameTextField, GroupLayout.DEFAULT_SIZE, 309, Short.MAX_VALUE)
+                                    .addComponent(nameTextField, GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE)
                                     .addGap(23, 23, 23)
                                     .addComponent(label11)
                                     .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(typeTextField, GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
+                                    .addComponent(typeTextField, GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
                                     .addGap(12, 12, 12))
                                 .addGroup(GroupLayout.Alignment.TRAILING, contentPanelLayout.createSequentialGroup()
                                     .addGroup(contentPanelLayout.createParallelGroup()
                                         .addComponent(configFileLabel2)
                                         .addComponent(label3, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE))
                                     .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(scrollPane1, GroupLayout.DEFAULT_SIZE, 477, Short.MAX_VALUE)
+                                    .addComponent(scrollPane1, GroupLayout.DEFAULT_SIZE, 484, Short.MAX_VALUE)
                                     .addContainerGap())))
                 );
                 contentPanelLayout.setVerticalGroup(
@@ -182,7 +182,7 @@ public class COutForm extends BaseForm {
                                     .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(label3)
                                     .addGap(0, 91, Short.MAX_VALUE))
-                                .addComponent(scrollPane1, GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE))
+                                .addComponent(scrollPane1, GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE))
                             .addContainerGap())
                 );
             }
@@ -203,14 +203,14 @@ public class COutForm extends BaseForm {
             dialogPaneLayout.setHorizontalGroup(
                 dialogPaneLayout.createParallelGroup()
                     .addGroup(GroupLayout.Alignment.TRAILING, dialogPaneLayout.createSequentialGroup()
-                        .addContainerGap(366, Short.MAX_VALUE)
+                        .addContainerGap(324, Short.MAX_VALUE)
                         .addComponent(okButton)
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(clearButton, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)
                         .addGap(4, 4, 4)
                         .addComponent(cancelButton)
                         .addContainerGap())
-                    .addComponent(separator1, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 557, Short.MAX_VALUE)
+                    .addComponent(separator1, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 572, Short.MAX_VALUE)
                     .addComponent(contentPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             );
             dialogPaneLayout.setVerticalGroup(
@@ -241,7 +241,7 @@ public class COutForm extends BaseForm {
                 .addGroup(contentPaneLayout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(dialogPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(2, Short.MAX_VALUE))
+                    .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pack();
         setLocationRelativeTo(getOwner());

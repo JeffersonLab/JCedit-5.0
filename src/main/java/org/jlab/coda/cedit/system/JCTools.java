@@ -618,7 +618,7 @@ public class JCTools {
         return new JCGComponent(c.getX(), c.getY(), c.getGridX(), c.getGridY(),
                 c.getW(), c.getH(), c.getPx(), c.getPy(), c.getId(), c.getName(),
                 c.getType(), c.getSubType(), c.getRol1(), c.getRol1UsrString(),
-                c.getRol2(), c.getRol2UsrString(), c.getDescription(),
+                c.getRol2(), c.getRol2UsrString(), c.getHost(),
                 c.getUserConfig(), c.getPriority(), c.isCodaComponent(),
                 c.isStreaming(), c.isPreDefined(), c.getNodeList(),
                 c.getCommand(), c.isMaster(), c.getModule(), c.getLnks(),

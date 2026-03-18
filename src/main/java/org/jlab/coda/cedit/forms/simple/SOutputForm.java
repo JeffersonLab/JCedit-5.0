@@ -57,8 +57,8 @@ public class SOutputForm extends BaseForm {
 
         initComponents();
         nameTextField.setText(comp.getName());
-        descriptionTextArea.setText(comp.getDescription());
-        if(!comp.getDescription().equals("undefined")){
+        descriptionTextArea.setText(comp.getHost());
+        if(!comp.getHost().equals("undefined")){
             descriptionTextArea.setEditable(false);
             descriptionTextArea.setEnabled(false);
         }
@@ -93,8 +93,8 @@ public class SOutputForm extends BaseForm {
         component = comp;
         initComponents();
         nameTextField.setText(comp.getName());
-        descriptionTextArea.setText(comp.getDescription());
-        if(!comp.getDescription().equals("")){
+        descriptionTextArea.setText(comp.getHost());
+        if(!comp.getHost().equals("")){
             descriptionTextArea.setEditable(false);
             descriptionTextArea.setEnabled(false);
         }
@@ -155,7 +155,7 @@ public class SOutputForm extends BaseForm {
         // Update component
         component.setName(nameTextField.getText().trim());
         component.setSubType(transportClassComboBox.getSelectedItem().toString());
-        component.setDescription(descriptionTextArea.getText().replace("\\n","\n"));
+        component.setHost(descriptionTextArea.getText().replace("\\n","\n"));
 
         JCGTransport gt = new JCGTransport();
         // Fill and add/update the transport

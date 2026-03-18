@@ -1850,7 +1850,7 @@ public class CDesktopNew extends JFrame {
                         gc.getType(),
                         gc.getSubType(),
                         gc.getId(),
-                        gc.getDescription()
+                        gc.getHost()
                 ));
             }
         }
@@ -1933,7 +1933,7 @@ public class CDesktopNew extends JFrame {
 
 
         // add new created component descriptions
-        tcm.put(com.getName(),new CDefinedComponent(com.getName(),com.getType(),com.getSubType(),com.getId(),com.getDescription()));
+        tcm.put(com.getName(),new CDefinedComponent(com.getName(),com.getType(),com.getSubType(),com.getId(),com.getHost()));
 
         // record into the database
         try {
@@ -2267,13 +2267,13 @@ public class CDesktopNew extends JFrame {
                 for (JCGComponent com : comps.values()) {
 
                     if (com.getType().equals(_type) && com.getName().equals(name) && com.getId() != id) {
-                        com.setDescription(description);
+                        com.setHost(description);
                         com.setId(id);
                     } else if (com.getType().equals(_type) && com.getId() == id && !com.getName().equals(name)) {
                         // we need to preserve the old name for updating links and transports
                         _pName = com.getName();
                         com.setName(name);
-                        com.setDescription(description);
+                        com.setHost(description);
                         for (JCGLink l : com.getLnks()) {
                             if (l.getSourceComponentName().equals(_pName)) {
                                 l.setSourceComponentName(name);

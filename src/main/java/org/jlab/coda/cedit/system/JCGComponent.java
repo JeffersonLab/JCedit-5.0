@@ -48,7 +48,7 @@ public class JCGComponent {
     private String                                 rol1UsrString        = "undefined";
     private String                                 rol2                 = "";
     private String                                 rol2UsrString        = "";
-    private String                                 description          = "undefined";
+    private String                                 host                 = "undefined";
     private String                                 userConfig           = "undefined";
     private int                                    priority             = -1;
     private boolean                                codaComponent        = true;
@@ -88,7 +88,7 @@ public class JCGComponent {
 
     public JCGComponent(double x, double y, double gridX, double gridY, double w, double h, double px, double py,
                         int id, String name, String type, String subType, String rol1, String rol1UsrString,
-                        String rol2, String rol2UsrString, String description, String userConfig, int priority,
+                        String rol2, String rol2UsrString, String host, String userConfig, int priority,
                         boolean codaComponent, boolean isStreaming, boolean preDefined, String nodeList,
                         String command, boolean isMaster, JCGModule module, Set<JCGLink> links,
                         Set<JCGTransport> transports, Set<JCGProcess> processes, BufferedImage image) {
@@ -108,7 +108,7 @@ public class JCGComponent {
         this.rol1UsrString = rol1UsrString;
         this.rol2 = rol2;
         this.rol2UsrString = rol2UsrString;
-        this.description = description;
+        this.host = host;
         this.userConfig = userConfig;
         this.priority = priority;
         this.codaComponent = codaComponent;
@@ -269,12 +269,12 @@ public class JCGComponent {
     }
 
 
-    public String getDescription() {
-        return description;
+    public String getHost() {
+        return host;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setHost(String host) {
+        this.host = host;
     }
 
     public String getRol1() {
@@ -530,7 +530,7 @@ public class JCGComponent {
         if (!module.equals(that.getModule())) return false;
 
         if (!userConfig.equals(that.getUserConfig())) return false;
-        if (!description.equals(that.getDescription())) return false;
+        if (!host.equals(that.getHost())) return false;
 
 
         if(links.size()!=that.getLnks().size()) return false;
@@ -596,7 +596,7 @@ public class JCGComponent {
                 ",\n rol1UsrString='" + rol1UsrString + '\'' +
                 ",\n rol2='" + rol2 + '\'' +
                 ",\n rol2UsrString='" + rol2UsrString + '\'' +
-                ",\n description='" + description + '\'' +
+                ",\n description='" + host + '\'' +
                 ",\n userConfig='" + userConfig + '\'' +
                 ",\n codaComponent=" + codaComponent +
                 ",\n codaVersion2=" + isStreaming +
