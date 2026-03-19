@@ -226,9 +226,6 @@ public class SComponentForm extends BaseForm {
                 label6.setEnabled(false);
                 break;
         }
-        if(component.isPreDefined()){
-            hostTextField.setEnabled(false);
-        }
         setVisible(true);
         if(!editable){
             nameTextField.setEnabled(false);
@@ -259,10 +256,9 @@ public class SComponentForm extends BaseForm {
                 typeTextField.getText().trim(),
                 component.getSubType(),
                 hostTextField.getText().replace("\\n","\n"));
-        if(predefinedHost.equals("UNDEFINED_VALUE")) {
-            hostTextField.setEnabled(true);
-        } else {
-            hostTextField.setEnabled(false);
+        // Always keep host text field enabled and editable
+        hostTextField.setEnabled(true);
+        if(!predefinedHost.equals("UNDEFINED_VALUE")) {
             hostTextField.setText(predefinedHost);
         }
     }

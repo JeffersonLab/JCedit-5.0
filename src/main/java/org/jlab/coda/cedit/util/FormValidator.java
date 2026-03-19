@@ -49,10 +49,9 @@ public class FormValidator {
      * Checks:
      * - Name is not null or empty
      * - Name doesn't contain underscore (control character)
-     * - Component with this name doesn't already exist on canvas
      *
      * @param name the component name to validate
-     * @param canvas the drawing canvas to check for duplicates (null to skip duplicate check)
+     * @param canvas the drawing canvas (parameter kept for API compatibility but not used)
      * @return validation result
      */
     public static ValidationResult validateComponentName(String name, DrawingCanvas canvas) {
@@ -67,11 +66,7 @@ public class FormValidator {
                     "Invalid Name");
         }
 
-        if (canvas != null && isComponentDefinedOnCanvas(name, canvas)) {
-            return ValidationResult.error(
-                    "Component with the name = " + name + " already exists.",
-                    "Duplicate Component");
-        }
+        // Duplicate component check removed - users can now create components with same names
 
         return ValidationResult.success();
     }

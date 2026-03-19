@@ -2096,142 +2096,17 @@ public class CDesktopNew extends JFrame {
     }
 
     public static String isComponentPredefined(String n, String t, String st, String d){
-        String out   = "undefined";
-        String name  = "undefined";
-        String type  = "undefined";
-        String desc  = "undefined";
-        String sType = "undefined";
-        int id = 0;
-        String s;
-        StringTokenizer st1, st2;
-        StringBuilder sb = new StringBuilder();
-        JCGSetup stp = JCGSetup.getInstance();
-        if(new File(stp.getCoolHome()+ File.separator+ stp.getExpid()+File.separator+
-                "jcedit"+File.separator+t+".txt").exists()){
-            try {
-                BufferedReader br = new BufferedReader(new FileReader(stp.getCoolHome()+
-                        File.separator+ stp.getExpid()+File.separator+"jcedit"+File.separator+t+".txt"));
-
-                // read entire file
-                while((s = br.readLine())!=null){
-                    sb.append(s);
-                    if(!s.endsWith("@@")){
-                        sb.append("\n");
-                    }
-                }
-                // get single component record
-                st1 = new StringTokenizer(sb.toString(),"@@");
-                while(st1.hasMoreTokens()){
-                    // get data
-                    st2 = new StringTokenizer(st1.nextToken(),"$");
-                    if(st2.hasMoreTokens()) name  = st2.nextToken();
-                    if(st2.hasMoreTokens()) type  = st2.nextToken();
-                    if(st2.hasMoreTokens()) sType = st2.nextToken();
-                    try{
-                        if(st2.hasMoreTokens()) id = Integer.parseInt(st2.nextToken());
-                    } catch (NumberFormatException e ){
-                        System.out.println(e.getMessage());
-                    }
-                    if(st2.hasMoreTokens()) desc  = st2.nextToken();
-
-                    if(name.equals(n)){
-                        br.close();
-                        out = desc;
-                        return out;
-                    }
-                }
-                br.close();
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-        return out;
+        // Predefined component system removed - always return "UNDEFINED_VALUE" (not predefined)
+        return "UNDEFINED_VALUE";
     }
 
     public static boolean isIDPredefined(String t, int _id){
-        int id = 0;
-        String s;
-        StringTokenizer st1, st2;
-        StringBuilder sb = new StringBuilder();
-        JCGSetup stp = JCGSetup.getInstance();
-        if(new File(stp.getCoolHome()+ File.separator+ stp.getExpid()+File.separator+
-                "jcedit"+File.separator+t+".txt").exists()){
-            try {
-                BufferedReader br = new BufferedReader(new FileReader(stp.getCoolHome()+
-                        File.separator+ stp.getExpid()+File.separator+"jcedit"+File.separator+t+".txt"));
-
-                // read entire file
-                while((s = br.readLine())!=null){
-                    sb.append(s);
-                    if(!s.endsWith("@@")){
-                        sb.append("\n");
-                    }
-                }
-                br.close();
-                // get single component record
-                st1 = new StringTokenizer(sb.toString(),"@@");
-                while(st1.hasMoreTokens()){
-                    // get data
-                    st2 = new StringTokenizer(st1.nextToken(),"$");
-                    if(st2.hasMoreTokens()) st2.nextToken();
-                    if(st2.hasMoreTokens())  st2.nextToken();
-                    if(st2.hasMoreTokens())  st2.nextToken();
-                    try{
-                        if(st2.hasMoreTokens()) id = Integer.parseInt(st2.nextToken());
-                    } catch (NumberFormatException e ){
-                        System.out.println(e.getMessage());
-                    }
-                    if(st2.hasMoreTokens())  st2.nextToken();
-
-
-                    if(id==_id){
-                        br.close();
-                        return true;
-                    }
-                }
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
-        }
+        // Predefined component system removed - always return false (ID not predefined)
         return false;
     }
 
     public static boolean isComponentPredefined(String t,String n){
-        String name  = "undefined";
-        String s;
-        StringTokenizer st1, st2;
-        StringBuilder sb = new StringBuilder();
-        JCGSetup stp = JCGSetup.getInstance();
-        if(new File(stp.getCoolHome()+ File.separator+ stp.getExpid()+File.separator+
-                "jcedit"+File.separator+t+".txt").exists()){
-            try {
-                BufferedReader br = new BufferedReader(new FileReader(stp.getCoolHome()+
-                        File.separator+ stp.getExpid()+File.separator+"jcedit"+File.separator+t+".txt"));
-
-                // read entire file
-                while((s = br.readLine())!=null){
-                    sb.append(s);
-                    if(!s.endsWith("@@")){
-                        sb.append("\n");
-                    }
-                }
-                // get single component record
-                st1 = new StringTokenizer(sb.toString(),"@@");
-                while(st1.hasMoreTokens()){
-                    // get data
-                    st2 = new StringTokenizer(st1.nextToken(),"$");
-                    if(st2.hasMoreTokens()) name  = st2.nextToken();
-
-                    if(name.equals(n)){
-                        br.close();
-                        return true;
-                    }
-                }
-                br.close();
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
-        }
+        // Predefined component system removed - always return false (not predefined)
         return false;
     }
 
@@ -2496,8 +2371,8 @@ public class CDesktopNew extends JFrame {
 //
 //        }
 
-        // add to the JCEdit defined component file ( common to all configurations .txt)
-        recordDescribedComponents(null, null, null);
+        // Predefined component persistence removed - no longer saving components for reuse
+        // recordDescribedComponents(null, null, null);
 
         // create runType/configuration specific RTV file,
         // i.e. file that contains defined RTV with values = "unset"
@@ -2505,6 +2380,9 @@ public class CDesktopNew extends JFrame {
 
         configNameLabel.setText(name);
         runType = name;
+
+        // create .cnf file for the configuration
+        createConfigurationFile(name);
 
         // create/replace tar file for the EXPID
         try {
@@ -2589,6 +2467,86 @@ public class CDesktopNew extends JFrame {
         } catch (IOException e1) {
             e1.getMessage();
         }
+    }
+
+    /**
+     * Creates a .cnf file for the given configuration name in the CODA_CONFIG directory.
+     * This file is created after a successful save operation and contains one line per component
+     * in the format: component_host component_type component_name
+     *
+     * @param configName the configuration name
+     */
+    private void createConfigurationFile(String configName) {
+        try {
+            // Get the CODA_CONFIG environment variable
+            String codaConfigDir = System.getenv("CODA_CONFIG");
+
+            if (codaConfigDir == null || codaConfigDir.trim().isEmpty()) {
+                System.err.println("Warning: CODA_CONFIG environment variable is not set. Skipping .cnf file creation.");
+                return;
+            }
+
+            // Construct the .cnf file path: $CODA_CONFIG/<configName>.cnf
+            String cnfFilePath = codaConfigDir + File.separator + configName + ".cnf";
+            File cnfFile = new File(cnfFilePath);
+
+            // Ensure parent directory exists
+            File parentDir = cnfFile.getParentFile();
+            if (parentDir != null && !parentDir.exists()) {
+                parentDir.mkdirs();
+            }
+
+            // Create the .cnf file (creates new or overwrites existing)
+            BufferedWriter bw = new BufferedWriter(new FileWriter(cnfFile));
+
+            // Write component entries - one line per component in format: host type name
+            // First, write all regular components from the canvas
+            if (drawingCanvas != null && drawingCanvas.getGCMPs() != null) {
+                for (JCGComponent component : drawingCanvas.getGCMPs().values()) {
+                    writeComponentEntry(bw, component);
+                }
+            }
+
+            // Then, write the supervisor component
+            if (drawingCanvas != null && drawingCanvas.getSupervisor() != null) {
+                writeComponentEntry(bw, drawingCanvas.getSupervisor());
+            }
+
+            bw.close();
+
+        } catch (IOException e) {
+            // Log error but don't break the existing save workflow
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Writes a single component entry to the .cnf file.
+     * Format: component_host component_type component_name
+     * Skips components with missing required fields.
+     *
+     * @param bw the BufferedWriter to write to
+     * @param component the component to write
+     * @throws IOException if writing fails
+     */
+    private void writeComponentEntry(BufferedWriter bw, JCGComponent component) throws IOException {
+        if (component == null) {
+            return;
+        }
+
+        String host = component.getHost();
+        String type = component.getType();
+        String name = component.getName();
+
+        // Skip components with missing required fields
+        if (host == null || host.trim().isEmpty() ||
+            type == null || type.trim().isEmpty() ||
+            name == null || name.trim().isEmpty()) {
+            return;
+        }
+
+        // Write in format: host type name (space-separated)
+        bw.write(host + " " + type + " " + name + "\n");
     }
 
     /**
