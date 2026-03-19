@@ -536,11 +536,15 @@ public class SComponentForm extends BaseForm {
         okAllButton.setEnabled(true);
         Rol1TextField.setBackground(Color.YELLOW);
         _rol1_update = true;
-        int returnValue = jfc.showOpenDialog(null);
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = jfc.getSelectedFile();
-            Rol1TextField.setText(selectedFile.getAbsolutePath());
+
+        // Only open file chooser if rol1FileCCB checkbox is selected
+        if (rol1FileCCB != null && rol1FileCCB.isSelected()) {
+            int returnValue = jfc.showOpenDialog(null);
+            if (returnValue == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = jfc.getSelectedFile();
+                Rol1TextField.setText(selectedFile.getAbsolutePath());
 //            System.out.println(selectedFile.getAbsolutePath());
+            }
         }
     }
 
@@ -548,10 +552,14 @@ public class SComponentForm extends BaseForm {
         Rol2TextField.setBackground(Color.YELLOW);
         _rol2_update = true;
         okAllButton.setEnabled(true);
-        int returnValue = jfc.showOpenDialog(null);
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = jfc.getSelectedFile();
-            Rol2TextField.setText(selectedFile.getAbsolutePath());
+
+        // Only open file chooser if rol2FileCCB checkbox is selected
+        if (rol2FileCCB != null && rol2FileCCB.isSelected()) {
+            int returnValue = jfc.showOpenDialog(null);
+            if (returnValue == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = jfc.getSelectedFile();
+                Rol2TextField.setText(selectedFile.getAbsolutePath());
+            }
         }
     }
 
@@ -689,6 +697,8 @@ public class SComponentForm extends BaseForm {
         label6 = new JLabel();
         endianCheckBox = new JCheckBox();
         hostTextField = new JTextField();
+        rol1FileCCB = new JCheckBox();
+        rol2FileCCB = new JCheckBox();
         okButton = new JButton();
         clearButton = new JButton();
         cancelButton = new JButton();
@@ -739,6 +749,7 @@ public class SComponentForm extends BaseForm {
                 Rol2Label.setText("ROL2");
 
                 //---- Rol2TextField ----
+                Rol2TextField.setText("undefined");
                 Rol2TextField.addKeyListener(new KeyAdapter() {
                     @Override
                     public void keyPressed(KeyEvent e) {
@@ -894,6 +905,12 @@ public class SComponentForm extends BaseForm {
                     }
                 });
 
+                //---- rol1FileCCB ----
+                rol1FileCCB.setToolTipText("Enable File Chooser");
+
+                //---- rol2FileCCB ----
+                rol2FileCCB.setToolTipText("Enable File Chooser");
+
                 GroupLayout contentPanelLayout = new GroupLayout(contentPanel);
                 contentPanel.setLayout(contentPanelLayout);
                 contentPanelLayout.setHorizontalGroup(
@@ -947,7 +964,11 @@ public class SComponentForm extends BaseForm {
                                                     .addComponent(Rol2Label)
                                                     .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                                     .addComponent(Rol2TextField)))
-                                            .addGap(28, 28, 28)
+                                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                            .addGroup(contentPanelLayout.createParallelGroup()
+                                                .addComponent(rol1FileCCB)
+                                                .addComponent(rol2FileCCB))
+                                            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                                             .addGroup(contentPanelLayout.createParallelGroup()
                                                 .addGroup(contentPanelLayout.createSequentialGroup()
                                                     .addGroup(contentPanelLayout.createParallelGroup()
@@ -1000,7 +1021,8 @@ public class SComponentForm extends BaseForm {
                                 .addComponent(Rol1Label)
                                 .addComponent(Rol1usrStringLabel)
                                 .addComponent(Rol1UserStrTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                .addComponent(Rol1TextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                .addComponent(Rol1TextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(rol1FileCCB))
                             .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(contentPanelLayout.createParallelGroup()
                                 .addGroup(contentPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
@@ -1008,7 +1030,8 @@ public class SComponentForm extends BaseForm {
                                     .addComponent(Rol2Label))
                                 .addGroup(contentPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                     .addComponent(Rol2UsrStringLabel)
-                                    .addComponent(Rol2UserStrTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(Rol2UserStrTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                .addComponent(rol2FileCCB))
                             .addGap(18, 18, 18)
                             .addGroup(contentPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                 .addComponent(configFileLabel)
@@ -1138,6 +1161,8 @@ public class SComponentForm extends BaseForm {
     private JLabel label6;
     private JCheckBox endianCheckBox;
     private JTextField hostTextField;
+    private JCheckBox rol1FileCCB;
+    private JCheckBox rol2FileCCB;
     private JButton okButton;
     private JButton clearButton;
     private JButton cancelButton;
