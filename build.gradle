@@ -85,7 +85,11 @@ java {
 jar {
     manifest {
         attributes 'Main-Class': 'org.jlab.coda.cedit.cooldesktop.CDesktopNew'
-        attributes 'Add-Opens': 'java.base/java.lang java.base/java.lang.reflect'
+        // Opens required by bundled JAXB (jaxb-runtime 2.3.x) on JDK 17.
+        // Note: the launcher script also sets -Dcom.sun.xml.bind.v2.bytecode
+        // .ClassTailor.noOptimize=true and passes --add-opens explicitly; these
+        // manifest entries let `java -jar` work without the launcher too.
+        attributes 'Add-Opens': 'java.base/java.lang java.base/java.lang.reflect java.base/java.io java.xml/com.sun.org.apache.xerces.internal.jaxp'
     }
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
@@ -240,11 +244,26 @@ tasks.register('deploy', Copy) {
     into dest
     with deploySpec
     doFirst {
-        if (dest == 'null') {
+        if (System.env.CODA == null) {
             throw new GradleException('CODA env is not set')
         }
     }
     dependsOn jar
+    finalizedBy 'deployScripts'
+}
+
+tasks.register('deployScripts', Copy) {
+    def dest = "$System.env.CODA/common/bin"
+    from('bin') {
+        include 'jcedit'
+    }
+    into dest
+    fileMode = 0755
+    doFirst {
+        if (System.env.CODA == null) {
+            throw new GradleException('CODA env is not set')
+        }
+    }
 }
 
 //////////////////////////////////////////////////////////////////////////////

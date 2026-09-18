@@ -2,24 +2,37 @@
 
 # JCedit launcher script
 
-# Determine the directory where this script is located
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+JAR_NAME="jcedit-5.0-SNAPSHOT.jar"
 
-# Path to the jar file (script is in bin/, jar is in build/libs/)
-JAR_FILE="${SCRIPT_DIR}/../build/libs/jcedit-5.0-SNAPSHOT.jar"
-
-# Check if jar exists
-if [ ! -f "$JAR_FILE" ]; then
-    echo "Error: JAR file not found at $JAR_FILE"
-    echo "Please run './gradlew build' first to build the project."
+# Resolve jar: prefer $CODA install layout, fall back to dev build tree.
+if [ -n "$CODA" ] && [ -f "$CODA/common/jar/$JAR_NAME" ]; then
+    JAR_FILE="$CODA/common/jar/$JAR_NAME"
+elif [ -f "${SCRIPT_DIR}/../jar/$JAR_NAME" ]; then
+    JAR_FILE="${SCRIPT_DIR}/../jar/$JAR_NAME"
+elif [ -f "${SCRIPT_DIR}/../build/libs/$JAR_NAME" ]; then
+    JAR_FILE="${SCRIPT_DIR}/../build/libs/$JAR_NAME"
+else
+    echo "Error: $JAR_NAME not found (checked \$CODA/common/jar, ../jar, ../build/libs)."
+    echo "Run './gradlew build' or './gradlew deploy' first."
     exit 1
 fi
 
-# Check if Java is available
 if ! command -v java &> /dev/null; then
     echo "Error: Java is not installed or not in PATH"
     exit 1
 fi
 
-# Run the application with all passed arguments
-exec java -jar "$JAR_FILE" "$@"
+# JVM args required by the bundled JAXB (org.glassfish.jaxb:jaxb-runtime 2.3.x)
+# on JDK 17. The JAXB runtime performs bytecode "optimization" that touches
+# JDK internals now strongly encapsulated in JDK 17 -- disable that optimizer
+# and open the packages it reflects into to avoid IllegalAccessError.
+JVM_OPTS=(
+    -Dcom.sun.xml.bind.v2.bytecode.ClassTailor.noOptimize=true
+    --add-opens java.base/java.lang=ALL-UNNAMED
+    --add-opens java.base/java.lang.reflect=ALL-UNNAMED
+    --add-opens java.base/java.io=ALL-UNNAMED
+    --add-opens java.xml/com.sun.org.apache.xerces.internal.jaxp=ALL-UNNAMED
+)
+
+exec java "${JVM_OPTS[@]}" -jar "$JAR_FILE" "$@"
