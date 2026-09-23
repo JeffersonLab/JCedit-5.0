@@ -1,7 +1,7 @@
 #!/bin/csh -f
 
-# Starts JCedit interface
-# author: vhg 30-Aug-2013
+#Starts JCedit interface
+#author vhg 30-Aug-2013
 
 setenv CLASSPATH "$CODA/common/jar/*:$CODA/common/jar/jena/*"
 
@@ -10,4 +10,4 @@ setenv CLASSPATH "$CODA/common/jar/*:$CODA/common/jar/jena/*"
 #-Djavax.xml.parsers.SAXParserFactory="com.sun.org.apache.xerces.internal.jaxp.SAXParserFactoryImpl" \
 #org.jlab.coda.cedit.cooldesktop.CDesktop
 
-$JAVA_HOME/bin/java -Xms200m -Xmx500m -Dcom.sun.management.jmxremote -Dcom.sun.xml.bind.v2.bytecode.Clastailor.noOptimize org.jlab.coda.cedit.cooldesktop.CDesktop
+$JAVA_HOME/bin/java -Xms200m -Xmx500m -Dcom.sun.management.jmxremote -Dcom.sun.xml.bind.v2.bytecode.ClassTailor.noOptimize=true org.jlab.coda.cedit.cooldesktop.CDesktop
